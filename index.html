@@ -471,10 +471,6 @@
             const check1 = document.getElementById('check1').checked;
             const check2 = document.getElementById('check2').checked;
             const check3 = document.getElementById('check3').checked;
-            if (!check1 || !check2 || !check3) {
-                alert('⚠️ Please complete all 3 checklist items before sending!');
-                return;
-            }
             
             const data = {
                 date: document.getElementById('date').value,
