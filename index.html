@@ -278,6 +278,10 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="hoursToday">Hours Worked Today *</label>
+                    <input type="number" id="hoursToday" step="0.5" placeholder="Auto-calculated or enter manually" required>
+                </div>
+                <div class="form-group">
                     <label for="weeklyHours">Weekly Total Hours (to date) *</label>
                     <input type="number" id="weeklyHours" step="0.5" placeholder="e.g., 40" required>
                 </div>
@@ -459,6 +463,22 @@
     </div>
     
     <script>
+        // Auto-calculate hours worked today
+        function calcHours() {
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+            if (start && end) {
+                const [sh, sm] = start.split(':').map(Number);
+                const [eh, em] = end.split(':').map(Number);
+                let mins = (eh * 60 + em) - (sh * 60 + sm);
+                if (mins < 0) mins += 24 * 60; // overnight shift
+                const hours = (mins / 60).toFixed(1);
+                document.getElementById('hoursToday').value = hours;
+            }
+        }
+        document.getElementById('startTime').addEventListener('change', calcHours);
+        document.getElementById('endTime').addEventListener('change', calcHours);
+
         // Set today's date as default
         document.getElementById('date').valueAsDate = new Date();
         
@@ -477,6 +497,7 @@
                 name: document.getElementById('name').value,
                 startTime: document.getElementById('startTime').value,
                 endTime: document.getElementById('endTime').value,
+                hoursToday: document.getElementById('hoursToday').value,
                 weeklyHours: document.getElementById('weeklyHours').value,
                 great: document.getElementById('great').value,
                 challenging: document.getElementById('challenging').value,
@@ -518,6 +539,7 @@ END OF SHIFT REPORT – CHASE'S PARADISE RANCH
 Date: ${data.date}
 Name: ${data.name}
 Start: ${data.startTime} | End: ${data.endTime}
+Hours Worked Today: ${data.hoursToday} hours
 Weekly Total: ${data.weeklyHours} hours
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
