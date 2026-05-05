@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" xml:lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="language" content="English">
     <title>Chase's Paradise Ranch - End of Shift Report</title>
+    <script>
+        // Force English - block auto-translation
+        document.documentElement.lang = 'en';
+        document.documentElement.setAttribute('translate', 'no');
+        // Prevent Chrome auto-translate
+        Object.defineProperty(navigator, 'language', { get: function() { return 'en-US'; } });
+        Object.defineProperty(navigator, 'languages', { get: function() { return ['en-US', 'en']; } });
+    </script>
     <style>
         * {
             margin: 0;
@@ -251,6 +262,9 @@
         
         <div class="alert alert-info">
             <strong>📋 Reminder:</strong> Send this report to the <strong>Reports Group Chat</strong> BEFORE signing out. Keep it for payroll records.
+        </div>
+        <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:10px 15px; margin-bottom:20px; font-size:13px; color:#856404;">
+            🌐 <strong>This form must be completed in English only.</strong> If your browser offers to translate this page, please decline or dismiss it.
         </div>
         
         <form id="reportForm">
