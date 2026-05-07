@@ -282,31 +282,31 @@
                 <div class="section-title">Shift Information</div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="date">Date *</label>
-                        <input type="date" id="date" required>
+                        <label for="date">Date</label>
+                        <input type="date" id="date">
                     </div>
                     <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" placeholder="Your full name" required>
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Your full name">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="startTime">Start Time *</label>
-                        <input type="time" id="startTime" required>
+                        <label for="startTime">Start Time</label>
+                        <input type="time" id="startTime">
                     </div>
                     <div class="form-group">
-                        <label for="endTime">End Time *</label>
-                        <input type="time" id="endTime" required>
+                        <label for="endTime">End Time</label>
+                        <input type="time" id="endTime">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="hoursToday">Hours Worked Today *</label>
-                    <input type="number" id="hoursToday" step="0.5" placeholder="Auto-calculated or enter manually" required>
+                    <label for="hoursToday">Hours Worked Today</label>
+                    <input type="number" id="hoursToday" step="0.5" placeholder="Auto-calculated or enter manually">
                 </div>
                 <div class="form-group">
-                    <label for="weeklyHours">Weekly Total Hours (to date) *</label>
-                    <input type="number" id="weeklyHours" step="0.5" placeholder="e.g., 40" required>
+                    <label for="weeklyHours">Weekly Total Hours (to date)</label>
+                    <input type="number" id="weeklyHours" step="0.5" placeholder="e.g., 40">
                 </div>
             </div>
             
@@ -314,32 +314,32 @@
             <div class="section">
                 <div class="section-title">Shift Summary</div>
                 <div class="form-group">
-                    <label for="great">What went great today? ✅ *</label>
-                    <textarea id="great" required placeholder="Describe the highlights..."></textarea>
+                    <label for="great">What went great today? ✅</label>
+                    <textarea id="great" placeholder="Describe the highlights..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="challenging">What was challenging? ⚠️ *</label>
-                    <textarea id="challenging" required placeholder="Any obstacles or difficulties..."></textarea>
+                    <label for="challenging">What was challenging? ⚠️</label>
+                    <textarea id="challenging" placeholder="Any obstacles or difficulties..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="broken">Anything broken or needing repair? 🔧 *</label>
-                    <textarea id="broken" required placeholder="Equipment, facilities, etc. or 'Nothing'"></textarea>
+                    <label for="broken">Anything broken or needing repair? 🔧</label>
+                    <textarea id="broken" placeholder="Equipment, facilities, etc. or 'Nothing'"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="projects">Special projects completed? 📌 *</label>
-                    <textarea id="projects" required placeholder="Any special tasks or projects or 'None'"></textarea>
+                    <label for="projects">Special projects completed? 📌</label>
+                    <textarea id="projects" placeholder="Any special tasks or projects or 'None'"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="supervisor">Reviewed with (Supervisor Name) 👤 *</label>
-                    <input type="text" id="supervisor" required placeholder="Name of supervisor">
+                    <label for="supervisor">Reviewed with (Supervisor Name) 👤</label>
+                    <input type="text" id="supervisor" placeholder="Name of supervisor">
                 </div>
                 <div class="form-group">
-                    <label for="incomplete">Tasks not fully completed today? ❌ *</label>
-                    <textarea id="incomplete" required placeholder="Include how this was communicated and agreed upon with manager + timeline"></textarea>
+                    <label for="incomplete">Tasks not fully completed today? ❌</label>
+                    <textarea id="incomplete" placeholder="Include how this was communicated and agreed upon with manager + timeline"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="notes">Notes for tomorrow 📝 *</label>
-                    <textarea id="notes" required placeholder="Any notes for the next shift..."></textarea>
+                    <label for="notes">Notes for tomorrow 📝</label>
+                    <textarea id="notes" placeholder="Any notes for the next shift..."></textarea>
                 </div>
             </div>
             
@@ -441,16 +441,16 @@
             <div class="section">
                 <div class="section-title">Additional Info</div>
                 <div class="form-group">
-                    <label for="order">🛒 Anything else to purchase? *</label>
-                    <textarea id="order" required placeholder="List items needed or 'No'"></textarea>
+                    <label for="order">🛒 Anything else to purchase?</label>
+                    <textarea id="order" placeholder="List items needed or 'No'"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="improve">💭 1 thing to improve at the ranch *</label>
-                    <textarea id="improve" required placeholder="Your suggestion..."></textarea>
+                    <label for="improve">💭 1 thing to improve at the ranch</label>
+                    <textarea id="improve" placeholder="Your suggestion..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="grateful">✨ 3 things grateful for today *</label>
-                    <textarea id="grateful" required placeholder="1. &#10;2. &#10;3. "></textarea>
+                    <label for="grateful">✨ 3 things grateful for today</label>
+                    <textarea id="grateful" placeholder="1. &#10;2. &#10;3. "></textarea>
                 </div>
             </div>
             
@@ -511,10 +511,7 @@
         
         function generateReport() {
             const form = document.getElementById('reportForm');
-            if (!form.checkValidity()) {
-                alert('Please fill in all required fields (*) before generating the report.');
-                return;
-            }
+
             const check1 = document.getElementById('check1').checked;
             const check2 = document.getElementById('check2').checked;
             const check3 = document.getElementById('check3').checked;
