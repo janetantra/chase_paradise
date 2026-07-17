@@ -1,685 +1,641 @@
 <!DOCTYPE html>
-<html lang="en" translate="no" xml:lang="en">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <meta http-equiv="Content-Language" content="en">
-    <meta name="language" content="English">
-    <title>Chase's Paradise Ranch - End of Shift Report</title>
-    <script>
-        // Force English - block auto-translation aggressively
-        document.documentElement.lang = 'en';
-        document.documentElement.setAttribute('translate', 'no');
-        document.documentElement.classList.add('notranslate');
-        // Prevent Chrome/Firefox auto-translate
-        Object.defineProperty(navigator, 'language', { get: function() { return 'en-US'; } });
-        Object.defineProperty(navigator, 'languages', { get: function() { return ['en-US', 'en']; } });
-        // Watch for translation attempts and revert
-        document.addEventListener('DOMContentLoaded', function() {
-            const observer = new MutationObserver(function() {
-                document.documentElement.lang = 'en';
-                document.documentElement.setAttribute('translate', 'no');
-            });
-            observer.observe(document.documentElement, { attributes: true });
-        });
-    </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            padding: 40px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #2c5f8d;
-            padding-bottom: 20px;
-        }
-        
-        h1 {
-            font-size: 28px;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-        }
-        
-        .subtitle {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #2c5f8d;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-        }
-        
-        input[type="text"],
-        input[type="date"],
-        input[type="time"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px 12px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: inherit;
-            background: #fafafa;
-            transition: border-color 0.2s;
-        }
-        
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        input[type="time"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #2c5f8d;
-            background: white;
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 70px;
-        }
-        
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .row.full {
-            grid-template-columns: 1fr;
-        }
-        
-        .inventory-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        
-        .inv-item {
-            padding: 12px;
-            background: #f5f5f5;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .inv-item label {
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-        
-        .inv-item input {
-            padding: 8px;
-            font-size: 13px;
-        }
-        
-        .button-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 30px;
-        }
-        
-        button {
-            padding: 14px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .btn-generate {
-            background: #2c5f8d;
-            color: white;
-            grid-column: 1 / -1;
-        }
-        
-        .btn-generate:hover {
-            background: #1f4563;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 95, 141, 0.3);
-        }
-        
-        .btn-clear {
-            background: #f0f0f0;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-        
-        .btn-clear:hover {
-            background: #e8e8e8;
-        }
-        
-        .btn-copy {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .btn-copy:hover {
-            background: #1f8449;
-        }
-        
-        .output-box {
-            display: none;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 20px;
-            margin-top: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            color: #333;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .output-box.visible {
-            display: block;
-        }
-        
-        .alert {
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-        
-        .alert-info {
-            background: #e8f4f8;
-            color: #0c447c;
-            border: 1px solid #b3d9e8;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 22px;
-            }
-            
-            .row {
-                grid-template-columns: 1fr;
-            }
-            
-            .inventory-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .button-group {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead Scoring · Bathroom Excellence</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(ellipse at 20% 50%,#2d0057 0%,#0a0015 40%,#0d0025 70%,#050010 100%);background-attachment:fixed;}
+body::before{content:'';position:fixed;top:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,0.2) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;animation:f1 8s ease-in-out infinite;}
+body::after{content:'';position:fixed;bottom:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;animation:f2 10s ease-in-out infinite;}
+@keyframes f1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+@keyframes f2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-20px)}}
+@keyframes pulseRing{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes toastIn{0%{opacity:0;transform:translate(-50%,-50%) scale(0.7)}60%{transform:translate(-50%,-50%) scale(1.05)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes toastOut{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
+
+.wrap{position:relative;z-index:1;padding:20px 16px;max-width:860px;margin:0 auto}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.nav-brand{font-size:17px;font-weight:900;background:linear-gradient(135deg,#c4b5fd,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-link{padding:7px 16px;border-radius:10px;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;background:rgba(139,92,246,0.15);color:#a78bfa;border:1.5px solid rgba(139,92,246,0.35);transition:all 0.2s}
+.nav-link:hover{background:rgba(139,92,246,0.25)}
+
+.card{display:block;width:100%;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(139,92,246,0.22);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,0.35);padding:20px;margin-bottom:16px}
+
+.script-block{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-left:3px solid #7c3aed;border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.script-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:8px}
+.script-text{font-size:13px;color:#c4b5fd;line-height:1.75}
+.script-text strong{color:#e2d9f3;font-weight:700}
+.script-listen{font-size:11px;color:#a78bfa;font-style:italic;margin-top:8px;opacity:0.8}
+
+.sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.sec-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-num-info{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#a78bfa}
+.sec-pts{margin-left:auto;font-size:10px;color:#6b7280;font-weight:500}
+
+.fl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7c3aed;margin-bottom:5px;display:block}
+input,select,textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(139,92,246,0.3);border-radius:9px;font-size:13px;color:#e2d9f3;outline:none;transition:all 0.2s}
+input::placeholder,textarea::placeholder{color:rgba(167,139,250,0.35)}
+input:focus,select:focus,textarea:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,0.18)}
+select option{background:#1a0035;color:#e2d9f3}
+.bp-inp{border-color:rgba(245,158,11,0.45)!important}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g2:last-child{margin-bottom:0}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+.opt{cursor:pointer;border:1.5px solid rgba(139,92,246,0.18);border-radius:11px;padding:14px 10px;transition:all 0.2s;background:rgba(255,255,255,0.03);text-align:center;user-select:none}
+.opt:hover{border-color:#8b5cf6;background:rgba(139,92,246,0.1);transform:translateY(-2px)}
+.opt:active{transform:translateY(0)}
+.ol{font-size:13px;font-weight:700;color:#e2d9f3;margin-bottom:5px}
+.pts{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:4px}
+.pg{background:rgba(34,197,94,0.2);color:#4ade80}
+.pa{background:rgba(245,158,11,0.2);color:#fbbf24}
+.pb{background:rgba(59,130,246,0.2);color:#60a5fa}
+.pr{background:rgba(239,68,68,0.2);color:#f87171}
+.pgr{background:rgba(107,114,128,0.2);color:#9ca3af}
+.sg{border-color:#22c55e!important;background:rgba(34,197,94,0.12)!important;box-shadow:0 0 14px rgba(34,197,94,0.25)}
+.sa{border-color:#f59e0b!important;background:rgba(245,158,11,0.12)!important;box-shadow:0 0 14px rgba(245,158,11,0.25)}
+.sb{border-color:#3b82f6!important;background:rgba(59,130,246,0.12)!important;box-shadow:0 0 14px rgba(59,130,246,0.25)}
+.sr{border-color:#ef4444!important;background:rgba(239,68,68,0.12)!important;box-shadow:0 0 14px rgba(239,68,68,0.25)}
+.sgr{border-color:#6b7280!important;background:rgba(107,114,128,0.12)!important}
+
+/* ── BOTTOM SCORE PANEL ── */
+.score-panel{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(139,92,246,0.35);border-radius:20px;padding:32px;margin-top:8px;box-shadow:0 0 40px rgba(139,92,246,0.15)}
+.score-panel-top{display:flex;align-items:center;gap:32px;margin-bottom:28px}
+.sring{width:150px;height:150px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:5px solid;transition:all 0.4s ease;flex-shrink:0}
+.rz{border-color:#4b5563;color:#6b7280}
+.rh{border-color:#22c55e;color:#4ade80;box-shadow:0 0 40px rgba(34,197,94,0.4)}
+.rm{border-color:#f59e0b;color:#fbbf24;box-shadow:0 0 40px rgba(245,158,11,0.4)}
+.rl{border-color:#ef4444;color:#f87171;box-shadow:0 0 40px rgba(239,68,68,0.4)}
+.pulse{animation:pulseRing 0.35s ease}
+
+.pill{font-size:11px;font-weight:800;letter-spacing:2px;padding:5px 14px;border-radius:999px;text-transform:uppercase;display:inline-block}
+.pnone{background:rgba(107,114,128,0.2);color:#9ca3af;border:1px solid rgba(107,114,128,0.3)}
+.ph{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.4);box-shadow:0 0 14px rgba(34,197,94,0.25)}
+.pm{background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
+.pl{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.4)}
+
+.score-right{flex:1}
+.nprev{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.22);border-radius:10px;padding:10px 16px;font-size:15px;font-weight:800;color:#c4b5fd;margin-bottom:14px;text-align:center}
+.ptrack{background:rgba(255,255,255,0.08);border-radius:999px;height:8px}
+.pfill{height:100%;border-radius:999px;background:linear-gradient(90deg,#7c3aed,#a78bfa);transition:width 0.4s ease;box-shadow:0 0 8px rgba(139,92,246,0.5)}
+.prog-label{display:flex;justify-content:space-between;margin-bottom:6px}
+
+.breakdown-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+.bitem{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px;text-align:center}
+.bitem-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7c3aed;margin-bottom:6px}
+.bitem-val{font-size:18px;font-weight:900;color:#6b7280;transition:all 0.3s}
+
+.guide-row{display:flex;gap:20px;margin-top:18px;justify-content:center}
+.guide-item{display:flex;align-items:center;gap:7px;font-size:12px}
+
+.sub-btn{width:100%;padding:16px;border:none;border-radius:12px;cursor:pointer;font-size:15px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,#7c3aed,#5b21b6,#4c1d95);color:#fff;box-shadow:0 6px 24px rgba(124,58,237,0.5);transition:all 0.2s;margin-top:20px}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(124,58,237,0.65)}
+
+/* ── CENTERED TOAST ── */
+.toast{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:9999;
+  background:linear-gradient(135deg,rgba(20,0,50,0.97),rgba(10,0,25,0.97));
+  border:2px solid rgba(139,92,246,0.6);
+  border-radius:24px;
+  padding:32px 48px;
+  text-align:center;
+  box-shadow:0 0 80px rgba(139,92,246,0.5),0 20px 60px rgba(0,0,0,0.6);
+  pointer-events:none;
+  opacity:0;
+  backdrop-filter:blur(30px);
+  min-width:320px;
+}
+.toast.show{animation:toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards}
+.toast.hide{animation:toastOut 0.3s ease forwards}
+.toast-category{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#7c3aed;margin-bottom:8px}
+.toast-pts{font-size:56px;font-weight:900;line-height:1;margin-bottom:4px}
+.toast-pts-label{font-size:11px;font-weight:600;color:#7c3aed;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.toast-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.4),transparent);margin:0 0 20px}
+.toast-row{display:flex;justify-content:center;gap:40px}
+.toast-col-num{font-size:36px;font-weight:900;line-height:1}
+.toast-col-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6b7280;margin-top:3px}
+
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9998;align-items:center;justify-content:center}
+.modal-box{background:linear-gradient(135deg,#1a0035,#0d0025);border:1px solid rgba(139,92,246,0.4);border-radius:18px;padding:32px;max-width:500px;width:92%;text-align:center;box-shadow:0 0 50px rgba(139,92,246,0.3)}
+.mcl{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;border:none;padding:10px 30px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;margin-top:14px}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏕️ Chase's Paradise Ranch</h1>
-            <p class="subtitle">End of Shift Report</p>
-        </header>
-        
-        <div class="alert alert-info">
-            <strong>📋 Reminder:</strong> Send this report to the <strong>Reports Group Chat</strong> BEFORE signing out. Keep it for payroll records.
-        </div>
-        <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:10px 15px; margin-bottom:20px; font-size:13px; color:#856404;">
-            🌐 <strong>This form must be completed in English only.</strong> If your browser offers to translate this page, please decline or dismiss it.
-        </div>
-        
-        <form id="reportForm">
-            <!-- SHIFT INFO -->
-            <div class="section">
-                <div class="section-title">Shift Information</div>
-                <div class="row">
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" id="date">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" placeholder="Your full name">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <label for="startTime">Start Time</label>
-                        <input type="time" id="startTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="endTime">End Time</label>
-                        <input type="time" id="endTime">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="hoursToday">Hours Worked Today</label>
-                    <input type="number" id="hoursToday" step="0.5" placeholder="Auto-calculated or enter manually">
-                </div>
-                <div class="form-group">
-                    <label for="weeklyHours">Weekly Total Hours (to date)</label>
-                    <input type="number" id="weeklyHours" step="0.5" placeholder="e.g., 40">
-                </div>
-            </div>
-            
-            <!-- SHIFT SUMMARY -->
-            <div class="section">
-                <div class="section-title">Shift Summary</div>
-                <div class="form-group">
-                    <label for="great">What went great today? ✅</label>
-                    <textarea id="great" placeholder="Describe the highlights..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="challenging">What was challenging? ⚠️</label>
-                    <textarea id="challenging" placeholder="Any obstacles or difficulties..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="broken">Anything broken or needing repair? 🔧</label>
-                    <textarea id="broken" placeholder="Equipment, facilities, etc. or 'Nothing'"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="projects">Special projects completed? 📌</label>
-                    <textarea id="projects" placeholder="Any special tasks or projects or 'None'"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="supervisor">Reviewed with (Supervisor Name) 👤</label>
-                    <input type="text" id="supervisor" placeholder="Name of supervisor">
-                </div>
-                <div class="form-group">
-                    <label for="incomplete">Tasks not fully completed today? ❌</label>
-                    <textarea id="incomplete" placeholder="Include how this was communicated and agreed upon with manager + timeline"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="notes">Notes for tomorrow 📝</label>
-                    <textarea id="notes" placeholder="Any notes for the next shift..."></textarea>
-                </div>
-            </div>
-            
-            <!-- INVENTORY COUNT -->
-            <div class="section">
-                <div class="section-title">Inventory Count (Exact Quantities)</div>
-                <div class="inventory-grid">
-                    <div class="inv-item">
-                        <label for="inv_coconuts">🥥 Coconuts</label>
-                        <input type="number" id="inv_coconuts" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_oranges">🟠 Oranges</label>
-                        <input type="number" id="inv_oranges" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_catcans">🐱 Cat cans</label>
-                        <input type="number" id="inv_catcans" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_chicken">🦵 Chicken feet</label>
-                        <input type="number" id="inv_chicken" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_bones">🦴 Bones</label>
-                        <input type="number" id="inv_bones" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_tp">🧻 Toilet Paper</label>
-                        <input type="number" id="inv_tp" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_pt">📄 Paper Towels</label>
-                        <input type="number" id="inv_pt" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_trash">🗑️ Trash Bags</label>
-                        <input type="number" id="inv_trash" min="0">
-                    </div>
-                    <div class="inv-item">
-                        <label for="inv_incense">🔥 Incense</label>
-                        <input type="number" id="inv_incense" min="0">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- DAYS REMAINING -->
-            <div class="section">
-                <div class="section-title">Days Remaining (Estimate)</div>
-                <div class="inventory-grid">
-                    <div class="inv-item">
-                        <label for="days_coffee">☕ Coffee</label>
-                        <input type="number" id="days_coffee" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_alfalfa">🌾 Alfalfa</label>
-                        <input type="number" id="days_alfalfa" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_salt">🧂 Mineral salt</label>
-                        <input type="number" id="days_salt" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_grain">🌾 Sheep grain</label>
-                        <input type="number" id="days_grain" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_meat">🥩 Meat for dogs</label>
-                        <input type="number" id="days_meat" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_rice">🍚 Rice for dogs</label>
-                        <input type="number" id="days_rice" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_kibble">🐱 Cat kibble</label>
-                        <input type="number" id="days_kibble" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_soap">🧼 Cleaning soap</label>
-                        <input type="number" id="days_soap" min="0" step="0.5">
-                    </div>
-                    <div class="inv-item">
-                        <label for="days_glass">🪟 Glass cleaner</label>
-                        <input type="number" id="days_glass" min="0" step="0.5">
-                    </div>
-                </div>
-                <div class="form-group" style="margin-top: 15px;">
-                    <label for="lowStock">Any items at or under 2 days?</label>
-                    <select id="lowStock">
-                        <option value="">-- Select --</option>
-                        <option value="No">No</option>
-                        <option value="Yes - message Rafael">Yes - message Rafael</option>
-                    </select>
-                </div>
-            </div>
-            
-            <!-- REQUESTS & GRATITUDE -->
-            <div class="section">
-                <div class="section-title">Additional Info</div>
-                <div class="form-group">
-                    <label for="order">🛒 Anything else to purchase?</label>
-                    <textarea id="order" placeholder="List items needed or 'No'"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="improve">💭 1 thing to improve at the ranch</label>
-                    <textarea id="improve" placeholder="Your suggestion..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="grateful">✨ 3 things grateful for today</label>
-                    <textarea id="grateful" placeholder="1. &#10;2. &#10;3. "></textarea>
-                </div>
-            </div>
-            
-            <!-- CHECKLIST BEFORE SENDING -->
-            <div class="section">
-                <div class="section-title">✔️ Checklist for Each Task</div>
-                <div style="display:flex; flex-direction:column; gap:12px;">
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check1" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Read task
-                    </label>
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check2" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Complete task
-                    </label>
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check3" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Re-read task to confirm details
-                    </label>
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check4" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        All tasks on list fully completed including all details (or agreed in advance with Adam in writing otherwise)
-                    </label>
-                </div>
-            </div>
+<div class="wrap">
 
-            <!-- BUTTONS -->
-            <div class="button-group">
-                <button type="button" class="btn-generate" onclick="generateReport()">📋 Generate WhatsApp Report</button>
-                <button type="button" class="btn-clear" onclick="clearForm()">Clear Form</button>
-            </div>
-        </form>
-        
-        <!-- OUTPUT -->
-        <div id="outputBox" class="output-box"></div>
-        <button id="copyBtn" style="display: none; grid-column: 1 / -1; margin-top: 15px;" class="btn-copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+  <div class="nav">
+    <div class="nav-brand">⚡ BATHROOM EXCELLENCE</div>
+    <a href="records.html" class="nav-link">📋 View Records</a>
+  </div>
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:22px;font-weight:900;background:linear-gradient(135deg,#c4b5fd,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">⚡ APPOINTMENT SCORING SCRIPT</div>
+    <div style="font-size:12px;color:rgba(167,139,250,0.6);margin-top:4px">Follow the script · Click answers · Score updates automatically</div>
+  </div>
+
+  <!-- CUSTOMER INFO -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">📋</div><div class="sec-title">Customer Information</div></div>
+    <div class="g2">
+      <div><label class="fl">Customer Name</label><input type="text" id="customerName" placeholder="John Smith" oninput="updatePreview()"></div>
+      <div><label class="fl">🔑 BP Opportunity ID <span style="color:#f59e0b;font-size:9px">(?opportunityId= in URL)</span></label><input type="number" id="bpLeadId" placeholder="e.g. 4947823" class="bp-inp"></div>
     </div>
-    
-    <script>
-        // Auto-calculate hours worked today
-        function calcHours() {
-            const start = document.getElementById('startTime').value;
-            const end = document.getElementById('endTime').value;
-            if (start && end) {
-                const [sh, sm] = start.split(':').map(Number);
-                const [eh, em] = end.split(':').map(Number);
-                let mins = (eh * 60 + em) - (sh * 60 + sm);
-                if (mins < 0) mins += 24 * 60; // overnight shift
-                const hours = (mins / 60).toFixed(1);
-                document.getElementById('hoursToday').value = hours;
-            }
-        }
-        document.getElementById('startTime').addEventListener('change', calcHours);
-        document.getElementById('endTime').addEventListener('change', calcHours);
+    <div class="g2">
+      <div><label class="fl">Set On</label><input type="date" id="setOn"></div>
+      <div><label class="fl">Lead Source</label>
+        <select id="leadSource">
+          <option value="">Select source...</option>
+          <option>APPOINTX</option><option>FACEBOOK</option><option>GOOGLE ADS</option>
+          <option>HOME ADVISOR</option><option>HOME BUDDY</option><option>MOD-MODERNIZE</option>
+          <option>PRO-REMODEL</option><option>SEARCH GOOGLE & ORGANIC</option>
+          <option>THUMBTACK</option><option>WEBSITE FORM</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
-        // Set today's date as default
-        document.getElementById('date').valueAsDate = new Date();
-        
-        function generateReport() {
-            const form = document.getElementById('reportForm');
+  <!-- OPENING -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">📞</div><div class="sec-title">Opening</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Say This</div>
+      <div class="script-text">
+        <strong>"Hi [Homeowner's Name], this is Arnold with Bathroom Excellence."</strong><br><br>
+        "I'm following up on the information you submitted about your bathroom project. Jack, my manager, asked me to reach out and get everything set up for your free in-home estimate."<br><br>
+        "Before we pick a time, I just want to learn a little more about your project so Jack can come prepared with the best recommendations."
+      </div>
+    </div>
+  </div>
 
-            const check1 = document.getElementById('check1').checked;
-            const check2 = document.getElementById('check2').checked;
-            const check3 = document.getElementById('check3').checked;
-            const check4 = document.getElementById('check4').checked;
-            if (!check1 || !check2 || !check3 || !check4) {
-                alert('⚠️ Please check all 3 items in the Checklist for Each Task before generating the report!');
-                return;
-            }
-            
-            const data = {
-                date: document.getElementById('date').value,
-                name: document.getElementById('name').value,
-                startTime: document.getElementById('startTime').value,
-                endTime: document.getElementById('endTime').value,
-                hoursToday: document.getElementById('hoursToday').value,
-                weeklyHours: document.getElementById('weeklyHours').value,
-                great: document.getElementById('great').value,
-                challenging: document.getElementById('challenging').value,
-                broken: document.getElementById('broken').value,
-                projects: document.getElementById('projects').value,
-                supervisor: document.getElementById('supervisor').value,
-                incomplete: document.getElementById('incomplete').value,
-                notes: document.getElementById('notes').value,
-                inv_coconuts: document.getElementById('inv_coconuts').value,
-                inv_oranges: document.getElementById('inv_oranges').value,
-                inv_catcans: document.getElementById('inv_catcans').value,
-                inv_chicken: document.getElementById('inv_chicken').value,
-                inv_bones: document.getElementById('inv_bones').value,
-                inv_tp: document.getElementById('inv_tp').value,
-                inv_pt: document.getElementById('inv_pt').value,
-                inv_trash: document.getElementById('inv_trash').value,
-                inv_incense: document.getElementById('inv_incense').value,
-                days_coffee: document.getElementById('days_coffee').value,
-                days_alfalfa: document.getElementById('days_alfalfa').value,
-                days_salt: document.getElementById('days_salt').value,
-                days_grain: document.getElementById('days_grain').value,
-                days_meat: document.getElementById('days_meat').value,
-                days_rice: document.getElementById('days_rice').value,
-                days_kibble: document.getElementById('days_kibble').value,
-                days_soap: document.getElementById('days_soap').value,
-                days_glass: document.getElementById('days_glass').value,
-                lowStock: document.getElementById('lowStock').value,
-                order: document.getElementById('order').value,
-                improve: document.getElementById('improve').value,
-                grateful: document.getElementById('grateful').value,
-            };
-            
-            const report = `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-END OF SHIFT REPORT – CHASE'S PARADISE RANCH
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  <!-- PROJECT DISCOVERY -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num">1</div><div class="sec-title">Project Discovery</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Ask</div>
+      <div class="script-text"><strong>"What are you looking to have done to your bathroom?"</strong></div>
+      <div class="script-listen">👂 Listen — then say: <strong>"Great, that's definitely something we specialize in."</strong></div>
+    </div>
+    <div><label class="fl">Project Type</label>
+      <select id="projectType" onchange="toggleOther(this)">
+        <option value="">Select type...</option>
+        <option>Full Bathroom Remodel</option>
+        <option>Tub to Shower Conversion</option>
+        <option>Tub/Shower Update</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="text" id="projectTypeOther" placeholder="Describe project..." style="display:none;margin-top:8px">
+    </div>
+  </div>
 
-📋 SHIFT INFO
-Date: ${data.date}
-Name: ${data.name}
-Start: ${data.startTime} | End: ${data.endTime}
-Hours Worked Today: ${data.hoursToday} hours
-Weekly Total: ${data.weeklyHours} hours
+  <!-- TIMELINE / URGENCY -->
+  <div class="card">
+    <div class="sec-hdr">
+      <div class="sec-num">2</div>
+      <div class="sec-title">Timeline / Urgency</div>
+      <div class="sec-pts">MAX <strong style="color:#a78bfa">20 PTS</strong></div>
+    </div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Ask</div>
+      <div class="script-text"><strong>"Ideally, when would you like to have the project completed?"</strong></div>
+      <div class="script-listen">👂 Listen — then select below</div>
+    </div>
+    <div class="g3" id="group-urgency">
+      <div class="opt" onclick="pick('urgency','ASAP',20,this,'sg','Urgency')">
+        <div class="ol">ASAP</div>
+        <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:5px">
+          <span class="pts pg">+10 PTS</span>
+          <span style="font-size:9px;font-weight:800;color:#fbbf24;background:rgba(245,158,11,0.2);padding:2px 7px;border-radius:999px">+10 BONUS</span>
+        </div>
+      </div>
+      <div class="opt" onclick="pick('urgency','Within the Next Month',5,this,'sa','Urgency')">
+        <div class="ol">Within the Next Month</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+5 PTS</span>
+      </div>
+      <div class="opt" onclick="pick('urgency','Just Planning Ahead',0,this,'sgr','Urgency')">
+        <div class="ol">Just Planning Ahead</div>
+        <span class="pts pgr" style="margin-top:5px;display:inline-block">0 PTS</span>
+      </div>
+    </div>
+  </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  <!-- BUYING READINESS -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">✅</div><div class="sec-title">Buying Readiness</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Ask</div>
+      <div class="script-text"><strong>"If everything made sense—the design, the workmanship, and the investment—would you be ready to move forward with the right company?"</strong></div>
+      <div class="script-listen">👂 Listen</div>
+    </div>
+  </div>
 
-✅ WHAT WENT GREAT?
-${data.great || '—'}
+  <!-- COMPETITION / QUOTES -->
+  <div class="card">
+    <div class="sec-hdr">
+      <div class="sec-num">3</div>
+      <div class="sec-title">Competition / Quotes</div>
+      <div class="sec-pts">MAX <strong style="color:#a78bfa">40 PTS</strong></div>
+    </div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Ask</div>
+      <div class="script-text">
+        <strong>"Have you had any other companies come out yet?"</strong><br><br>
+        <span style="color:#a78bfa">If YES →</span> <strong>"How many estimates have you received so far?"</strong>
+      </div>
+      <div class="script-listen">👂 Listen — then select below</div>
+    </div>
+    <div class="g3" id="group-quotes">
+      <div class="opt" onclick="pick('quotes','Got 1 Quote',40,this,'sg','Quotes')">
+        <div class="ol">Got 1 Quote</div>
+        <span class="pts pg" style="margin-top:5px;display:inline-block">+40 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Has competitor quote</div>
+      </div>
+      <div class="opt" onclick="pick('quotes','Have Appt Before Us',30,this,'sa','Quotes')">
+        <div class="ol">Have Appt Before Us</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+30 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Scheduled earlier</div>
+      </div>
+      <div class="opt" onclick="pick('quotes','None',10,this,'sa','Quotes')">
+        <div class="ol">None</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+10 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">No quote yet</div>
+      </div>
+    </div>
+  </div>
 
-⚠️ WHAT WAS CHALLENGING?
-${data.challenging || '—'}
+  <!-- DECISION MAKERS -->
+  <div class="card">
+    <div class="sec-hdr">
+      <div class="sec-num">4</div>
+      <div class="sec-title">Decision Makers</div>
+      <div class="sec-pts">MAX <strong style="color:#a78bfa">20 PTS</strong></div>
+    </div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Ask</div>
+      <div class="script-text">
+        <strong>"Besides yourself, will anyone else be involved in making the final decision? Such as a spouse or partner?"</strong><br><br>
+        <span style="color:#a78bfa">If YES →</span> "Perfect. Since Jack will be discussing design ideas, pricing, and financing options, we ask that everyone involved in the decision be present so everyone hears the same information together."<br><br>
+        <strong>"What's the best time that works for the both of you? Morning, afternoon, or evening?"</strong>
+      </div>
+      <div class="script-listen">👂 Listen — then select below</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px" id="group-dm">
+      <div class="opt" onclick="pick('dm','Older Couple',20,this,'sg','Decision Maker')">
+        <div class="ol">Older Couple</div>
+        <span class="pts pg" style="margin-top:5px;display:inline-block">+20 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Both DMs present</div>
+      </div>
+      <div class="opt" onclick="pick('dm','Younger Couple',15,this,'sa','Decision Maker')">
+        <div class="ol">Younger Couple</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+15 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Both DMs present</div>
+      </div>
+      <div class="opt" onclick="pick('dm','Just Him / Her',10,this,'sgr','Decision Maker')">
+        <div class="ol">Just Him / Her</div>
+        <span class="pts pgr" style="margin-top:5px;display:inline-block">+10 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Solo decision maker</div>
+      </div>
+      <div class="opt" onclick="pick('dm','With Son / Daughter / Parents',10,this,'sb','Decision Maker')">
+        <div class="ol">With Son / Daughter / Parents</div>
+        <span class="pts pb" style="margin-top:5px;display:inline-block">+10 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Family present</div>
+      </div>
+      <div class="opt" onclick="pick('dm','Cash Project',10,this,'sb','Decision Maker')">
+        <div class="ol">Cash Project</div>
+        <span class="pts pb" style="margin-top:5px;display:inline-block">+10 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Cash buyer</div>
+      </div>
+    </div>
+  </div>
 
-🔧 BROKEN/NEEDS REPAIR?
-${data.broken || '—'}
+  <!-- SCHEDULE -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">📅</div><div class="sec-title">Schedule Appointment</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Say</div>
+      <div class="script-text">
+        "Let's find a time that works best."<br><br>
+        <strong>"I have: Tuesday at 2:00 PM or Wednesday at 5:00 PM. Which works better for you?"</strong>
+      </div>
+      <div class="script-listen">📅 Book below</div>
+    </div>
+    <div class="g2">
+      <div><label class="fl">Appointment Date</label><input type="date" id="appointmentDate"></div>
+      <div><label class="fl">Appointment Time</label><input type="time" id="appointmentTime"></div>
+    </div>
+  </div>
 
-📌 SPECIAL PROJECTS COMPLETED?
-${data.projects || '—'}
+  <!-- CREDIT -->
+  <div class="card">
+    <div class="sec-hdr">
+      <div class="sec-num">5</div>
+      <div class="sec-title">Financing / Credit</div>
+      <div class="sec-pts">MAX <strong style="color:#a78bfa">20 PTS</strong></div>
+    </div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Say</div>
+      <div class="script-text">
+        "Jack brings several financing programs with him—from excellent-credit options all the way down to programs designed for homeowners rebuilding credit."<br><br>
+        <strong>"About where would you say your credit falls today? Needs work, fair, good, or excellent?"</strong>
+      </div>
+      <div class="script-listen">👂 Listen — then select below</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px" id="group-credit">
+      <div class="opt" onclick="pick('credit','Good / Excellent',20,this,'sg','Credit')">
+        <div class="ol">Good / Excellent</div>
+        <span class="pts pg" style="margin-top:5px;display:inline-block">+20 PTS</span>
+      </div>
+      <div class="opt" onclick="pick('credit','Fair',10,this,'sa','Credit')">
+        <div class="ol">Fair</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+10 PTS</span>
+      </div>
+      <div class="opt" onclick="pick('credit','Cash Project',20,this,'sb','Credit')">
+        <div class="ol">Cash Project</div>
+        <span class="pts pb" style="margin-top:5px;display:inline-block">+20 PTS</span>
+      </div>
+      <div class="opt" onclick="pick('credit','Won\'t Share Credit',10,this,'sgr','Credit')">
+        <div class="ol">Won't Share Credit</div>
+        <span class="pts pgr" style="margin-top:5px;display:inline-block">+10 PTS</span>
+      </div>
+    </div>
+  </div>
 
-👤 REVIEWED WITH: ${data.supervisor || '—'}
+  <!-- BUILD VALUE -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">💎</div><div class="sec-title">Build Value</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Say</div>
+      <div class="script-text">
+        "Excellent. The nice thing about meeting with Jack is that he'll take measurements, go over different design options, explain the installation process, answer any questions you have, and provide pricing during the appointment."<br><br>
+        <strong>"That way you'll have everything you need to make an informed decision—there's absolutely no obligation."</strong>
+      </div>
+    </div>
+  </div>
 
-❌ TASKS NOT COMPLETED?
-${data.incomplete || '—'}
+  <!-- ENGAGEMENT -->
+  <div class="card">
+    <div class="sec-hdr">
+      <div class="sec-num">6</div>
+      <div class="sec-title">Engagement / Interest Level</div>
+      <div class="sec-pts">MAX <strong style="color:#a78bfa">10 PTS</strong></div>
+    </div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Commitment Close</div>
+      <div class="script-text">
+        "Perfect. We reserve this appointment specifically for you, and Jack sets aside about 60 to 90 minutes so he can answer all of your questions without rushing."<br><br>
+        <strong>"Is there anything you can think of today that might prevent us from meeting that day?"</strong><br><br>
+        <strong>"So unless something unexpected comes up, I can count on seeing you then?"</strong>
+      </div>
+      <div class="script-listen">👂 Rate customer enthusiasm below</div>
+    </div>
+    <div class="g3" id="group-engagement">
+      <div class="opt" onclick="pick('engagement','Very Interested',10,this,'sg','Engagement')">
+        <div class="ol">Very Interested</div>
+        <span class="pts pg" style="margin-top:5px;display:inline-block">+10 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Enthusiastic & committed</div>
+      </div>
+      <div class="opt" onclick="pick('engagement','Interested',5,this,'sa','Engagement')">
+        <div class="ol">Interested</div>
+        <span class="pts pa" style="margin-top:5px;display:inline-block">+5 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Willing but cautious</div>
+      </div>
+      <div class="opt" onclick="pick('engagement','Not Interested',0,this,'sr','Engagement')">
+        <div class="ol">Not Interested</div>
+        <span class="pts pr" style="margin-top:5px;display:inline-block">0 PTS</span>
+        <div style="font-size:10px;color:#6b7280;margin-top:4px">Low intent</div>
+      </div>
+    </div>
+  </div>
 
-📝 NOTES FOR TOMORROW:
-${data.notes || '—'}
+  <!-- ADDRESS & FINAL -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">📍</div><div class="sec-title">Address & Final Confirmation</div></div>
+    <div class="script-block">
+      <div class="script-label">🎙️ Confirm</div>
+      <div class="script-text">
+        <strong>"Can you please confirm the property address for me?"</strong><br><br>
+        "Excellent. So I have you scheduled for 📅 <strong>[Date & Time]</strong> at 📍 <strong>[Address]</strong>. And both decision-makers will be there, correct?"<br><br>
+        "You'll receive a reminder from us before your appointment. Jack is looking forward to meeting you, and we appreciate the opportunity to earn your business. <strong>Have a wonderful day!</strong>"
+      </div>
+    </div>
+    <div><label class="fl">Property Address</label><input type="text" id="address" placeholder="123 Main St, City, State"></div>
+  </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  <!-- CALL NOTES -->
+  <div class="card">
+    <div class="sec-hdr"><div class="sec-num sec-num-info">📝</div><div class="sec-title">Call Notes</div></div>
+    <textarea id="callNotes" rows="4" placeholder="Objections, special circumstances, or anything to follow up on..."></textarea>
+  </div>
 
-📦 INVENTORY COUNT (Exact #)
-🥥 Coconuts: ${data.inv_coconuts || '—'}
-🟠 Oranges: ${data.inv_oranges || '—'}
-🐱 Cat cans: ${data.inv_catcans || '—'}
-🦵 Chicken feet: ${data.inv_chicken || '—'}
-🦴 Bones: ${data.inv_bones || '—'}
-🧻 Toilet Paper: ${data.inv_tp || '—'}
-📄 Paper Towels: ${data.inv_pt || '—'}
-🗑️ Trash Bags: ${data.inv_trash || '—'}
-🔥 Incense: ${data.inv_incense || '—'}
+  <!-- ══════════ BOTTOM SCORE PANEL ══════════ -->
+  <div class="score-panel">
+    <div style="text-align:center;font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#7c3aed;margin-bottom:24px">⚡ Live Score Summary</div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    <div class="score-panel-top">
+      <!-- Ring -->
+      <div style="text-align:center">
+        <div class="sring rz" id="scoreRing">
+          <div style="font-size:48px;font-weight:900;line-height:1" id="scoreNumber">0</div>
+          <div style="font-size:12px;font-weight:600;opacity:0.7;margin-top:4px">PTS</div>
+        </div>
+        <div style="margin-top:14px"><span class="pill pnone" id="priorityBadge">No Data Yet</span></div>
+      </div>
 
-📅 DAYS REMAINING (Est.)
-☕ Coffee: ${data.days_coffee || '—'} days
-🌾 Alfalfa: ${data.days_alfalfa || '—'} days
-🧂 Mineral salt: ${data.days_salt || '—'} days
-🌾 Sheep grain: ${data.days_grain || '—'} days
-🥩 Meat for dogs: ${data.days_meat || '—'} days
-🍚 Rice for dogs: ${data.days_rice || '—'} days
-🐱 Cat kibble: ${data.days_kibble || '—'} days
-🧼 Cleaning soap: ${data.days_soap || '—'} days
-🪟 Glass cleaner: ${data.days_glass || '—'} days
+      <!-- Right info -->
+      <div class="score-right">
+        <div class="nprev" id="namePreview">— Enter customer name —</div>
+        <div class="prog-label">
+          <span style="font-size:10px;font-weight:700;letter-spacing:1px;color:#7c3aed;text-transform:uppercase">Progress</span>
+          <span style="font-size:12px;font-weight:800;color:#a78bfa" id="progressText">0 of 5</span>
+        </div>
+        <div class="ptrack"><div class="pfill" id="progressBar" style="width:0%"></div></div>
 
-⚠️ LOW STOCK ALERT: ${data.lowStock || '—'}
+        <div class="guide-row" style="margin-top:16px">
+          <div class="guide-item" style="color:#4ade80"><span style="width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;display:inline-block"></span>80+ → HIGH</div>
+          <div class="guide-item" style="color:#fbbf24"><span style="width:9px;height:9px;border-radius:50%;background:#f59e0b;box-shadow:0 0 6px #f59e0b;display:inline-block"></span>60–79 → MEDIUM</div>
+          <div class="guide-item" style="color:#f87171"><span style="width:9px;height:9px;border-radius:50%;background:#ef4444;box-shadow:0 0 6px #ef4444;display:inline-block"></span>0–59 → LOW</div>
+        </div>
+      </div>
+    </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    <!-- Breakdown -->
+    <div class="breakdown-grid">
+      <div class="bitem"><div class="bitem-label">Urgency</div><div class="bitem-val" id="b-urgency">—</div></div>
+      <div class="bitem"><div class="bitem-label">Quotes</div><div class="bitem-val" id="b-quotes">—</div></div>
+      <div class="bitem"><div class="bitem-label">Decision Maker</div><div class="bitem-val" id="b-dm">—</div></div>
+      <div class="bitem"><div class="bitem-label">Credit</div><div class="bitem-val" id="b-credit">—</div></div>
+      <div class="bitem"><div class="bitem-label">Engagement</div><div class="bitem-val" id="b-engagement">—</div></div>
+    </div>
 
-🛒 ANYTHING ELSE TO ORDER?
-${data.order || '—'}
+    <button class="sub-btn" onclick="submitLead()">🚀 SUBMIT TO CRM — Google Sheets + BuildersPrime</button>
+  </div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</div><!-- end wrap -->
 
-💭 GRATITUDE & SUGGESTIONS
-1 thing to improve at the ranch:
-${data.improve || '—'}
+<!-- CENTERED SCORE TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-category" id="toastCategory">Urgency</div>
+  <div class="toast-pts" id="toastPts">+20</div>
+  <div class="toast-pts-label">POINTS ADDED</div>
+  <div class="toast-divider"></div>
+  <div class="toast-row">
+    <div style="text-align:center">
+      <div class="toast-col-num" id="toastTotal" style="color:#c4b5fd">0</div>
+      <div class="toast-col-label">TOTAL SCORE</div>
+    </div>
+    <div style="text-align:center">
+      <div class="toast-col-num" id="toastPriority" style="color:#4ade80">—</div>
+      <div class="toast-col-label">PRIORITY</div>
+    </div>
+  </div>
+</div>
 
-3 things I'm grateful for today:
-${data.grateful || '—'}
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div style="font-size:44px;margin-bottom:10px">✅</div>
+    <h2 style="font-size:17px;font-weight:800;color:#c4b5fd;margin-bottom:7px">Lead Submitted!</h2>
+    <p style="font-size:12px;color:#7c3aed;margin-bottom:14px" id="modalSummary"></p>
+    <div id="modalPayload" style="background:rgba(0,0,0,0.3);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:12px;text-align:left;font-size:10px;color:#a78bfa;max-height:180px;overflow-y:auto;margin-bottom:14px;font-family:monospace;white-space:pre-wrap"></div>
+    <button class="mcl" onclick="closeModal()">NEW CALL</button>
+  </div>
+</div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<script>
+const A={urgency:null,quotes:null,dm:null,credit:null,engagement:null};
+const S={urgency:0,  quotes:0,   dm:0,  credit:0,   engagement:0};
+let toastTimer=null;
 
-✔️ CHECKLIST FOR EACH TASK:
-${check1 ? '☑️' : '☐'} Read task
-${check2 ? '☑️' : '☐'} Complete task
-${check3 ? '☑️' : '☐'} Re-read task to confirm details
-${check4 ? '☑️' : '☐'} All tasks on list fully completed including all details (or agreed in advance with Adam in writing otherwise)
+function pick(group,label,pts,el,cls,catName){
+  document.querySelectorAll('#group-'+group+' .opt').forEach(c=>c.classList.remove('sg','sa','sb','sr','sgr'));
+  el.classList.add(cls);
+  const prev=S[group];
+  A[group]=label; S[group]=pts;
+  calc();
+  showToast(pts,prev,catName);
+}
 
+function calc(){
+  const total=Object.values(S).reduce((a,b)=>a+b,0);
+  const done=Object.values(A).filter(v=>v!==null).length;
+  document.getElementById('scoreNumber').textContent=total;
+  const ring=document.getElementById('scoreRing');
+  ring.className='sring';
+  let pr,pc,rc,tcol;
+  if(done===0){rc='rz';pr='No Data Yet';pc='pnone';tcol='#9ca3af';}
+  else if(total>=80){rc='rh';pr='HIGH';pc='ph';tcol='#4ade80';}
+  else if(total>=60){rc='rm';pr='MEDIUM';pc='pm';tcol='#fbbf24';}
+  else{rc='rl';pr='LOW';pc='pl';tcol='#f87171';}
+  ring.classList.add(rc,'pulse');
+  setTimeout(()=>ring.classList.remove('pulse'),350);
+  const b=document.getElementById('priorityBadge');
+  b.textContent=done===0?'No Data Yet':pr+' PRIORITY'; b.className='pill '+pc;
+  document.getElementById('progressBar').style.width=Math.round((done/5)*100)+'%';
+  document.getElementById('progressText').textContent=done+' of 5';
+  ['urgency','quotes','dm','credit','engagement'].forEach(k=>{
+    const el=document.getElementById('b-'+k);
+    if(A[k]===null){el.textContent='—';el.style.color='#6b7280';}
+    else{el.textContent=S[k]+' pts';el.style.color=S[k]>0?'#4ade80':'#f87171';el.style.fontSize='20px';}
+  });
+  updatePreview();
+  return{total,pr,tcol};
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-            
-            const outputBox = document.getElementById('outputBox');
-            outputBox.textContent = report;
-            outputBox.classList.add('visible');
-            document.getElementById('copyBtn').style.display = 'block';
-            
-            outputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        
-        function copyToClipboard() {
-            const outputBox = document.getElementById('outputBox');
-            const text = outputBox.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.getElementById('copyBtn');
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied to Clipboard!';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                }, 2000);
-            }).catch(err => {
-                alert('Could not copy. Please try again.');
-            });
-        }
-        
-        function clearForm() {
-            document.getElementById('reportForm').reset();
-            document.getElementById('date').valueAsDate = new Date();
-            document.getElementById('check1').checked = false;
-            document.getElementById('check2').checked = false;
-            document.getElementById('check3').checked = false;
-            document.getElementById('check4').checked = false;
-            document.getElementById('outputBox').classList.remove('visible');
-            document.getElementById('copyBtn').style.display = 'none';
-        }
-    </script>
+function showToast(pts,prevPts,catName){
+  const total=Object.values(S).reduce((a,b)=>a+b,0);
+  const done=Object.values(A).filter(v=>v!==null).length;
+  let pr='—',tcol='#9ca3af';
+  if(total>=80){pr='HIGH';tcol='#4ade80';}
+  else if(total>=60){pr='MEDIUM';tcol='#fbbf24';}
+  else if(done>0){pr='LOW';tcol='#f87171';}
+
+  const diff=pts-prevPts;
+  const ptsEl=document.getElementById('toastPts');
+  ptsEl.textContent=(diff>=0?'+':'')+diff+' pts';
+  ptsEl.style.color=diff>0?'#4ade80':diff<0?'#f87171':'#9ca3af';
+
+  document.getElementById('toastCategory').textContent=catName;
+  document.getElementById('toastTotal').textContent=total+' pts';
+  document.getElementById('toastPriority').textContent=pr;
+  document.getElementById('toastPriority').style.color=tcol;
+
+  const toast=document.getElementById('toast');
+  if(toastTimer){clearTimeout(toastTimer);toast.className='toast';}
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove('show');
+    toast.classList.add('hide');
+    setTimeout(()=>toast.classList.remove('hide'),350);
+  },2500);
+}
+
+function updatePreview(){
+  const name=document.getElementById('customerName').value.trim();
+  const total=Object.values(S).reduce((a,b)=>a+b,0);
+  const done=Object.values(A).filter(v=>v!==null).length;
+  const el=document.getElementById('namePreview');
+  if(!name){el.textContent='— Enter customer name —';el.style.color='rgba(167,139,250,0.4)';}
+  else{el.textContent=done>0?total+' '+name:name;el.style.color='#c4b5fd';}
+}
+
+function toggleOther(sel){
+  const o=document.getElementById('projectTypeOther');
+  o.style.display=sel.value==='Other'?'block':'none';
+  if(sel.value!=='Other')o.value='';
+}
+
+function submitLead(){
+  const name=document.getElementById('customerName').value.trim()||'Unknown';
+  const total=Object.values(S).reduce((a,b)=>a+b,0);
+  const priority=total>=80?'HIGH':total>=60?'MEDIUM':'LOW';
+  const pt=document.getElementById('projectType').value==='Other'
+    ?'Other: '+(document.getElementById('projectTypeOther').value.trim()||'Not specified')
+    :document.getElementById('projectType').value;
+  const payload={
+    id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+    bp_lead_id:parseInt(document.getElementById('bpLeadId').value)||null,
+    crm_customer_name:total+' '+name,
+    customer_name:name,
+    address:document.getElementById('address').value,
+    set_on:document.getElementById('setOn').value,
+    lead_source:document.getElementById('leadSource').value,
+    project_type:pt,
+    appointment_date:document.getElementById('appointmentDate').value,
+    appointment_time:document.getElementById('appointmentTime').value,
+    score:total,score_max:null,priority,
+    answers:{...A},scores:{...S},
+    notes:document.getElementById('callNotes').value,
+    call_timestamp:new Date().toISOString()
+  };
+  try{const e=JSON.parse(localStorage.getItem('leadRecords')||'[]');e.push(payload);localStorage.setItem('leadRecords',JSON.stringify(e));}catch(e){}
+  fetch('https://hook.us1.make.com/886k5ojznokp6xytozlgqj1w473lfilt',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(e=>console.warn(e));
+  document.getElementById('modalSummary').textContent=payload.crm_customer_name+' · '+priority+' · '+total+' pts';
+  document.getElementById('modalPayload').textContent=JSON.stringify(payload,null,2);
+  document.getElementById('modal').style.display='flex';
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+  ['customerName','callNotes','bpLeadId','address'].forEach(id=>document.getElementById(id).value='');
+  ['leadSource','projectType','appointmentDate','appointmentTime'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('projectTypeOther').style.display='none';
+  document.getElementById('projectTypeOther').value='';
+  document.getElementById('setOn').value=new Date().toISOString().split('T')[0];
+  document.querySelectorAll('.opt').forEach(c=>c.classList.remove('sg','sa','sb','sr','sgr'));
+  for(const k in A){A[k]=null;S[k]=0;}
+  calc();
+}
+
+document.getElementById('setOn').value=new Date().toISOString().split('T')[0];
+</script>
 </body>
 </html>
