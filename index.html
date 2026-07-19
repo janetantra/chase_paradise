@@ -301,6 +301,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                <div class="form-group">
+                        <label for="breakTime">Break Time (minutes)</label>
+                        <input type="number" id="breakTime" min="0" step="5" placeholder="e.g. 30">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="hoursToday">Hours Worked Today</label>
                     <input type="number" id="hoursToday" step="0.5" placeholder="Auto-calculated or enter manually">
                 </div>
@@ -318,7 +324,7 @@
                     <textarea id="great" placeholder="Describe the highlights..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="challenging">What was challenging? ⚠️</label>
+                    <label for="challenging">⚠️ Name 1+ challenging thing today (we utilize this feedback to make this a great place to work)</label>
                     <textarea id="challenging" placeholder="Any obstacles or difficulties..."></textarea>
                 </div>
                 <div class="form-group">
@@ -326,16 +332,14 @@
                     <textarea id="broken" placeholder="Equipment, facilities, etc. or 'Nothing'"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="projects">Special projects completed? 📌</label>
+                    <label for="projects">📌 Did you ask Adam for the special project today? What was completed?</label>
                     <textarea id="projects" placeholder="Any special tasks or projects or 'None'"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="supervisor">Reviewed with (Supervisor Name) 👤</label>
-                    <input type="text" id="supervisor" placeholder="Name of supervisor">
-                </div>
+
                 <div class="form-group">
                     <label for="incomplete">Tasks not fully completed today? ❌</label>
                     <textarea id="incomplete" placeholder="Include how this was communicated and agreed upon with manager + timeline"></textarea>
+                    <p style="font-size:13px; color:#c0392b; font-style:italic; margin-top:6px; padding:8px 12px; background:#fdf0f0; border-left:3px solid #c0392b; border-radius:4px;">⚠️ Always communicate in advance to approve skipping</p>
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes for tomorrow 📝</label>
@@ -351,10 +355,7 @@
                         <label for="inv_coconuts">🥥 Coconuts</label>
                         <input type="number" id="inv_coconuts" min="0">
                     </div>
-                    <div class="inv-item">
-                        <label for="inv_oranges">🟠 Oranges</label>
-                        <input type="number" id="inv_oranges" min="0">
-                    </div>
+
                     <div class="inv-item">
                         <label for="inv_catcans">🐱 Cat cans</label>
                         <input type="number" id="inv_catcans" min="0">
@@ -432,7 +433,7 @@
                     <select id="lowStock">
                         <option value="">-- Select --</option>
                         <option value="No">No</option>
-                        <option value="Yes - message Rafael">Yes - message Rafael</option>
+                        <option value="Yes - message Adam">Yes - message Adam</option>
                     </select>
                 </div>
             </div>
@@ -449,7 +450,7 @@
                     <textarea id="improve" placeholder="Your suggestion..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="grateful">✨ 3 things grateful for today</label>
+                    <label for="grateful">✨ 3 things grateful for today <span style="font-size:12px; color:#888; font-style:italic;">(3 fresh things daily - do not skip)</span></label>
                     <textarea id="grateful" placeholder="1. &#10;2. &#10;3. "></textarea>
                 </div>
             </div>
@@ -472,7 +473,7 @@
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
                         <input type="checkbox" id="check4" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        All tasks on list fully completed including all details (or agreed in advance with Adam in writing otherwise)
+                        At end of day today I reread the task list including reading all details and I confirm with my word and promise by checking here that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance.
                     </label>
                 </div>
             </div>
@@ -499,11 +500,13 @@
                 const [eh, em] = end.split(':').map(Number);
                 let mins = (eh * 60 + em) - (sh * 60 + sm);
                 if (mins < 0) mins += 24 * 60; // overnight shift
-                const hours = (mins / 60).toFixed(1);
+                const breakMins = parseFloat(document.getElementById('breakTime').value) || 0;
+                const hours = ((mins - breakMins) / 60).toFixed(1);
                 document.getElementById('hoursToday').value = hours;
             }
         }
         document.getElementById('startTime').addEventListener('change', calcHours);
+        document.getElementById('breakTime').addEventListener('change', calcHours);
         document.getElementById('endTime').addEventListener('change', calcHours);
 
         // Set today's date as default
@@ -525,18 +528,21 @@
                 date: document.getElementById('date').value,
                 name: document.getElementById('name').value,
                 startTime: document.getElementById('startTime').value,
+                breakTime: document.getElementById('breakTime').value || '0',
                 endTime: document.getElementById('endTime').value,
                 hoursToday: document.getElementById('hoursToday').value,
                 weeklyHours: document.getElementById('weeklyHours').value,
                 great: document.getElementById('great').value,
                 challenging: document.getElementById('challenging').value,
                 broken: document.getElementById('broken').value,
+                brokenReason: document.getElementById('brokenReason').value,
                 projects: document.getElementById('projects').value,
-                supervisor: document.getElementById('supervisor').value,
+
                 incomplete: document.getElementById('incomplete').value,
                 notes: document.getElementById('notes').value,
+                dogRotation: document.getElementById('dogRotation').value,
                 inv_coconuts: document.getElementById('inv_coconuts').value,
-                inv_oranges: document.getElementById('inv_oranges').value,
+
                 inv_catcans: document.getElementById('inv_catcans').value,
                 inv_chicken: document.getElementById('inv_chicken').value,
                 inv_bones: document.getElementById('inv_bones').value,
@@ -567,7 +573,7 @@ END OF SHIFT REPORT – CHASE'S PARADISE RANCH
 📋 SHIFT INFO
 Date: ${data.date}
 Name: ${data.name}
-Start: ${data.startTime} | End: ${data.endTime}
+Start: ${data.startTime} | End: ${data.endTime} | Break: ${data.breakTime} mins
 Hours Worked Today: ${data.hoursToday} hours
 Weekly Total: ${data.weeklyHours} hours
 
@@ -576,16 +582,18 @@ Weekly Total: ${data.weeklyHours} hours
 ✅ WHAT WENT GREAT?
 ${data.great || '—'}
 
-⚠️ WHAT WAS CHALLENGING?
+⚠️ CHALLENGING THING(S) TODAY:
 ${data.challenging || '—'}
 
 🔧 BROKEN/NEEDS REPAIR?
 ${data.broken || '—'}
 
-📌 SPECIAL PROJECTS COMPLETED?
+❓ WHY NOT FIXED DURING SHIFT?
+${data.brokenReason || '—'}
+
+📌 SPECIAL PROJECT (Asked Adam?) & WHAT WAS COMPLETED:
 ${data.projects || '—'}
 
-👤 REVIEWED WITH: ${data.supervisor || '—'}
 
 ❌ TASKS NOT COMPLETED?
 ${data.incomplete || '—'}
@@ -595,9 +603,13 @@ ${data.notes || '—'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+🐕 DOG ROTATION PAIRS:
+${data.dogRotation || '—'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 📦 INVENTORY COUNT (Exact #)
 🥥 Coconuts: ${data.inv_coconuts || '—'}
-🟠 Oranges: ${data.inv_oranges || '—'}
 🐱 Cat cans: ${data.inv_catcans || '—'}
 🦵 Chicken feet: ${data.inv_chicken || '—'}
 🦴 Bones: ${data.inv_bones || '—'}
@@ -641,7 +653,7 @@ ${data.grateful || '—'}
 ${check1 ? '☑️' : '☐'} Read task
 ${check2 ? '☑️' : '☐'} Complete task
 ${check3 ? '☑️' : '☐'} Re-read task to confirm details
-${check4 ? '☑️' : '☐'} All tasks on list fully completed including all details (or agreed in advance with Adam in writing otherwise)
+${check4 ? '☑️' : '☐'} At end of day today I reread the task list including reading all details and I confirm with my word and promise by checking here that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
@@ -673,6 +685,8 @@ ${check4 ? '☑️' : '☐'} All tasks on list fully completed including all det
         function clearForm() {
             document.getElementById('reportForm').reset();
             document.getElementById('date').valueAsDate = new Date();
+            document.getElementById('breakTime').value = '';
+            document.getElementById('dogRotation').value = '';
             document.getElementById('check1').checked = false;
             document.getElementById('check2').checked = false;
             document.getElementById('check3').checked = false;
