@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End of Shift Report – Chase's Paradise Ranch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --ranch-brown: #3B2A1A;
+    --ranch-tan: #C8A96E;
+    --ranch-cream: #FDF6EC;
+    --ranch-green: #2D5016;
+    --ranch-sage: #6B8F47;
+    --ranch-rust: #A0522D;
+    --ranch-dark: #1C1208;
+    --section-bg: #FFFEF9;
+    --border: #E2D5BE;
+    --input-bg: #FEFCF7;
+    --placeholder: #B0997A;
+    --text: #2A1F12;
+    --muted: #7A6248;
+    --green-accent: #4CAF50;
+    --warn: #E67E22;
+    --danger: #C0392B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ranch-cream);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--ranch-dark) 0%, var(--ranch-brown) 60%, #5C3D1E 100%);
+    color: #fff;
+    text-align: center;
+    padding: 32px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8A96E' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(200,169,110,0.2);
+    border: 1px solid rgba(200,169,110,0.4);
+    color: var(--ranch-tan);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-size: clamp(18px, 5vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: #fff;
+  }
+  header p {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+
+  /* ── SECTIONS ── */
+  .section {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+  .section-header {
+    background: linear-gradient(90deg, var(--ranch-brown) 0%, #4A3020 100%);
+    color: #fff;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-body { padding: 18px; }
+
+  /* ── FORM GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 540px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .field input, .field textarea, .field select {
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none;
+    border-color: var(--ranch-tan);
+    box-shadow: 0 0 0 3px rgba(200,169,110,0.15);
+  }
+  .field textarea { min-height: 80px; }
+  .field input[type="number"] { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── COMPUTED FIELD ── */
+  .computed {
+    background: rgba(45,80,22,0.07);
+    border: 1.5px solid rgba(45,80,22,0.2);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ranch-green);
+    min-height: 40px;
+  }
+
+  /* ── DOG LIST ── */
+  .dog-list { display: flex; flex-direction: column; gap: 8px; }
+  .dog-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dog-dash {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ranch-brown);
+    width: 16px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .dog-item input { flex: 1; }
+
+  /* ── INVENTORY ── */
+  .inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .inv-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .inv-item label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .inv-item input {
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .inv-item input:focus {
+    outline: none;
+    border-color: var(--ranch-tan);
+    box-shadow: 0 0 0 3px rgba(200,169,110,0.15);
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist-info {
+    background: rgba(160,82,45,0.07);
+    border-left: 3px solid var(--ranch-rust);
+    padding: 12px 14px;
+    border-radius: 0 7px 7px 0;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+  .steps-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .step-badge {
+    width: 28px; height: 28px;
+    background: var(--ranch-brown);
+    color: var(--ranch-tan);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .step-check {
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .step-check:hover { background: #f0ece3; }
+  .step-check input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--ranch-green);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .step-check.done {
+    background: rgba(76,175,80,0.08);
+    border-color: rgba(76,175,80,0.3);
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .step-check.done .step-badge { background: var(--ranch-sage); }
+
+  .btn-add-dog {
+    margin-top: 10px;
+    background: transparent;
+    border: 1.5px dashed var(--ranch-tan);
+    color: var(--ranch-brown);
+    border-radius: 7px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-add-dog:hover {
+    background: rgba(200,169,110,0.1);
+    border-color: var(--ranch-brown);
+  }
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(76,175,80,0.06);
+    border: 1.5px solid rgba(76,175,80,0.25);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .confirm-row input[type="checkbox"] {
+    width: 20px; height: 20px;
+    accent-color: var(--ranch-green);
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+  .confirm-row label {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  /* ── LOW STOCK ALERT ── */
+  #low-stock-alert {
+    min-height: 36px;
+    padding: 10px 12px;
+    background: rgba(192,57,43,0.06);
+    border: 1.5px solid rgba(192,57,43,0.2);
+    border-radius: 7px;
+    font-size: 13px;
+    color: var(--danger);
+    font-weight: 500;
+  }
+
+  /* ── GENERATE BUTTON ── */
+  .generate-wrap {
+    text-align: center;
+    margin-top: 28px;
+  }
+  .btn-generate {
+    background: linear-gradient(135deg, var(--ranch-green) 0%, var(--ranch-sage) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 40px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(45,80,22,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45,80,22,0.4);
+  }
+  .btn-generate:active { transform: translateY(0); }
+
+  /* ── OUTPUT ── */
+  #output-section {
+    display: none;
+    margin-top: 24px;
+  }
+  #output-section .section-header { background: linear-gradient(90deg, var(--ranch-green), var(--ranch-sage)); }
+  #output-box {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #1A1208;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 14px;
+  }
+  .copy-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-copy {
+    background: var(--ranch-brown);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    flex: 1;
+  }
+  .btn-copy:hover { background: var(--ranch-dark); }
+  .btn-copy.success { background: var(--ranch-green); }
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--ranch-rust); color: var(--ranch-rust); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    color: var(--placeholder);
+    font-size: 12px;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Daily Report Tool</div>
+  <h1>🐾 END OF SHIFT REPORT<br>Chase's Paradise Ranch</h1>
+  <p>Fill in the form below — then copy & paste to WhatsApp</p>
+</header>
+
+<div class="container">
+
+  <!-- ── SHIFT INFO ── -->
+  <div class="section">
+    <div class="section-header">📋 Shift Info</div>
+    <div class="section-body">
+      <div class="grid-2" style="margin-bottom:12px">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="f-name" placeholder="Your name">
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:12px">
+        <div class="field">
+          <label>Start Time</label>
+          <input type="time" id="f-start">
+        </div>
+        <div class="field">
+          <label>Break Time (min)</label>
+          <input type="number" id="f-break" placeholder="e.g. 30" min="0">
+        </div>
+        <div class="field">
+          <label>End Time</label>
+          <input type="time" id="f-end">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Hours Worked Today</label>
+          <div class="computed" id="hours-today">—</div>
+        </div>
+        <div class="field">
+          <label>Weekly Total (hrs)</label>
+          <input type="text" id="f-weekly" placeholder="e.g. 32.5">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NARRATIVE QUESTIONS ── -->
+  <div class="section">
+    <div class="section-header">✅ What Went Great?</div>
+    <div class="section-body">
+      <div class="field">
+        <textarea id="f-great" placeholder="Describe what went well today…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">⚠️ What Was Challenging?</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">This question is so we know what's needed to create an awesome place to work — please be honest.</p>
+      <div class="field">
+        <textarea id="f-challenging" placeholder="Describe any challenges…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">🔧 Broken / Needs Repair</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Please also include why it could not be fixed during shift.</p>
+      <div class="field">
+        <textarea id="f-broken" placeholder="Describe anything broken or needing repair…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">📌 Special Projects</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Did you propose or ask Adam for special projects and what was completed?</p>
+      <div class="field">
+        <textarea id="f-projects" placeholder="Describe any special projects proposed or completed…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">❌ Tasks Not Completed</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">It's very important to always have pre-approval before not completing any tasks.</p>
+      <div class="field">
+        <textarea id="f-incomplete" placeholder="List any incomplete tasks and pre-approval received…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">📝 Notes for Tomorrow</div>
+    <div class="section-body">
+      <div class="field">
+        <textarea id="f-notes" placeholder="Notes, reminders, or handover info for tomorrow…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DOG ROTATION ── -->
+  <div class="section">
+    <div class="section-header">🐕 WHAT WAS TODAY'S ORDER OF THE 10 DOGS ROTATED DURING SHIFT?</div>
+    <div class="section-body">
+      <div class="dog-list" id="dog-list">
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+      </div>
+      <button type="button" class="btn-add-dog" onclick="addDogSlot()">+ Add another dog</button>
+    </div>
+  </div>
+
+  <!-- ── INVENTORY COUNT ── -->
+  <div class="section">
+    <div class="section-header">📦 Inventory Count (Exact #)</div>
+    <div class="section-body">
+      <div class="inv-grid">
+        <div class="inv-item"><label>🥥 Coconuts</label><input type="number" id="inv-coconuts" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🐱 Cat Cans</label><input type="number" id="inv-catcans" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🦵 Chicken Feet</label><input type="number" id="inv-chickenfeet" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🦴 Bones</label><input type="number" id="inv-bones" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🧻 Toilet Paper</label><input type="number" id="inv-tp" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>📄 Paper Towels</label><input type="number" id="inv-papertowels" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🗑️ Trash Bags</label><input type="number" id="inv-trashbags" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🔥 Incense</label><input type="number" id="inv-incense" placeholder="0" min="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DAYS REMAINING ── -->
+  <div class="section">
+    <div class="section-header">📅 Days Remaining (Est.)</div>
+    <div class="section-body">
+      <div class="inv-grid">
+        <div class="inv-item"><label>☕ Coffee</label><input type="text" class="days-input" id="days-coffee" placeholder="e.g. 4"></div>
+        <div class="inv-item"><label>🌾 Alfalfa</label><input type="text" class="days-input" id="days-alfalfa" placeholder="e.g. 7"></div>
+        <div class="inv-item"><label>🧂 Mineral Salt</label><input type="text" class="days-input" id="days-salt" placeholder="e.g. 10"></div>
+        <div class="inv-item"><label>🌾 Sheep Grain</label><input type="text" class="days-input" id="days-sheepgrain" placeholder="e.g. 5"></div>
+        <div class="inv-item"><label>🥩 Meat for Dogs</label><input type="text" class="days-input" id="days-meat" placeholder="e.g. 3"></div>
+        <div class="inv-item"><label>🍚 Rice for Dogs</label><input type="text" class="days-input" id="days-rice" placeholder="e.g. 6"></div>
+        <div class="inv-item"><label>🐱 Cat Kibble</label><input type="text" class="days-input" id="days-catkibble" placeholder="e.g. 8"></div>
+        <div class="inv-item"><label>🧼 Cleaning Soap</label><input type="text" class="days-input" id="days-soap" placeholder="e.g. 4"></div>
+        <div class="inv-item"><label>🪟 Glass Cleaner</label><input type="text" class="days-input" id="days-glasscleaner" placeholder="e.g. 2"></div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <label style="color:var(--danger);font-size:13px">⚠️ Low Stock Alert (auto-detected & editable)</label>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:6px">Anything with less than 2 days remaining must also be private messaged to Adam.</p>
+        <div id="low-stock-alert">Fill in days remaining above to auto-detect low stock.</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field" style="margin-top:4px">
+        <label>🛒 Anything Else to Order?</label>
+        <textarea id="f-order" placeholder="List any other items to order…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GRATITUDE & IMPROVEMENT ── -->
+  <div class="section">
+    <div class="section-header">💡 1 Thing to Improve at the Ranch</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Please be honest — this helps create an awesome place to work.</p>
+      <div class="field">
+        <textarea id="f-improve" placeholder="One thing that could be improved…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">🙏 3 Things I'm Grateful for Today</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Fresh answers daily — please do not skip.</p>
+      <div class="field" style="margin-bottom:8px">
+        <label>1.</label>
+        <input type="text" id="f-grateful1" placeholder="First thing…">
+      </div>
+      <div class="field" style="margin-bottom:8px">
+        <label>2.</label>
+        <input type="text" id="f-grateful2" placeholder="Second thing…">
+      </div>
+      <div class="field">
+        <label>3.</label>
+        <input type="text" id="f-grateful3" placeholder="Third thing…">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHECKLIST ── -->
+  <div class="section">
+    <div class="section-header">✔️ Checklist Confirmation</div>
+    <div class="section-body">
+      <div class="checklist-info">
+        🛑 READ THE TASK LIST EACH TIME YOU DO A TASK<br>
+        🛑 ORDER FROM TOP TO BOTTOM IS IMPORTANT<br>
+        🛑 Follow these steps for every task:
+      </div>
+      <div class="steps-list">
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">1</span> Read task
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">2</span> Complete task
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">3</span> Re-read task to confirm all details are completed
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">4</span> Read next task before starting it
+        </label>
+      </div>
+      <div class="confirm-row">
+        <input type="checkbox" id="f-confirm">
+        <label for="f-confirm">At end of day today I re-read the task list including reading all details and I confirm with my word and promise by checking this box that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance. ✅</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GENERATE ── -->
+  <div class="generate-wrap">
+    <button class="btn-generate" onclick="generateReport()">📋 Generate WhatsApp Report</button>
+  </div>
+
+  <!-- ── OUTPUT ── -->
+  <div class="section" id="output-section">
+    <div class="section-header">📤 Your Report — Ready to Copy</div>
+    <div class="section-body">
+      <pre id="output-box"></pre>
+      <div class="copy-row">
+        <button class="btn-copy" id="copy-btn" onclick="copyReport()">📋 Copy to Clipboard</button>
+        <button class="btn-reset" onclick="resetForm()">🔄 Start New Report</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Chase's Paradise Ranch · Shift Report Tool</p>
+  </footer>
+</div>
+
+<script>
+// ── ADD DOG SLOT ──────────────────────────────────────────────────────────
+function addDogSlot() {
+  const list = document.getElementById('dog-list');
+  const item = document.createElement('div');
+  item.className = 'dog-item';
+  item.innerHTML = '<span class="dog-dash">-</span><input class="dog-input" type="text">';
+  list.appendChild(item);
+  item.querySelector('input').focus();
+}
+
+// ── STEP CHECKBOXES ───────────────────────────────────────────────────────
+document.querySelectorAll('.task-check').forEach(cb => {
+  cb.addEventListener('change', () => {
+    cb.closest('.step-item').classList.toggle('done', cb.checked);
+  });
+});
+
+// ── AUTO-CALCULATE HOURS ──────────────────────────────────────────────────
+function calcHours() {
+  const start = document.getElementById('f-start').value;
+  const end   = document.getElementById('f-end').value;
+  const brk   = parseInt(document.getElementById('f-break').value) || 0;
+  const el    = document.getElementById('hours-today');
+
+  if (!start || !end) { el.textContent = '—'; return; }
+
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  let mins = (eh * 60 + em) - (sh * 60 + sm) - brk;
+  if (mins < 0) mins += 24 * 60;
+
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  el.textContent = m ? `${h}h ${m}m` : `${h}h`;
+}
+
+['f-start','f-end','f-break'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcHours));
+
+// ── SET TODAY'S DATE ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('f-date').value =
+    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+});
+
+// ── LOW STOCK AUTO-DETECT ─────────────────────────────────────────────────
+const daysFields = [
+  { id:'days-coffee',      label:'☕ Coffee' },
+  { id:'days-alfalfa',     label:'🌾 Alfalfa' },
+  { id:'days-salt',        label:'🧂 Mineral Salt' },
+  { id:'days-sheepgrain',  label:'🌾 Sheep Grain' },
+  { id:'days-meat',        label:'🥩 Meat for Dogs' },
+  { id:'days-rice',        label:'🍚 Rice for Dogs' },
+  { id:'days-catkibble',   label:'🐱 Cat Kibble' },
+  { id:'days-soap',        label:'🧼 Cleaning Soap' },
+  { id:'days-glasscleaner',label:'🪟 Glass Cleaner' },
+];
+
+function updateLowStock() {
+  const low = daysFields.filter(f => {
+    const v = parseFloat(document.getElementById(f.id).value);
+    return !isNaN(v) && v < 2;
+  }).map(f => f.label);
+
+  const el = document.getElementById('low-stock-alert');
+  if (low.length) {
+    el.style.color = 'var(--danger)';
+    el.textContent = '⚠️ LOW: ' + low.join(', ') + ' — MESSAGE ADAM PRIVATELY!';
+  } else {
+    el.style.color = 'var(--ranch-sage)';
+    el.textContent = '✅ No items below 2 days remaining.';
+  }
+}
+
+daysFields.forEach(f =>
+  document.getElementById(f.id).addEventListener('input', updateLowStock));
+
+// ── FORMAT DATE ───────────────────────────────────────────────────────────
+function formatDate(val) {
+  if (!val) return '';
+  const [y, m, d] = val.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+}
+
+function fmt12(val) {
+  if (!val) return '';
+  const [h, m] = val.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hr = h % 12 || 12;
+  return `${hr}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+// ── GENERATE REPORT ───────────────────────────────────────────────────────
+function generateReport() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const dogs = [...document.querySelectorAll('.dog-input')].map(el => el.value.trim());
+  const confirmed = document.getElementById('f-confirm').checked;
+
+  // calc hours display
+  const hoursEl = document.getElementById('hours-today');
+  const hoursToday = hoursEl.textContent !== '—' ? hoursEl.textContent : v('hours-today') || 'N/A';
+
+  // low stock text
+  const lowStockEl = document.getElementById('low-stock-alert');
+  const lowStockText = lowStockEl.textContent.trim();
+
+  const lines = [];
+
+  lines.push(`END OF SHIFT REPORT – CHASE'S PARADISE RANCH`);
+  lines.push(`📋 SHIFT INFO`);
+  lines.push(`Date: ${formatDate(v('f-date'))}`);
+  lines.push(`Name: ${v('f-name')}`);
+  lines.push(`Start: ${fmt12(v('f-start'))}`);
+  lines.push(`Amount of break time: ${v('f-break') ? v('f-break') + ' min' : 'N/A'}`);
+  lines.push(`End: ${fmt12(v('f-end'))}`);
+  lines.push(`Hours Worked Today: ${hoursToday}`);
+  lines.push(`Weekly Total: ${v('f-weekly') || 'N/A'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`✅ *WHAT WENT GREAT?*`);
+  lines.push(v('f-great') || 'N/A');
+  lines.push(``);
+  lines.push(`⚠️ *WHAT WAS CHALLENGING?*`);
+  lines.push(v('f-challenging') || 'N/A');
+  lines.push(``);
+  lines.push(`🔧 *BROKEN/NEEDS REPAIR*`);
+  lines.push(v('f-broken') || 'N/A');
+  lines.push(``);
+  lines.push(`📌 *SPECIAL PROJECTS*`);
+  lines.push(v('f-projects') || 'N/A');
+  lines.push(``);
+  lines.push(`❌ *TASKS NOT COMPLETED*`);
+  lines.push(v('f-incomplete') || 'None');
+  lines.push(``);
+  lines.push(`📝 *NOTES FOR TOMORROW:*`);
+  lines.push(v('f-notes') || 'N/A');
+  lines.push(``);
+  lines.push(`*WHAT WAS TODAY'S ORDER OF THE 10 DOGS ROTATED DURING SHIFT?*`);
+  dogs.forEach(d => lines.push(`- ${d || ''}`));
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`📦 INVENTORY COUNT (Exact #)`);
+  lines.push(`🥥 Coconuts: ${v('inv-coconuts') || 'N/A'}`);
+  lines.push(`🐱 Cat cans: ${v('inv-catcans') || 'N/A'}`);
+  lines.push(`🦵 Chicken feet: ${v('inv-chickenfeet') || 'N/A'}`);
+  lines.push(`🦴 Bones: ${v('inv-bones') || 'N/A'}`);
+  lines.push(`🧻 Toilet Paper: ${v('inv-tp') || 'N/A'}`);
+  lines.push(`📄 Paper Towels: ${v('inv-papertowels') || 'N/A'}`);
+  lines.push(`🗑️ Trash Bags: ${v('inv-trashbags') || 'N/A'}`);
+  lines.push(`🔥 Incense: ${v('inv-incense') || 'N/A'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`📅 DAYS REMAINING (Est.)`);
+  lines.push(`☕ Coffee: ${v('days-coffee') || 'N/A'}`);
+  lines.push(`🌾 Alfalfa: ${v('days-alfalfa') || 'N/A'}`);
+  lines.push(`🧂 Mineral salt: ${v('days-salt') || 'N/A'}`);
+  lines.push(`🌾 Sheep grain: ${v('days-sheepgrain') || 'N/A'}`);
+  lines.push(`🥩 Meat for dogs: ${v('days-meat') || 'N/A'}`);
+  lines.push(`🍚 Rice for dogs: ${v('days-rice') || 'N/A'}`);
+  lines.push(`🐱 Cat kibble: ${v('days-catkibble') || 'N/A'}`);
+  lines.push(`🧼 Cleaning soap: ${v('days-soap') || 'N/A'}`);
+  lines.push(`🪟 Glass cleaner: ${v('days-glasscleaner') || 'N/A'}`);
+  lines.push(``);
+  lines.push(`⚠️ *LOW STOCK ALERT:*`);
+  lines.push(lowStockText);
+  lines.push(`*(Anything less than 2 days remaining must be private messaged to Adam.)*`);
+  lines.push(``);
+  lines.push(`🛒 *ANYTHING ELSE TO ORDER?*`);
+  lines.push(v('f-order') || 'None');
+  lines.push(``);
+  lines.push(`*1 THING TO IMPROVE AT THE RANCH:*`);
+  lines.push(v('f-improve') || 'N/A');
+  lines.push(``);
+  lines.push(`*3 THINGS I'M GRATEFUL FOR TODAY:*`);
+  lines.push(`1. ${v('f-grateful1') || '—'}`);
+  lines.push(`2. ${v('f-grateful2') || '—'}`);
+  lines.push(`3. ${v('f-grateful3') || '—'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  const stepLabels = ['Read task','Complete task','Re-read task to confirm all details','Read next task before starting it'];
+  const stepChecks = [...document.querySelectorAll('.task-check')].map(cb => cb.checked);
+
+  lines.push(`✔️ CHECKLIST FOR EACH TASK:`);
+  stepLabels.forEach((label, i) => {
+    lines.push(`${stepChecks[i] ? '✅' : '⬜'} ${i+1}️⃣ ${label}`);
+  });
+  lines.push(``);
+  lines.push(confirmed
+    ? `✅ I confirm I re-read the task list and all tasks were fully completed or pre-approved.`
+    : `❌ Task list confirmation NOT checked.`);
+  lines.push(``);
+  lines.push(`🛑 READ THE TASK LIST EACH TIME YOU DO A TASK 🛑 ORDER FROM TOP TO BOTTOM IS IMPORTANT. 🛑`);
+
+  const report = lines.join('\n');
+  document.getElementById('output-box').textContent = report;
+
+  const outSec = document.getElementById('output-section');
+  outSec.style.display = 'block';
+  outSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── COPY ──────────────────────────────────────────────────────────────────
+async function copyReport() {
+  const text = document.getElementById('output-box').textContent;
+  const btn  = document.getElementById('copy-btn');
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('success');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy to Clipboard';
+      btn.classList.remove('success');
+    }, 2500);
+  } catch {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('success');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy to Clipboard';
+      btn.classList.remove('success');
+    }, 2500);
+  }
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────
+function resetForm() {
+  if (!confirm('Clear all fields and start a new report?')) return;
+  document.querySelectorAll('input:not([type=checkbox]), textarea, select').forEach(el => {
+    el.value = '';
+  });
+  document.getElementById('f-confirm').checked = false;
+  document.querySelectorAll('.task-check').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.step-item').classList.remove('done');
+  });
+  document.getElementById('hours-today').textContent = '—';
+  document.getElementById('low-stock-alert').textContent = 'Fill in days remaining above to auto-detect low stock.';
+  document.getElementById('low-stock-alert').style.color = 'var(--danger)';
+  document.getElementById('output-section').style.display = 'none';
+
+  // re-set today's date
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('f-date').value =
+    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
