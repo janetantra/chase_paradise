@@ -272,9 +272,7 @@
         <div class="alert alert-info">
             <strong>📋 Reminder:</strong> Send this report to the <strong>Reports Group Chat</strong> BEFORE signing out. Keep it for payroll records.
         </div>
-        <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:10px 15px; margin-bottom:20px; font-size:13px; color:#856404;">
-            🌐 <strong>This form must be completed in English only.</strong> If your browser offers to translate this page, please decline or dismiss it.
-        </div>
+
         
         <form id="reportForm">
             <!-- SHIFT INFO -->
@@ -339,7 +337,7 @@
                 <div class="form-group">
                     <label for="incomplete">Tasks not fully completed today? ❌</label>
                     <textarea id="incomplete" placeholder="Include how this was communicated and agreed upon with manager + timeline"></textarea>
-                    <p style="font-size:13px; color:#c0392b; font-style:italic; margin-top:6px; padding:8px 12px; background:#fdf0f0; border-left:3px solid #c0392b; border-radius:4px;">⚠️ Always communicate in advance to approve skipping</p>
+                    <p style="font-size:13px; color:#c0392b; font-style:italic; margin-top:6px; padding:8px 12px; background:#fdf0f0; border-left:3px solid #c0392b; border-radius:4px;">⚠️ Always communicate in advance to approve skipping any tasks</p>
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes for tomorrow 📝</label>
@@ -459,18 +457,7 @@
             <div class="section">
                 <div class="section-title">✔️ Checklist for Each Task</div>
                 <div style="display:flex; flex-direction:column; gap:12px;">
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check1" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Read task
-                    </label>
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check2" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Complete task
-                    </label>
-                    <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
-                        <input type="checkbox" id="check3" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
-                        Re-read task to confirm details
-                    </label>
+
                     <label style="display:flex; align-items:center; gap:10px; font-weight:400; cursor:pointer; font-size:15px;">
                         <input type="checkbox" id="check4" style="width:20px; height:20px; accent-color:#2c5f8d; cursor:pointer;">
                         At end of day today I reread the task list including reading all details and I confirm with my word and promise by checking here that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance.
@@ -540,7 +527,11 @@
 
                 incomplete: document.getElementById('incomplete').value,
                 notes: document.getElementById('notes').value,
-                dogRotation: document.getElementById('dogRotation').value,
+                dog1: `${document.getElementById('dog1a').value} – ${document.getElementById('dog1b').value}`,
+                dog2: `${document.getElementById('dog2a').value} – ${document.getElementById('dog2b').value}`,
+                dog3: `${document.getElementById('dog3a').value} – ${document.getElementById('dog3b').value}`,
+                dog4: `${document.getElementById('dog4a').value} – ${document.getElementById('dog4b').value}`,
+                dog5: `${document.getElementById('dog5a').value} – ${document.getElementById('dog5b').value}`,
                 inv_coconuts: document.getElementById('inv_coconuts').value,
 
                 inv_catcans: document.getElementById('inv_catcans').value,
@@ -604,7 +595,11 @@ ${data.notes || '—'}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🐕 DOG ROTATION PAIRS:
-${data.dogRotation || '—'}
+Pair 1: ${data.dog1 || '—'}
+Pair 2: ${data.dog2 || '—'}
+Pair 3: ${data.dog3 || '—'}
+Pair 4: ${data.dog4 || '—'}
+Pair 5: ${data.dog5 || '—'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -649,10 +644,7 @@ ${data.grateful || '—'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✔️ CHECKLIST FOR EACH TASK:
-${check1 ? '☑️' : '☐'} Read task
-${check2 ? '☑️' : '☐'} Complete task
-${check3 ? '☑️' : '☐'} Re-read task to confirm details
+✔️ CHECKLIST:
 ${check4 ? '☑️' : '☐'} At end of day today I reread the task list including reading all details and I confirm with my word and promise by checking here that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance.
 
 
@@ -686,10 +678,7 @@ ${check4 ? '☑️' : '☐'} At end of day today I reread the task list includin
             document.getElementById('reportForm').reset();
             document.getElementById('date').valueAsDate = new Date();
             document.getElementById('breakTime').value = '';
-            document.getElementById('dogRotation').value = '';
-            document.getElementById('check1').checked = false;
-            document.getElementById('check2').checked = false;
-            document.getElementById('check3').checked = false;
+            ['dog1a','dog1b','dog2a','dog2b','dog3a','dog3b','dog4a','dog4b','dog5a','dog5b'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('check4').checked = false;
             document.getElementById('outputBox').classList.remove('visible');
             document.getElementById('copyBtn').style.display = 'none';
