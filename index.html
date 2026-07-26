@@ -3,1315 +3,923 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lead Scoring · Bathroom Excellence</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>End of Shift Report – Chase's Paradise Ranch</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;min-height:100vh;background:#080014;color:#e2d9f3}
+  :root {
+    --ranch-brown: #3B2A1A;
+    --ranch-tan: #C8A96E;
+    --ranch-cream: #FDF6EC;
+    --ranch-green: #2D5016;
+    --ranch-sage: #6B8F47;
+    --ranch-rust: #A0522D;
+    --ranch-dark: #1C1208;
+    --section-bg: #FFFEF9;
+    --border: #E2D5BE;
+    --input-bg: #FEFCF7;
+    --placeholder: #B0997A;
+    --text: #2A1F12;
+    --muted: #7A6248;
+    --green-accent: #4CAF50;
+    --warn: #E67E22;
+    --danger: #C0392B;
+  }
 
-body::before{content:'';position:fixed;top:-300px;right:-200px;width:800px;height:800px;background:radial-gradient(circle,rgba(109,40,217,0.18) 0%,transparent 65%);border-radius:50%;pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(79,70,229,0.12) 0%,transparent 65%);border-radius:50%;pointer-events:none;z-index:0}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:rgba(255,255,255,0.03)}::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.4);border-radius:99px}
+  body {
+    background: var(--ranch-cream);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
 
-/* ══ SCORE BAR ══ */
-.score-bar{position:fixed;top:0;left:0;right:0;z-index:600;height:64px;background:rgba(8,0,20,0.93);backdrop-filter:blur(24px);border-bottom:1px solid rgba(109,40,217,0.25);display:flex;align-items:center;padding:0 24px}
-.sb-segment{display:flex;flex-direction:column;justify-content:center;padding:0 20px;border-right:1px solid rgba(109,40,217,0.18)}
-.sb-segment:last-child{border-right:none}
-.sb-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(167,139,250,0.5);margin-bottom:2px}
-.sb-value{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;line-height:1;transition:all 0.25s}
-.sb-pill{display:inline-flex;align-items:center;font-size:10px;font-weight:800;padding:3px 12px;border-radius:99px;letter-spacing:1.5px;text-transform:uppercase;transition:all 0.25s}
-.pill-none{background:rgba(107,114,128,0.15);color:#6b7280;border:1px solid rgba(107,114,128,0.2)}
-.pill-high{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.35)}
-.pill-med{background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.35)}
-.pill-low{background:rgba(239,68,68,0.12);color:#f87171;border:1px solid rgba(239,68,68,0.35)}
-.sb-dots{display:flex;gap:5px}
-.sb-dot{width:8px;height:8px;border-radius:50%;background:rgba(109,40,217,0.25);transition:all 0.3s}
-.sb-dot.done{background:#7c3aed;box-shadow:0 0 6px rgba(124,58,237,0.6)}
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--ranch-dark) 0%, var(--ranch-brown) 60%, #5C3D1E 100%);
+    color: #fff;
+    text-align: center;
+    padding: 32px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8A96E' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(200,169,110,0.2);
+    border: 1px solid rgba(200,169,110,0.4);
+    color: var(--ranch-tan);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-size: clamp(18px, 5vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: #fff;
+  }
+  header p {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    margin-top: 6px;
+  }
 
-/* ══ LAYOUT ══ */
-.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:80px 16px 40px}
-.page-header{text-align:center;margin-bottom:32px;padding:28px 0 20px}
-.brand{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(167,139,250,0.5);margin-bottom:10px}
-.page-title{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ddd6fe,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:8px}
-.page-sub{font-size:12px;color:rgba(167,139,250,0.45);letter-spacing:0.5px}
+  /* ── LAYOUT ── */
+  .container { max-width: 720px; margin: 0 auto; padding: 0 16px; }
 
-/* ══ CARDS ══ */
-.card{background:rgba(255,255,255,0.04);border:1px solid rgba(109,40,217,0.2);border-radius:16px;padding:24px;margin-bottom:14px;backdrop-filter:blur(12px)}
-.card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.card-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.ci-info{background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.25)}
-.ci-scored{background:rgba(109,40,217,0.2);border:1px solid rgba(109,40,217,0.35)}
-.ci-green{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25)}
-.ci-orange{background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3)}
-.card-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#a78bfa}
-.card-pts{margin-left:auto;font-size:10px;font-weight:600;color:rgba(167,139,250,0.4);white-space:nowrap}
+  /* ── SECTIONS ── */
+  .section {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+  .section-header {
+    background: linear-gradient(90deg, var(--ranch-brown) 0%, #4A3020 100%);
+    color: #fff;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-body { padding: 18px; }
 
-/* ══ SCRIPT BLOCK ══ */
-.script{background:rgba(109,40,217,0.07);border:1px solid rgba(109,40,217,0.18);border-left:3px solid #7c3aed;border-radius:10px;padding:14px 16px;margin-bottom:16px}
-.script-tag{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:7px}
-.script-body{font-size:13px;color:#c4b5fd;line-height:1.8}
-.script-body strong{color:#e2d9f3;font-weight:700}
-.script-listen{font-size:11px;color:#818cf8;font-style:italic;margin-top:8px;opacity:0.8}
+  /* ── FORM GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 540px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
 
-/* ══ INPUTS ══ */
-.field-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(167,139,250,0.6);margin-bottom:6px;display:block}
-input,select,textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(109,40,217,0.25);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;color:#e2d9f3;outline:none;transition:all 0.2s;-webkit-appearance:none}
-input::placeholder,textarea::placeholder{color:rgba(167,139,250,0.3)}
-input:focus,select:focus,textarea:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,0.15);background:rgba(255,255,255,0.07)}
-select option{background:#0d0020;color:#e2d9f3}
-.bp-field input{border-color:rgba(245,158,11,0.35)!important}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.grid-2:last-child{margin-bottom:0}
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .field input, .field textarea, .field select {
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none;
+    border-color: var(--ranch-tan);
+    box-shadow: 0 0 0 3px rgba(200,169,110,0.15);
+  }
+  .field textarea { min-height: 80px; }
+  .field input[type="number"] { font-family: 'JetBrains Mono', monospace; }
 
-/* ══ CHOICES ══ */
-.choices{display:grid;gap:10px}
-.choices.cols-3{grid-template-columns:repeat(3,1fr)}
-.choices.cols-4{grid-template-columns:repeat(4,1fr)}
-.choices.cols-2{grid-template-columns:1fr 1fr}
-.choice{cursor:pointer;border:1.5px solid rgba(109,40,217,0.18);border-radius:12px;padding:14px 12px;transition:all 0.18s;background:rgba(255,255,255,0.025);text-align:center;user-select:none;position:relative;overflow:hidden}
-.choice:hover{border-color:rgba(139,92,246,0.5);background:rgba(139,92,246,0.08);transform:translateY(-1px)}
-.choice-label{font-size:13px;font-weight:700;color:#e2d9f3;margin-bottom:6px}
-.choice-sub{font-size:10px;color:rgba(107,114,128,0.7);margin-top:2px}
-.badge{display:inline-block;font-size:10px;font-weight:800;padding:3px 10px;border-radius:99px;margin-top:6px;letter-spacing:0.5px}
-.badge-green{background:rgba(34,197,94,0.15);color:#4ade80}
-.badge-amber{background:rgba(245,158,11,0.15);color:#fbbf24}
-.badge-blue{background:rgba(59,130,246,0.15);color:#60a5fa}
-.badge-gray{background:rgba(107,114,128,0.15);color:#9ca3af}
-.badge-purple{background:rgba(139,92,246,0.15);color:#a78bfa}
-.badge-orange{background:rgba(249,115,22,0.15);color:#fb923c}
-.sel-green{border-color:#22c55e!important;background:rgba(34,197,94,0.1)!important;box-shadow:0 0 18px rgba(34,197,94,0.2)!important}
-.sel-green .choice-label{color:#4ade80}
-.sel-amber{border-color:#f59e0b!important;background:rgba(245,158,11,0.1)!important;box-shadow:0 0 18px rgba(245,158,11,0.2)!important}
-.sel-amber .choice-label{color:#fbbf24}
-.sel-blue{border-color:#3b82f6!important;background:rgba(59,130,246,0.1)!important;box-shadow:0 0 18px rgba(59,130,246,0.2)!important}
-.sel-blue .choice-label{color:#60a5fa}
-.sel-gray{border-color:#6b7280!important;background:rgba(107,114,128,0.1)!important}
-.sel-gray .choice-label{color:#9ca3af}
-.sel-purple{border-color:#8b5cf6!important;background:rgba(139,92,246,0.1)!important;box-shadow:0 0 18px rgba(139,92,246,0.2)!important}
-.sel-purple .choice-label{color:#c4b5fd}
+  /* ── COMPUTED FIELD ── */
+  .computed {
+    background: rgba(45,80,22,0.07);
+    border: 1.5px solid rgba(45,80,22,0.2);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ranch-green);
+    min-height: 40px;
+  }
 
-/* ══ DM BIG CHOICES ══ */
-.dm-big{cursor:pointer;border:2px solid rgba(109,40,217,0.2);border-radius:14px;padding:24px;transition:all 0.2s;background:rgba(255,255,255,0.025);text-align:center;user-select:none}
-.dm-big:hover{transform:translateY(-2px)}
-.dm-yes-sel,.dm-yes:hover{border-color:#22c55e!important;background:rgba(34,197,94,0.1)!important;box-shadow:0 0 24px rgba(34,197,94,0.25)!important}
-.dm-no-sel,.dm-no:hover{border-color:#ef4444!important;background:rgba(239,68,68,0.1)!important;box-shadow:0 0 24px rgba(239,68,68,0.25)!important}
-.dm-icon{font-size:38px;margin-bottom:10px}
-.dm-big-label{font-size:20px;font-weight:900;margin-bottom:6px}
+  /* ── DOG LIST ── */
+  .dog-list { display: flex; flex-direction: column; gap: 8px; }
+  .dog-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dog-dash {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ranch-brown);
+    width: 16px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .dog-item input { flex: 1; }
 
-/* ══ COMPETITOR FOLLOWUP ══ */
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.followup-block{background:rgba(249,115,22,0.06);border:1.5px solid rgba(249,115,22,0.3);border-radius:12px;padding:16px;margin-top:14px;animation:slideDown 0.25s ease}
-.followup-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fb923c;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  /* ── INVENTORY ── */
+  .inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .inv-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .inv-item label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .inv-item input {
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .inv-item input:focus {
+    outline: none;
+    border-color: var(--ranch-tan);
+    box-shadow: 0 0 0 3px rgba(200,169,110,0.15);
+  }
 
-/* ══ COMPETITOR REMINDER BANNER ══ */
-@keyframes reminderIn{from{opacity:0;transform:translateY(-10px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.competitor-reminder{
-  background:linear-gradient(135deg,rgba(249,115,22,0.1),rgba(239,68,68,0.06));
-  border:2px solid rgba(249,115,22,0.4);
-  border-radius:16px;padding:20px;margin-bottom:14px;
-  animation:reminderIn 0.3s ease;
-  box-shadow:0 0 30px rgba(249,115,22,0.12),0 4px 16px rgba(0,0,0,0.3);
-}
-.reminder-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.reminder-icon{font-size:22px;animation:pulse-icon 2s infinite}
-@keyframes pulse-icon{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.reminder-title{font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#fb923c}
-.reminder-badge{margin-left:auto;font-size:9px;font-weight:800;padding:3px 10px;border-radius:99px;background:rgba(249,115,22,0.2);color:#fb923c;border:1px solid rgba(249,115,22,0.35);letter-spacing:1px;text-transform:uppercase}
-.reminder-body{font-size:13px;color:#fed7aa;line-height:1.7;margin-bottom:14px}
-.reminder-body strong{color:#fff;font-weight:700}
-.reminder-script{background:rgba(0,0,0,0.25);border:1px solid rgba(249,115,22,0.2);border-left:3px solid #f97316;border-radius:10px;padding:12px 14px;margin-bottom:14px}
-.reminder-script-tag{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#f97316;margin-bottom:6px}
-.reminder-script-body{font-size:13px;color:#fed7aa;line-height:1.7;font-style:italic}
-.reminder-rec{background:rgba(0,0,0,0.2);border-radius:10px;padding:14px;display:flex;align-items:flex-start;gap:12px}
-.reminder-rec-icon{font-size:20px;flex-shrink:0;margin-top:2px}
-.reminder-rec-content{}
-.reminder-rec-title{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#f97316;margin-bottom:4px}
-.reminder-rec-text{font-size:13px;color:#e2d9f3;font-weight:700;margin-bottom:2px}
-.reminder-rec-sub{font-size:11px;color:rgba(249,115,22,0.7);line-height:1.5}
-.competitor-date-display{background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:8px;padding:8px 14px;margin-top:10px;font-size:13px;color:#fb923c;font-weight:700;display:flex;align-items:center;gap:8px}
+  /* ── CHECKLIST ── */
+  .checklist-info {
+    background: rgba(160,82,45,0.07);
+    border-left: 3px solid var(--ranch-rust);
+    padding: 12px 14px;
+    border-radius: 0 7px 7px 0;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+  .steps-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .step-badge {
+    width: 28px; height: 28px;
+    background: var(--ranch-brown);
+    color: var(--ranch-tan);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .step-check {
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .step-check:hover { background: #f0ece3; }
+  .step-check input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--ranch-green);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .step-check.done {
+    background: rgba(76,175,80,0.08);
+    border-color: rgba(76,175,80,0.3);
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .step-check.done .step-badge { background: var(--ranch-sage); }
 
-/* ══ RESULT PANEL ══ */
-.result-panel{background:rgba(255,255,255,0.04);border:2px solid rgba(109,40,217,0.35);border-radius:20px;padding:28px;margin-bottom:14px;box-shadow:0 0 60px rgba(109,40,217,0.12),0 8px 32px rgba(0,0,0,0.4)}
-.result-top{display:flex;gap:24px;align-items:flex-start;margin-bottom:24px}
-.score-ring{width:148px;height:148px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;transition:all 0.35s;flex-shrink:0}
-.ring-none{border-color:#374151;color:#6b7280}
-.ring-high{border-color:#22c55e;color:#4ade80;box-shadow:0 0 40px rgba(34,197,94,0.4)}
-.ring-med{border-color:#f59e0b;color:#fbbf24;box-shadow:0 0 40px rgba(245,158,11,0.4)}
-.ring-low{border-color:#ef4444;color:#f87171;box-shadow:0 0 40px rgba(239,68,68,0.4)}
-.ring-num{font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:700;line-height:1;transition:all 0.25s}
-.ring-denom{font-size:11px;font-weight:500;opacity:0.5;margin-top:2px}
-@keyframes pulse-ring{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-.pulse{animation:pulse-ring 0.3s ease}
+  .btn-add-dog {
+    margin-top: 10px;
+    background: transparent;
+    border: 1.5px dashed var(--ranch-tan);
+    color: var(--ranch-brown);
+    border-radius: 7px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-add-dog:hover {
+    background: rgba(200,169,110,0.1);
+    border-color: var(--ranch-brown);
+  }
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(76,175,80,0.06);
+    border: 1.5px solid rgba(76,175,80,0.25);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .confirm-row input[type="checkbox"] {
+    width: 20px; height: 20px;
+    accent-color: var(--ranch-green);
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+  .confirm-row label {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    cursor: pointer;
+  }
 
-.rec-block{flex:1;display:flex;flex-direction:column;gap:12px}
-.rec-card{background:rgba(0,0,0,0.25);border:1px solid rgba(109,40,217,0.18);border-radius:12px;padding:16px}
-.rec-eyebrow{font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#7c3aed;margin-bottom:8px}
-.rec-action{font-size:17px;font-weight:800;color:#e2d9f3;margin-bottom:6px;line-height:1.3;transition:color 0.25s}
-.rec-sub{font-size:12px;color:#a78bfa;line-height:1.6}
-.reason-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.reason-chip{font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(109,40,217,0.15);border:1px solid rgba(109,40,217,0.25);color:#c4b5fd}
-.reason-chip.good{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);color:#4ade80}
-.reason-chip.warn{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:#fbbf24}
-.reason-chip.bad{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:#f87171}
+  /* ── LOW STOCK ALERT ── */
+  #low-stock-alert {
+    min-height: 36px;
+    padding: 10px 12px;
+    background: rgba(192,57,43,0.06);
+    border: 1.5px solid rgba(192,57,43,0.2);
+    border-radius: 7px;
+    font-size: 13px;
+    color: var(--danger);
+    font-weight: 500;
+  }
 
-.breakdown{background:rgba(0,0,0,0.2);border:1px solid rgba(109,40,217,0.12);border-radius:10px;padding:14px}
-.bd-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:5px 0;border-bottom:1px solid rgba(109,40,217,0.08)}
-.bd-row:last-child{border-bottom:none;padding-top:10px;margin-top:4px;font-size:13px;font-weight:800;color:#c4b5fd}
-.bd-key{color:rgba(107,114,128,0.8)}
-.bd-val{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px;transition:color 0.25s}
+  /* ── GENERATE BUTTON ── */
+  .generate-wrap {
+    text-align: center;
+    margin-top: 28px;
+  }
+  .btn-generate {
+    background: linear-gradient(135deg, var(--ranch-green) 0%, var(--ranch-sage) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 40px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(45,80,22,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45,80,22,0.4);
+  }
+  .btn-generate:active { transform: translateY(0); }
 
-.rules-table{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
-.rule-cell{border-radius:10px;padding:12px;text-align:center;border:1px solid;transition:all 0.3s}
-.rule-score{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;margin-bottom:4px}
-.rule-desc{font-size:9px;font-weight:700;letter-spacing:0.5px;line-height:1.4;text-transform:uppercase}
-.rule-h{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.25);color:#4ade80}
-.rule-mh{background:rgba(109,40,217,0.08);border-color:rgba(109,40,217,0.25);color:#c4b5fd}
-.rule-m{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);color:#fbbf24}
-.rule-l{background:rgba(107,114,128,0.08);border-color:rgba(107,114,128,0.25);color:#9ca3af}
-.rule-active{transform:scale(1.05);box-shadow:0 0 20px currentColor;opacity:1!important}
-.rule-inactive{opacity:0.35}
+  /* ── OUTPUT ── */
+  #output-section {
+    display: none;
+    margin-top: 24px;
+  }
+  #output-section .section-header { background: linear-gradient(90deg, var(--ranch-green), var(--ranch-sage)); }
+  #output-box {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #1A1208;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 14px;
+  }
+  .copy-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-copy {
+    background: var(--ranch-brown);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    flex: 1;
+  }
+  .btn-copy:hover { background: var(--ranch-dark); }
+  .btn-copy.success { background: var(--ranch-green); }
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--ranch-rust); color: var(--ranch-rust); }
 
-/* ══ QUAL PANEL ══ */
-.qual-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(109,40,217,0.25);border-radius:16px;padding:24px;margin-bottom:14px}
-.qual-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(109,40,217,0.3),transparent);margin:20px 0}
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+  }
 
-/* ══ BONUS ══ */
-.bonus-panel{background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.2);border-radius:14px;padding:20px;margin-bottom:14px}
-.bonus-strip{display:flex;gap:20px;margin-top:14px;padding:12px;background:rgba(0,0,0,0.2);border-radius:8px;font-size:12px;color:rgba(99,102,241,0.8)}
-.bonus-strip strong{color:#c4b5fd}
-
-/* ══ SUBMIT ══ */
-.submit-panel{background:rgba(255,255,255,0.03);border:1px solid rgba(109,40,217,0.2);border-radius:16px;padding:24px;margin-bottom:14px}
-.customer-display{background:rgba(109,40,217,0.1);border:1px solid rgba(109,40,217,0.25);border-radius:8px;padding:10px 16px;text-align:center;font-size:16px;font-weight:800;color:#c4b5fd;margin-bottom:16px;font-family:'JetBrains Mono',monospace;min-height:42px}
-.sub-btn{width:100%;padding:18px;border:none;border-radius:12px;cursor:pointer;font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#7c3aed,#5b21b6,#4c1d95);color:#fff;box-shadow:0 6px 24px rgba(124,58,237,0.45);transition:all 0.2s;font-family:'Inter',sans-serif}
-.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(124,58,237,0.6)}
-
-/* ══ TOAST ══ */
-@keyframes toastIn{0%{opacity:0;transform:translate(-50%,-50%) scale(0.7)}60%{transform:translate(-50%,-50%) scale(1.06)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-@keyframes toastOut{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:linear-gradient(135deg,rgba(15,0,40,0.97),rgba(8,0,20,0.97));border:2px solid rgba(139,92,246,0.5);border-radius:22px;padding:26px 42px;text-align:center;box-shadow:0 0 80px rgba(139,92,246,0.4),0 20px 60px rgba(0,0,0,0.6);pointer-events:none;opacity:0;backdrop-filter:blur(30px);min-width:280px}
-.toast.show{animation:toastIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards}
-.toast.hide{animation:toastOut 0.25s ease forwards}
-.t-cat{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#7c3aed;margin-bottom:4px}
-.t-pts{font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:700;line-height:1;margin-bottom:2px}
-.t-ptslabel{font-size:9px;font-weight:700;color:#7c3aed;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
-.t-div{height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.4),transparent);margin-bottom:16px}
-.t-row{display:flex;justify-content:center;gap:32px}
-.t-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;line-height:1}
-.t-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6b7280;margin-top:3px}
-
-/* ══ MODAL ══ */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:9998;align-items:center;justify-content:center}
-.modal-box{background:linear-gradient(135deg,#130028,#0a0018);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:32px;max-width:500px;width:92%;text-align:center;box-shadow:0 0 60px rgba(139,92,246,0.3)}
-.modal-close{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-top:14px;font-family:'Inter',sans-serif}
-
-/* ══ NAV & DIVIDERS ══ */
-.nav-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-.brand-name{font-size:16px;font-weight:900;background:linear-gradient(135deg,#c4b5fd,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-link{padding:7px 16px;border-radius:10px;font-size:10px;font-weight:800;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;background:rgba(139,92,246,0.12);color:#a78bfa;border:1px solid rgba(139,92,246,0.3);transition:all 0.2s}
-.nav-link:hover{background:rgba(139,92,246,0.22)}
-.section-divider{display:flex;align-items:center;gap:12px;margin:8px 0 14px}
-.section-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(109,40,217,0.25))}
-.section-divider-label{font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(109,40,217,0.5)}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.card,.result-panel,.qual-panel,.bonus-panel,.submit-panel{animation:fadeUp 0.4s ease both}
-
-/* ══ LOGIN GATE ══ */
-.login-gate{position:fixed;inset:0;z-index:9999;background:#080014;display:flex;align-items:center;justify-content:center}
-.login-gate::before{content:'';position:fixed;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(109,40,217,0.22) 0%,transparent 65%);border-radius:50%;pointer-events:none}
-.login-gate::after{content:'';position:fixed;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,70,229,0.14) 0%,transparent 65%);border-radius:50%;pointer-events:none}
-.login-box{position:relative;z-index:1;background:rgba(255,255,255,0.04);border:1px solid rgba(109,40,217,0.3);border-radius:20px;padding:40px 36px;width:100%;max-width:400px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(109,40,217,0.15),0 20px 60px rgba(0,0,0,0.5)}
-.login-logo{text-align:center;margin-bottom:28px}
-.login-brand{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(167,139,250,0.5);margin-bottom:8px}
-.login-title{font-size:22px;font-weight:900;background:linear-gradient(135deg,#ddd6fe,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.login-sub{font-size:11px;color:rgba(167,139,250,0.4);margin-top:4px}
-.login-field{margin-bottom:14px}
-.login-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(167,139,250,0.55);margin-bottom:6px;display:block}
-.login-input{width:100%;padding:11px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(109,40,217,0.25);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;color:#e2d9f3;outline:none;transition:all 0.2s}
-.login-input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,0.15);background:rgba(255,255,255,0.07)}
-.login-input::placeholder{color:rgba(167,139,250,0.3)}
-.login-btn{width:100%;padding:14px;border:none;border-radius:11px;cursor:pointer;font-size:14px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;box-shadow:0 6px 20px rgba(124,58,237,0.4);transition:all 0.2s;font-family:'Inter',sans-serif;margin-top:6px}
-.login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(124,58,237,0.55)}
-.login-error{display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:10px 14px;font-size:12px;color:#f87171;text-align:center;margin-top:12px}
-.login-error.show{display:block}
-.login-user-badge{display:flex;align-items:center;gap:8px;background:rgba(109,40,217,0.1);border:1px solid rgba(109,40,217,0.2);border-radius:8px;padding:7px 12px;font-size:11px;color:#a78bfa;margin-bottom:0}
-.login-user-dot{width:7px;height:7px;border-radius:50%;background:#7c3aed;box-shadow:0 0 6px rgba(124,58,237,0.8)}
-@keyframes loginIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.login-box{animation:loginIn 0.35s cubic-bezier(0.34,1.2,0.64,1)}
-@keyframes gateOut{from{opacity:1}to{opacity:0;pointer-events:none}}
-.login-gate.hide{animation:gateOut 0.4s ease forwards}
-/* ══ REVIEW MODAL ══ */
-.review-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:9997;align-items:center;justify-content:center;padding:16px}
-.review-box{background:linear-gradient(135deg,#130028,#0a0018);border:1px solid rgba(109,40,217,0.45);border-radius:20px;padding:0;max-width:560px;width:100%;max-height:90vh;overflow:hidden;box-shadow:0 0 80px rgba(109,40,217,0.25),0 20px 60px rgba(0,0,0,0.6);display:flex;flex-direction:column}
-.review-header{padding:22px 26px 16px;border-bottom:1px solid rgba(109,40,217,0.2);flex-shrink:0}
-.review-title{font-size:16px;font-weight:900;color:#c4b5fd;margin-bottom:3px}
-.review-sub{font-size:11px;color:rgba(167,139,250,0.5)}
-.review-body{overflow-y:auto;padding:20px 26px;flex:1}
-.review-section{margin-bottom:18px}
-.review-section-title{font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#7c3aed;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(109,40,217,0.15)}
-.review-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
-.review-row:last-child{border-bottom:none}
-.review-key{color:rgba(167,139,250,0.55);font-weight:500;flex-shrink:0;margin-right:12px}
-.review-val{color:#e2d9f3;font-weight:700;text-align:right}
-.review-score-block{background:rgba(109,40,217,0.1);border:1px solid rgba(109,40,217,0.25);border-radius:12px;padding:14px;display:flex;align-items:center;gap:16px;margin-bottom:10px}
-.review-score-num{font-family:'JetBrains Mono',monospace;font-size:40px;font-weight:700;line-height:1}
-.review-footer{padding:16px 26px 20px;border-top:1px solid rgba(109,40,217,0.2);flex-shrink:0;display:flex;gap:10px}
-.review-confirm-btn{flex:1;padding:14px;border:none;border-radius:11px;cursor:pointer;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;box-shadow:0 6px 20px rgba(124,58,237,0.4);transition:all 0.2s;font-family:'Inter',sans-serif}
-.review-confirm-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(124,58,237,0.6)}
-.review-edit-btn{padding:14px 20px;border:1.5px solid rgba(109,40,217,0.3);border-radius:11px;cursor:pointer;font-size:13px;font-weight:800;background:transparent;color:#a78bfa;transition:all 0.2s;font-family:'Inter',sans-serif}
-.review-edit-btn:hover{background:rgba(109,40,217,0.1)}
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    color: var(--placeholder);
+    font-size: 12px;
+    margin-top: 40px;
+  }
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN GATE ══ -->
-<div class="login-gate" id="loginGate">
-  <div class="login-box">
-    <div class="login-logo">
-      <div class="login-brand">⚡ Bathroom Excellence</div>
-      <div class="login-title">Appointment Tool</div>
-      <div class="login-sub">Sign in to access the lead qualification form</div>
-    </div>
-    <div class="login-field">
-      <label class="login-label">Username</label>
-      <input class="login-input" type="text" id="loginUser" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
-    </div>
-    <div class="login-field">
-      <label class="login-label">Password</label>
-      <input class="login-input" type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="login-btn" onclick="doLogin()">🔐 Sign In</button>
-    <div class="login-error" id="loginError">Incorrect username or password. Please try again.</div>
-  </div>
-</div>
+<header>
+  <div class="badge">Daily Report Tool</div>
+  <h1>🐾 END OF SHIFT REPORT<br>Chase's Paradise Ranch</h1>
+  <p>Fill in the form below — then copy & paste to WhatsApp</p>
+</header>
 
-<!-- ══ LIVE SCORE BAR ══ -->
-<div class="score-bar">
-  <div class="sb-segment" style="padding-left:0">
-    <div class="sb-label">Lead Score</div>
-    <div class="sb-value" id="sb-score" style="color:#4b5563">0<span style="font-size:13px;opacity:0.4"> / 100</span></div>
-  </div>
-  <div class="sb-segment">
-    <div class="sb-label">Priority</div>
-    <span class="sb-pill pill-none" id="sb-pill">—</span>
-  </div>
-  <div class="sb-segment" style="flex:1">
-    <div class="sb-label">Recommendation</div>
-    <div style="font-size:11px;font-weight:700;color:rgba(107,114,128,0.6)" id="sb-rec">Complete the scored sections below</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;padding-left:20px;border-left:1px solid rgba(109,40,217,0.18)">
-    <div class="sb-label" style="margin-bottom:4px">Questions</div>
-    <div class="sb-dots">
-      <div class="sb-dot" id="dot-urgency" title="Urgency"></div>
-      <div class="sb-dot" id="dot-quotes" title="Quotes"></div>
-      <div class="sb-dot" id="dot-dm" title="Decision Makers"></div>
-      <div class="sb-dot" id="dot-credit" title="Credit"></div>
-    </div>
-  </div>
-</div>
+<div class="container">
 
-<div class="wrap">
-
-  <!-- NAV -->
-  <div class="nav-bar">
-    <div class="brand-name">⚡ Bathroom Excellence</div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="login-user-badge"><div class="login-user-dot"></div><span id="navUserName">—</span></div>
-      <a href="records.html" class="nav-link">📋 Records</a>
-      <button onclick="doLogout()" style="padding:7px 16px;border-radius:10px;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.25);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'">🚪 Sign Out</button>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <div class="page-header">
-    <div class="brand">Appointment Qualification Assistant</div>
-    <div class="page-title">Lead Qualification</div>
-    <div class="page-sub">Follow the script · Click answers · Get instant scheduling recommendation</div>
-  </div>
-
-  <!-- ══ CUSTOMER INFO ══ -->
-  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Customer Information</div><div class="section-divider-line" style="background:linear-gradient(90deg,rgba(109,40,217,0.25),transparent)"></div></div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">📋</div>
-      <div class="card-title">Customer Details</div>
-    </div>
-    <div class="grid-2">
-      <div><label class="field-label">Customer Name</label><input type="text" id="customerName" placeholder="John Smith" oninput="updateNameDisplay()"></div>
-      <div class="bp-field"><label class="field-label">🔑 BP Opportunity ID <span style="color:#f59e0b;font-size:9px">(from URL)</span></label><input type="number" id="bpLeadId" placeholder="e.g. 4947823"></div>
-    </div>
-    <div class="grid-2">
-      <div><label class="field-label">Set On</label><input type="date" id="setOn"></div>
-      <div><label class="field-label">Lead Source</label>
-        <select id="leadSource">
-          <option value="">Select source...</option>
-          <option>APPOINTX</option><option>FACEBOOK</option><option>GOOGLE ADS</option>
-          <option>HOME ADVISOR</option><option>HOME BUDDY</option><option>MOD-MODERNIZE</option>
-          <option>PRO-REMODEL</option><option>SEARCH GOOGLE & ORGANIC</option>
-          <option>THUMBTACK</option><option>WEBSITE FORM</option><option>Other</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- OPENING SCRIPT -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">📞</div>
-      <div class="card-title">Opening Script</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Say This</div>
-      <div class="script-body">
-        <strong>"Hi [Name], this is Arnold with Bathroom Excellence."</strong><br><br>
-        "I'm following up on the information you submitted about your bathroom project. Jack, my manager, asked me to reach out and get everything set up for your free in-home estimate."<br><br>
-        "Before we pick a time, I just want to learn a little more about your project so Jack can come prepared with the best recommendations."
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ QUALIFICATION QUESTIONS ══ -->
-  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Qualification Questions</div><div class="section-divider-line" style="background:linear-gradient(90deg,rgba(109,40,217,0.25),transparent)"></div></div>
-
-  <!-- PROJECT DISCOVERY -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">🚿</div>
-      <div class="card-title">Project Discovery</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Ask</div>
-      <div class="script-body"><strong>"What are you looking to have done to your bathroom?"</strong></div>
-      <div class="script-listen">👂 Listen — then say: <strong>"Great, that's definitely something we specialize in."</strong></div>
-    </div>
-    <div>
-      <label class="field-label">Project Type</label>
-      <select id="projectType" onchange="toggleOther(this)">
-        <option value="">Select type...</option>
-        <option>Full Bathroom Remodel</option>
-        <option>Bathroom from Scratch</option>
-        <option>Tub to Shower Conversion</option>
-        <option>Tub/Shower Update</option>
-        <option value="Other">Other</option>
-      </select>
-      <input type="text" id="projectTypeOther" placeholder="Describe project..." style="display:none;margin-top:8px">
-    </div>
-  </div>
-
-  <!-- Q1: URGENCY -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-scored">1</div>
-      <div class="card-title">Project Timeline / Urgency</div>
-      <div class="card-pts">MAX 20 PTS</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Ask</div>
-      <div class="script-body"><strong>"If everything made sense — the design, the workmanship, and the investment — when would you like to have the project started?"</strong></div>
-      <div class="script-listen">👂 Listen — then select below</div>
-    </div>
-    <div class="choices cols-4" id="group-urgency">
-      <div class="choice" onclick="pick('urgency','ASAP',20,this,'sel-green','Urgency')">
-        <div class="choice-label">ASAP</div>
-        <div class="choice-sub">As soon as possible</div>
-        <span class="badge badge-green">+20 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('urgency','1-3 Months',15,this,'sel-amber','Urgency')">
-        <div class="choice-label">1–3 Months</div>
-        <div class="choice-sub">Near-term timeline</div>
-        <span class="badge badge-amber">+15 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('urgency','Depends on the Price',15,this,'sel-amber','Urgency')">
-        <div class="choice-label">Depends on Price</div>
-        <div class="choice-sub">Price-dependent</div>
-        <span class="badge badge-amber">+15 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('urgency','Just Planning Ahead',0,this,'sel-gray','Urgency')">
-        <div class="choice-label">Just Planning Ahead</div>
-        <div class="choice-sub">No urgency yet</div>
-        <span class="badge badge-gray">0 PTS</span>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Q2: QUOTES — with conditional follow-up -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-scored">2</div>
-      <div class="card-title">Competition / Quotes</div>
-      <div class="card-pts">MAX 40 PTS</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Ask</div>
-      <div class="script-body">
-        <strong>"Have you had any other companies come out yet?"</strong><br><br>
-        <span style="color:#4ade80">If YES →</span> <strong>"Great! That's gonna be an additional discount for you!"</strong> We don't need to know which company nor how much the offer is — we just want you to have something to compare us with, price wise and quality wise.<br><br>
-        <span style="color:#f87171">If NO →</span> "Just so you know, I am not booking you with any regular agent — I am booking you with the manager himself. That being said, it's a guarantee that you will be offered a significant discount on top of the promotion you already qualified for. We highly recommend that you get a quote before our visit if possible, doesn't really matter which company nor how much the offer is — we will never ask, we just want you to have something to compare us with, price wise and quality wise."<br><br>
-        <strong>"Do you think 7 days out is enough for you to get a quote?"</strong>
-      </div>
-      <div class="script-listen">👂 Listen — then select below</div>
-    </div>
-    <div class="choices cols-3" id="group-quotes">
-      <div class="choice" onclick="pick('quotes','Got 1 Quote',40,this,'sel-green','Quotes')">
-        <div class="choice-label">Got 1 Quote</div>
-        <div class="choice-sub">Has competitor quote</div>
-        <span class="badge badge-green">+40 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('quotes','Have Appt Before Us',30,this,'sel-amber','Quotes'); showCompetitorFollowup()">
-        <div class="choice-label">Appt Before Us</div>
-        <div class="choice-sub">Competitor appt scheduled</div>
-        <span class="badge badge-amber">+30 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('quotes','None',10,this,'sel-amber','Quotes'); hideCompetitorFollowup()">
-        <div class="choice-label">None</div>
-        <div class="choice-sub">No quote yet</div>
-        <span class="badge badge-amber">+10 PTS</span>
-      </div>
-    </div>
-
-    <!-- CONDITIONAL: Competitor appt date follow-up -->
-    <div class="followup-block" id="competitor-followup" style="display:none">
-      <div class="followup-label">🗓️ Follow-up Question</div>
-      <div class="script" style="margin-bottom:12px">
-        <div class="script-tag">🎙 Ask</div>
-        <div class="script-body"><strong>"When is your appointment with the other company?"</strong></div>
-        <div class="script-listen">👂 Enter the date below</div>
-      </div>
-      <label class="field-label">Competitor Appointment Date</label>
-      <input type="date" id="competitorApptDate" oninput="updateCompetitorDate()">
-    </div>
-  </div>
-
-  <!-- Q3: DECISION MAKERS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-scored">3</div>
-      <div class="card-title">Decision Maker Confirmation</div>
-      <div class="card-pts">MAX 20 PTS</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Ask</div>
-      <div class="script-body">
-        <strong>"Besides yourself, will anyone else be involved in making the final decision? Such as a spouse or partner?"</strong><br><br>
-        <span style="color:#4ade80">If YES →</span> "Perfect. Since Jack will be discussing design ideas, pricing, and financing options, we ask that everyone involved in the decision be present so everyone hears the same information together."<br><br>
-        <strong>"What's the best time that works for the both of you — morning, afternoon, or evening?"</strong>
-      </div>
-    </div>
-    <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(167,139,250,0.5);margin-bottom:10px">Select Decision Maker Age Group</div>
-    <div class="choices cols-3" id="group-dm">
-      <div class="dm-big dm-yes" onclick="pickDM('Senior',20,this)">
-        <div class="dm-icon">👴</div>
-        <div class="dm-big-label" style="color:#4ade80">Senior</div>
-        <div style="font-size:11px;color:rgba(107,114,128,0.7);margin-bottom:10px">Senior homeowner</div>
-        <span class="badge badge-green" style="font-size:11px;padding:4px 14px">+20 PTS</span>
-      </div>
-      <div class="dm-big dm-yes" onclick="pickDM('50s-60s',20,this)">
-        <div class="dm-icon">👫</div>
-        <div class="dm-big-label" style="color:#4ade80">50s – 60s</div>
-        <div style="font-size:11px;color:rgba(107,114,128,0.7);margin-bottom:10px">Mid-age couple</div>
-        <span class="badge badge-green" style="font-size:11px;padding:4px 14px">+20 PTS</span>
-      </div>
-      <div class="dm-big dm-yes" onclick="pickDM('40s and Below',20,this)">
-        <div class="dm-icon">🧑</div>
-        <div class="dm-big-label" style="color:#4ade80">40s Below</div>
-        <div style="font-size:11px;color:rgba(107,114,128,0.7);margin-bottom:10px">Younger decision maker</div>
-        <span class="badge badge-green" style="font-size:11px;padding:4px 14px">+20 PTS</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- BUILD VALUE — moved to after schedule/address per new script order -->
-  
-
-  <!-- ══ APPOINTMENT QUALIFICATION ══ -->
-  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Appointment Qualification</div><div class="section-divider-line" style="background:linear-gradient(90deg,rgba(109,40,217,0.25),transparent)"></div></div>
-
-  <!-- Q4: CREDIT — updated scoring -->
-  <div class="qual-panel">
-    <div class="card-header" style="margin-bottom:16px">
-      <div class="card-icon ci-scored">4</div>
-      <div class="card-title">Financing / Credit</div>
-      <div class="card-pts">MAX 20 PTS</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Say — Read while checking calendar</div>
-      <div class="script-body">
-        "Let me go ahead and check Jack's availability…"<br><br>
-        "Jack brings several financing programs with him — from excellent-credit options all the way down to programs designed for homeowners rebuilding credit."<br><br>
-        <strong>"About where would you say your credit falls today? Needs work, fair, good, or excellent?"</strong>
-      </div>
-      <div class="script-listen">👂 Listen — then select below</div>
-    </div>
-    <!-- Updated: Good/Excellent=20, Fair=15, Cash=10, Won't Share=5 -->
-    <div class="choices cols-4" id="group-credit">
-      <div class="choice" onclick="pick('credit','Good / Excellent',20,this,'sel-green','Credit')">
-        <div class="choice-label">Good / Excellent</div>
-        <span class="badge badge-green">+20 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('credit','Fair',15,this,'sel-amber','Credit')">
-        <div class="choice-label">Fair</div>
-        <span class="badge badge-amber">+15 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('credit','Cash Project',10,this,'sel-blue','Credit')">
-        <div class="choice-label">Cash Project</div>
-        <span class="badge badge-blue">+10 PTS</span>
-      </div>
-      <div class="choice" onclick="pick('credit','Won\'t Share',5,this,'sel-gray','Credit')">
-        <div class="choice-label">Won't Share</div>
-        <span class="badge badge-gray">+5 PTS</span>
-      </div>
-    </div>
-
-    <div class="qual-divider"></div>
-
-    <!-- FINAL SCORE + RECOMMENDATION -->
-    <div class="result-panel" style="margin-bottom:0;border:2px solid rgba(109,40,217,0.3)">
-      <div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#7c3aed;text-align:center;margin-bottom:20px">⚡ Lead Qualification Result</div>
-      <div class="result-top">
-        <div style="text-align:center">
-          <div class="score-ring ring-none" id="mainRing">
-            <div class="ring-num" id="mainScore">0</div>
-            <div class="ring-denom">/ 100 PTS</div>
-          </div>
-          <div style="margin-top:12px">
-            <span class="sb-pill pill-none" id="mainPill" style="font-size:11px;padding:5px 18px">NO DATA</span>
-          </div>
-        </div>
-        <div class="rec-block">
-          <div class="rec-card">
-            <div class="rec-eyebrow">🎯 Scheduling Recommendation</div>
-            <div class="rec-action" id="recAction">Answer all 4 scored sections to get recommendation</div>
-            <div class="rec-sub" id="recSub">Urgency · Quotes · Decision Makers · Credit</div>
-            <div class="reason-list" id="reasonList"></div>
-          </div>
-          <div class="breakdown">
-            <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:10px">Score Breakdown</div>
-            <div class="bd-row"><span class="bd-key">Urgency</span><span class="bd-val" id="bd-urgency" style="color:#4b5563">—</span></div>
-            <div class="bd-row"><span class="bd-key">Quotes</span><span class="bd-val" id="bd-quotes" style="color:#4b5563">—</span></div>
-            <div class="bd-row"><span class="bd-key">Decision Makers</span><span class="bd-val" id="bd-dm" style="color:#4b5563">—</span></div>
-            <div class="bd-row"><span class="bd-key">Credit / Financing</span><span class="bd-val" id="bd-credit" style="color:#4b5563">—</span></div>
-            <div class="bd-row"><span>Total</span><span class="bd-val" id="bd-total" style="color:#c4b5fd">0 / 100</span></div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:10px">📅 Booking Rules</div>
-        <div class="rules-table">
-          <div class="rule-cell rule-h" id="rule-90"><div class="rule-score">90 +</div><div class="rule-desc">Never Double Book</div></div>
-          <div class="rule-cell rule-mh" id="rule-80"><div class="rule-score">80 – 89</div><div class="rule-desc">Double Book Only With Low Priority</div></div>
-          <div class="rule-cell rule-m" id="rule-65"><div class="rule-score">65 – 79</div><div class="rule-desc">Standard Double Book OK</div></div>
-          <div class="rule-cell rule-l" id="rule-64"><div class="rule-score">Below 65</div><div class="rule-desc">Standby / Partner Out</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="qual-divider"></div>
-
-    <!-- ══ COMPETITOR REMINDER — shows only when "Appt Before Us" selected ══ -->
-    <div class="competitor-reminder" id="competitor-reminder" style="display:none">
-      <div class="reminder-header">
-        <span class="reminder-icon">⚠️</span>
-        <div class="reminder-title">Scheduling Reminder — Competitor Appointment Detected</div>
-        <span class="reminder-badge">Action Required</span>
-      </div>
-      <div class="reminder-body">
-        This customer already has an appointment with another contractor.<br>
-        <strong>Before selecting a date, confirm their competitor appointment date and book Bathroom Excellence 2 days after.</strong>
-      </div>
-
-      <!-- Script for setter -->
-      <div class="reminder-script">
-        <div class="reminder-script-tag">🎙 Confirm Script</div>
-        <div class="reminder-script-body">"Just to confirm — when is your appointment with the other company again?"</div>
-      </div>
-
-      <!-- Competitor date display -->
-      <div class="competitor-date-display" id="reminder-date-display" style="display:none">
-        <span>📅 Competitor Appointment:</span>
-        <strong id="reminder-competitor-date">—</strong>
-        <span style="margin-left:auto;color:rgba(249,115,22,0.6)">→</span>
-        <span>Book BE:</span>
-        <strong id="reminder-be-date" style="color:#4ade80">—</strong>
-      </div>
-
-      <!-- Recommendation -->
-      <div class="reminder-rec">
-        <span class="reminder-rec-icon">📆</span>
-        <div class="reminder-rec-content">
-          <div class="reminder-rec-title">Recommended Booking</div>
-          <div class="reminder-rec-text">Schedule this appointment <span style="color:#fb923c">2 days after</span> their existing contractor appointment.</div>
-          <div class="reminder-rec-sub">This gives the customer time to receive the competitor's quote before our consultation — increasing the chance they choose Bathroom Excellence.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- APPOINTMENT BOOKING -->
-    <div>
-      <div class="card-header" style="margin-bottom:16px">
-        <div class="card-icon ci-green">📅</div>
-        <div class="card-title">Schedule Appointment</div>
-      </div>
-      <div class="script">
-        <div class="script-tag">🎙 Say</div>
-        <div class="script-body">
-          <strong>"Let me go ahead and check Jack's availability…"</strong><br><br>
-          "I have: Tuesday at 2:00 PM or Wednesday at 5:00 PM. Which works better for you?"
-        </div>
-      </div>
+  <!-- ── SHIFT INFO ── -->
+  <div class="section">
+    <div class="section-header">📋 Shift Info</div>
+    <div class="section-body">
       <div class="grid-2" style="margin-bottom:12px">
-        <div><label class="field-label">Appointment Date</label><input type="date" id="appointmentDate"></div>
-        <div><label class="field-label">Appointment Time</label><input type="time" id="appointmentTime"></div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="f-name" placeholder="Your name">
+        </div>
       </div>
-      <div>
-        <label class="field-label">Sales Agent</label>
-        <div class="choices cols-2" id="group-agent" style="margin-top:0">
-          <div class="choice" onclick="pickAgent('Jack',this)" id="agent-jack">
-            <div class="choice-label">🤝 Jack</div>
-            <div class="choice-sub">Manager / Senior Agent</div>
-          </div>
-          <div class="choice" onclick="pickAgent('Dave',this)" id="agent-dave">
-            <div class="choice-label">🤝 Dave</div>
-            <div class="choice-sub">Sales Agent</div>
-          </div>
+      <div class="grid-3" style="margin-bottom:12px">
+        <div class="field">
+          <label>Start Time</label>
+          <input type="time" id="f-start">
+        </div>
+        <div class="field">
+          <label>Break Time (min)</label>
+          <input type="number" id="f-break" placeholder="e.g. 30" min="0">
+        </div>
+        <div class="field">
+          <label>End Time</label>
+          <input type="time" id="f-end">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Hours Worked Today</label>
+          <div class="computed" id="hours-today">—</div>
+        </div>
+        <div class="field">
+          <label>Weekly Total (hrs)</label>
+          <input type="text" id="f-weekly" placeholder="e.g. 32.5">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ADDRESS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">📍</div>
-      <div class="card-title">Address & Final Confirmation</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Confirm</div>
-      <div class="script-body">
-        <strong>"Can you please confirm the property address for me?"</strong>
-      </div>
-    </div>
-    <div>
-      <label class="field-label">Property Address</label>
-      <div style="display:flex;gap:10px;align-items:stretch">
-        <input type="text" id="address" placeholder="123 Main St, City, State" oninput="updateMapLink()" style="flex:1">
-        <button onclick="openMap()" id="map-btn" title="Search on Google Maps"
-          style="flex-shrink:0;padding:10px 16px;background:rgba(34,197,94,0.12);border:1.5px solid rgba(34,197,94,0.35);border-radius:10px;color:#4ade80;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px"
-          onmouseover="this.style.background='rgba(34,197,94,0.22)'" onmouseout="this.style.background='rgba(34,197,94,0.12)'">
-          🗺️ Open in Maps
-        </button>
-      </div>
-      <div style="font-size:10px;color:rgba(167,139,250,0.4);margin-top:6px">Type the address then click <strong style="color:rgba(167,139,250,0.6)">Open in Maps</strong> to verify the exact location on Google Maps.</div>
-    </div>
-  </div>
-
-  <!-- BUILD VALUE / CLOSE -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">💎</div>
-      <div class="card-title">Build Value & Close</div>
-    </div>
-    <div class="script">
-      <div class="script-tag">🎙 Say to Close</div>
-      <div class="script-body">
-        <strong>"Alright, you are all set on [DATE AND TIME]."</strong><br><br>
-        "Jack will see you then. He will take measurements, go over different design options, explain the installation process, answer any questions you have, and provide pricing during the appointment."<br><br>
-        "That way you'll have everything you need to make an informed decision — there's absolutely no obligation."<br><br>
-        <strong>"Just wait for the text message I'll be sending you in a few that will have our company name, our website, and a phone number to call or text in case you need to reschedule. Thank you and have a great day!"</strong>
+  <!-- ── NARRATIVE QUESTIONS ── -->
+  <div class="section">
+    <div class="section-header">✅ What Went Great?</div>
+    <div class="section-body">
+      <div class="field">
+        <textarea id="f-great" placeholder="Describe what went well today…"></textarea>
       </div>
     </div>
   </div>
 
-  <!-- ENTHUSIASM BONUS -->
-  <div class="bonus-panel">
-    <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#6366f1;margin-bottom:3px">⭐ Enthusiasm Bonus — Internal Tracking Only</div>
-    <div style="font-size:11px;color:rgba(99,102,241,0.6);margin-bottom:14px">Does NOT affect official qualification score</div>
-    <div class="choices cols-2" id="group-engagement">
-      <div class="choice" onclick="pickBonus('Very Interested',10,this,'sel-purple')">
-        <div class="choice-label" style="color:#c4b5fd">Very Interested</div>
-        <div class="choice-sub">Enthusiastic buyer</div>
-        <span class="badge badge-purple">+10 BONUS</span>
-      </div>
-      <div class="choice" onclick="pickBonus('Interested',5,this,'sel-amber')">
-        <div class="choice-label">Interested</div>
-        <div class="choice-sub">Willing buyer</div>
-        <span class="badge badge-amber">+5 BONUS</span>
+  <div class="section">
+    <div class="section-header">⚠️ What Was Challenging?</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">This question is so we know what's needed to create an awesome place to work — please be honest.</p>
+      <div class="field">
+        <textarea id="f-challenging" placeholder="Describe any challenges…"></textarea>
       </div>
     </div>
-    <div class="bonus-strip">
-      <div>Base Score: <strong id="bonus-base">0</strong></div>
-      <div>Enthusiasm Bonus: <strong id="bonus-enth">+0</strong></div>
-      <div style="margin-left:auto">Combined (internal): <strong id="bonus-total">0</strong></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">🔧 Broken / Needs Repair</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Please also include why it could not be fixed during shift.</p>
+      <div class="field">
+        <textarea id="f-broken" placeholder="Describe anything broken or needing repair…"></textarea>
+      </div>
     </div>
   </div>
 
-  <!-- CALL NOTES -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon ci-info">📝</div>
-      <div class="card-title">Call Notes</div>
-    </div>
-    <textarea id="callNotes" rows="4" placeholder="Objections, special circumstances, or anything to follow up on..."></textarea>
-  </div>
-
-  <!-- SUBMIT -->
-  <div class="submit-panel">
-    <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;text-align:center;margin-bottom:12px">🚀 Final Submission</div>
-    <div class="customer-display" id="finalNameDisplay">— Enter customer name above —</div>
-    <button class="sub-btn" onclick="submitLead()">🚀 SUBMIT TO CRM — Google Sheets + BuildersPrime</button>
-    <div style="text-align:center;font-size:10px;color:rgba(107,114,128,0.4);margin-top:8px">Data saves to Google Sheets and BuildersPrime automatically</div>
-  </div>
-
-</div>
-
-<!-- REVIEW & CONFIRM MODAL -->
-<div class="review-modal-bg" id="reviewModal">
-  <div class="review-box">
-    <div class="review-header">
-      <div style="font-size:22px;margin-bottom:6px">📋</div>
-      <div class="review-title">Review Before Submitting</div>
-      <div class="review-sub">Check all details carefully — then click Confirm & Submit</div>
-    </div>
-    <div class="review-body" id="reviewBody">
-      <!-- filled dynamically -->
-    </div>
-    <div class="review-footer">
-      <button class="review-edit-btn" onclick="document.getElementById('reviewModal').style.display='none'">✏️ Edit</button>
-      <button class="review-confirm-btn" onclick="confirmAndSubmit()">🚀 Confirm & Submit to CRM</button>
+  <div class="section">
+    <div class="section-header">📌 Special Projects</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Did you propose or ask Adam for special projects and what was completed?</p>
+      <div class="field">
+        <textarea id="f-projects" placeholder="Describe any special projects proposed or completed…"></textarea>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- VALIDATION MODAL -->
-<div class="modal-bg" id="validationModal" style="display:none">
-  <div class="modal-box" style="border-color:rgba(239,68,68,0.4);box-shadow:0 0 60px rgba(239,68,68,0.2)">
-    <div style="font-size:40px;margin-bottom:10px">⚠️</div>
-    <h2 style="font-size:16px;font-weight:800;color:#f87171;margin-bottom:6px">Please Complete All Required Fields</h2>
-    <p style="font-size:11px;color:rgba(239,68,68,0.6);margin-bottom:16px">Fix the following before submitting:</p>
-    <div id="validationList" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:12px;text-align:left;max-height:260px;overflow-y:auto;margin-bottom:16px"></div>
-    <button class="modal-close" onclick="document.getElementById('validationModal').style.display='none'" style="background:linear-gradient(135deg,#dc2626,#991b1b)">Got It — Fix Now</button>
+  <div class="section">
+    <div class="section-header">❌ Tasks Not Completed</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">It's very important to always have pre-approval before not completing any tasks.</p>
+      <div class="field">
+        <textarea id="f-incomplete" placeholder="List any incomplete tasks and pre-approval received…"></textarea>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <div class="t-cat" id="t-cat">Category</div>
-  <div class="t-pts" id="t-pts">+20</div>
-  <div class="t-ptslabel">POINTS ADDED</div>
-  <div class="t-div"></div>
-  <div class="t-row">
-    <div style="text-align:center"><div class="t-num" id="t-total" style="color:#c4b5fd">0</div><div class="t-label">Score</div></div>
-    <div style="text-align:center"><div class="t-num" id="t-pri" style="color:#4ade80">—</div><div class="t-label">Priority</div></div>
+  <div class="section">
+    <div class="section-header">📝 Notes for Tomorrow</div>
+    <div class="section-body">
+      <div class="field">
+        <textarea id="f-notes" placeholder="Notes, reminders, or handover info for tomorrow…"></textarea>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal">
-  <div class="modal-box">
-    <div style="font-size:44px;margin-bottom:10px">✅</div>
-    <h2 style="font-size:17px;font-weight:800;color:#c4b5fd;margin-bottom:7px">Lead Submitted!</h2>
-    <p style="font-size:12px;color:#7c3aed;margin-bottom:14px" id="modalSummary"></p>
-    <div id="modalPayload" style="background:rgba(0,0,0,0.3);border:1px solid rgba(139,92,246,0.2);border-radius:10px;padding:12px;text-align:left;font-size:10px;color:#a78bfa;max-height:180px;overflow-y:auto;margin-bottom:14px;font-family:'JetBrains Mono',monospace;white-space:pre-wrap"></div>
-    <button class="modal-close" onclick="closeModal()">NEW CALL</button>
+  <!-- ── DOG ROTATION ── -->
+  <div class="section">
+    <div class="section-header">🐕 WHAT WAS TODAY'S ORDER OF THE 10 DOGS ROTATED DURING SHIFT?</div>
+    <div class="section-body">
+      <div class="dog-list" id="dog-list">
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+        <div class="dog-item"><span class="dog-dash">-</span><input class="dog-input" type="text"></div>
+      </div>
+      <button type="button" class="btn-add-dog" onclick="addDogSlot()">+ Add another dog</button>
+    </div>
   </div>
+
+  <!-- ── INVENTORY COUNT ── -->
+  <div class="section">
+    <div class="section-header">📦 Inventory Count (Exact #)</div>
+    <div class="section-body">
+      <div class="inv-grid">
+        <div class="inv-item"><label>🥥 Coconuts</label><input type="number" id="inv-coconuts" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🐱 Cat Cans</label><input type="number" id="inv-catcans" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🦵 Chicken Feet</label><input type="number" id="inv-chickenfeet" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🦴 Bones</label><input type="number" id="inv-bones" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🧻 Toilet Paper</label><input type="number" id="inv-tp" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>📄 Paper Towels</label><input type="number" id="inv-papertowels" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🗑️ Trash Bags</label><input type="number" id="inv-trashbags" placeholder="0" min="0"></div>
+        <div class="inv-item"><label>🔥 Incense</label><input type="number" id="inv-incense" placeholder="0" min="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DAYS REMAINING ── -->
+  <div class="section">
+    <div class="section-header">📅 Days Remaining (Est.)</div>
+    <div class="section-body">
+      <div class="inv-grid">
+        <div class="inv-item"><label>☕ Coffee</label><input type="text" class="days-input" id="days-coffee" placeholder="e.g. 4"></div>
+        <div class="inv-item"><label>🌾 Alfalfa</label><input type="text" class="days-input" id="days-alfalfa" placeholder="e.g. 7"></div>
+        <div class="inv-item"><label>🧂 Mineral Salt</label><input type="text" class="days-input" id="days-salt" placeholder="e.g. 10"></div>
+        <div class="inv-item"><label>🌾 Sheep Grain</label><input type="text" class="days-input" id="days-sheepgrain" placeholder="e.g. 5"></div>
+        <div class="inv-item"><label>🥩 Meat for Dogs</label><input type="text" class="days-input" id="days-meat" placeholder="e.g. 3"></div>
+        <div class="inv-item"><label>🍚 Rice for Dogs</label><input type="text" class="days-input" id="days-rice" placeholder="e.g. 6"></div>
+        <div class="inv-item"><label>🐱 Cat Kibble</label><input type="text" class="days-input" id="days-catkibble" placeholder="e.g. 8"></div>
+        <div class="inv-item"><label>🧼 Cleaning Soap</label><input type="text" class="days-input" id="days-soap" placeholder="e.g. 4"></div>
+        <div class="inv-item"><label>🪟 Glass Cleaner</label><input type="text" class="days-input" id="days-glasscleaner" placeholder="e.g. 2"></div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <label style="color:var(--danger);font-size:13px">⚠️ Low Stock Alert (auto-detected & editable)</label>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:6px">Anything with less than 2 days remaining must also be private messaged to Adam.</p>
+        <div id="low-stock-alert">Fill in days remaining above to auto-detect low stock.</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field" style="margin-top:4px">
+        <label>🛒 Anything Else to Order?</label>
+        <textarea id="f-order" placeholder="List any other items to order…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GRATITUDE & IMPROVEMENT ── -->
+  <div class="section">
+    <div class="section-header">💡 1 Thing to Improve at the Ranch</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Please be honest — this helps create an awesome place to work.</p>
+      <div class="field">
+        <textarea id="f-improve" placeholder="One thing that could be improved…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">🙏 3 Things I'm Grateful for Today</div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Fresh answers daily — please do not skip.</p>
+      <div class="field" style="margin-bottom:8px">
+        <label>1.</label>
+        <input type="text" id="f-grateful1" placeholder="First thing…">
+      </div>
+      <div class="field" style="margin-bottom:8px">
+        <label>2.</label>
+        <input type="text" id="f-grateful2" placeholder="Second thing…">
+      </div>
+      <div class="field">
+        <label>3.</label>
+        <input type="text" id="f-grateful3" placeholder="Third thing…">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHECKLIST ── -->
+  <div class="section">
+    <div class="section-header">✔️ Checklist Confirmation</div>
+    <div class="section-body">
+      <div class="checklist-info">
+        🛑 READ THE TASK LIST EACH TIME YOU DO A TASK<br>
+        🛑 ORDER FROM TOP TO BOTTOM IS IMPORTANT<br>
+        🛑 Follow these steps for every task:
+      </div>
+      <div class="steps-list">
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">1</span> Read task
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">2</span> Complete task
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">3</span> Re-read task to confirm all details are completed
+        </label>
+        <label class="step-item step-check">
+          <input type="checkbox" class="task-check"> <span class="step-badge">4</span> Read next task before starting it
+        </label>
+      </div>
+      <div class="confirm-row">
+        <input type="checkbox" id="f-confirm">
+        <label for="f-confirm">At end of day today I re-read the task list including reading all details and I confirm with my word and promise by checking this box that I know for sure all details of each task were fully completed. Anything that was not clear I asked about. Anything not completed I got pre-approved in advance. ✅</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GENERATE ── -->
+  <div class="generate-wrap">
+    <button class="btn-generate" onclick="generateReport()">📋 Generate WhatsApp Report</button>
+  </div>
+
+  <!-- ── OUTPUT ── -->
+  <div class="section" id="output-section">
+    <div class="section-header">📤 Your Report — Ready to Copy</div>
+    <div class="section-body">
+      <pre id="output-box"></pre>
+      <div class="copy-row">
+        <button class="btn-copy" id="copy-btn" onclick="copyReport()">📋 Copy to Clipboard</button>
+        <button class="btn-reset" onclick="resetForm()">🔄 Start New Report</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Chase's Paradise Ranch · Shift Report Tool</p>
+  </footer>
 </div>
 
 <script>
-// ══ AUTH ══
-// Add / remove users here: { username, password, displayName }
-const USERS = [
-  { username: 'arnold',   password: 'BE@arnold2024',  displayName: 'Arnold' },
-  { username: 'jack',     password: 'BE@jack2024',    displayName: 'Jack' },
-  { username: 'dave',     password: 'BE@dave2024',    displayName: 'Dave' },
-  { username: 'admin',    password: 'BE@admin2024',   displayName: 'Admin' },
+// ── ADD DOG SLOT ──────────────────────────────────────────────────────────
+function addDogSlot() {
+  const list = document.getElementById('dog-list');
+  const item = document.createElement('div');
+  item.className = 'dog-item';
+  item.innerHTML = '<span class="dog-dash">-</span><input class="dog-input" type="text">';
+  list.appendChild(item);
+  item.querySelector('input').focus();
+}
+
+// ── STEP CHECKBOXES ───────────────────────────────────────────────────────
+document.querySelectorAll('.task-check').forEach(cb => {
+  cb.addEventListener('change', () => {
+    cb.closest('.step-item').classList.toggle('done', cb.checked);
+  });
+});
+
+// ── AUTO-CALCULATE HOURS ──────────────────────────────────────────────────
+function calcHours() {
+  const start = document.getElementById('f-start').value;
+  const end   = document.getElementById('f-end').value;
+  const brk   = parseInt(document.getElementById('f-break').value) || 0;
+  const el    = document.getElementById('hours-today');
+
+  if (!start || !end) { el.textContent = '—'; return; }
+
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  let mins = (eh * 60 + em) - (sh * 60 + sm) - brk;
+  if (mins < 0) mins += 24 * 60;
+
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  el.textContent = m ? `${h}h ${m}m` : `${h}h`;
+}
+
+['f-start','f-end','f-break'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcHours));
+
+// ── SET TODAY'S DATE ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('f-date').value =
+    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+});
+
+// ── LOW STOCK AUTO-DETECT ─────────────────────────────────────────────────
+const daysFields = [
+  { id:'days-coffee',      label:'☕ Coffee' },
+  { id:'days-alfalfa',     label:'🌾 Alfalfa' },
+  { id:'days-salt',        label:'🧂 Mineral Salt' },
+  { id:'days-sheepgrain',  label:'🌾 Sheep Grain' },
+  { id:'days-meat',        label:'🥩 Meat for Dogs' },
+  { id:'days-rice',        label:'🍚 Rice for Dogs' },
+  { id:'days-catkibble',   label:'🐱 Cat Kibble' },
+  { id:'days-soap',        label:'🧼 Cleaning Soap' },
+  { id:'days-glasscleaner',label:'🪟 Glass Cleaner' },
 ];
 
-function checkSession() {
-  const s = sessionStorage.getItem('be_user');
-  if (s) {
-    const u = JSON.parse(s);
-    document.getElementById('loginGate').style.display = 'none';
-    document.getElementById('navUserName').textContent = u.displayName;
-  }
-}
+function updateLowStock() {
+  const low = daysFields.filter(f => {
+    const v = parseFloat(document.getElementById(f.id).value);
+    return !isNaN(v) && v < 2;
+  }).map(f => f.label);
 
-function doLogin() {
-  const user = document.getElementById('loginUser').value.trim().toLowerCase();
-  const pass = document.getElementById('loginPass').value;
-  const match = USERS.find(u => u.username === user && u.password === pass);
-  if (match) {
-    sessionStorage.setItem('be_user', JSON.stringify({ username: match.username, displayName: match.displayName }));
-    document.getElementById('navUserName').textContent = match.displayName;
-    const gate = document.getElementById('loginGate');
-    gate.classList.add('hide');
-    setTimeout(() => gate.style.display = 'none', 400);
-    document.getElementById('loginError').classList.remove('show');
+  const el = document.getElementById('low-stock-alert');
+  if (low.length) {
+    el.style.color = 'var(--danger)';
+    el.textContent = '⚠️ LOW: ' + low.join(', ') + ' — MESSAGE ADAM PRIVATELY!';
   } else {
-    const err = document.getElementById('loginError');
-    err.classList.add('show');
-    document.getElementById('loginPass').value = '';
-    document.getElementById('loginPass').focus();
-    document.getElementById('loginPass').style.borderColor = '#ef4444';
-    setTimeout(() => { document.getElementById('loginPass').style.borderColor = ''; }, 2000);
+    el.style.color = 'var(--ranch-sage)';
+    el.textContent = '✅ No items below 2 days remaining.';
   }
 }
 
-function doLogout() {
-  sessionStorage.removeItem('be_user');
-  location.reload();
+daysFields.forEach(f =>
+  document.getElementById(f.id).addEventListener('input', updateLowStock));
+
+// ── FORMAT DATE ───────────────────────────────────────────────────────────
+function formatDate(val) {
+  if (!val) return '';
+  const [y, m, d] = val.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
 }
 
-// Run on page load
-checkSession();
+function fmt12(val) {
+  if (!val) return '';
+  const [h, m] = val.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hr = h % 12 || 12;
+  return `${hr}:${String(m).padStart(2,'0')} ${ampm}`;
+}
 
-// ══ STATE ══
-const A = { urgency: null, quotes: null, dm: null, credit: null };
-const S = { urgency: 0, quotes: 0, dm: 0, credit: 0 };
-let enthAnswer = null, enthBonus = 0;
-let toastTimer = null;
-let competitorApptExists = false;
-let selectedAgent = null;
+// ── GENERATE REPORT ───────────────────────────────────────────────────────
+function generateReport() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const dogs = [...document.querySelectorAll('.dog-input')].map(el => el.value.trim());
+  const confirmed = document.getElementById('f-confirm').checked;
 
-function pickAgent(name, el) {
-  document.querySelectorAll('#group-agent .choice').forEach(c => {
-    c.className = c.className.replace(/sel-\w+/g,'').trim();
+  // calc hours display
+  const hoursEl = document.getElementById('hours-today');
+  const hoursToday = hoursEl.textContent !== '—' ? hoursEl.textContent : v('hours-today') || 'N/A';
+
+  // low stock text
+  const lowStockEl = document.getElementById('low-stock-alert');
+  const lowStockText = lowStockEl.textContent.trim();
+
+  const lines = [];
+
+  lines.push(`END OF SHIFT REPORT – CHASE'S PARADISE RANCH`);
+  lines.push(`📋 SHIFT INFO`);
+  lines.push(`Date: ${formatDate(v('f-date'))}`);
+  lines.push(`Name: ${v('f-name')}`);
+  lines.push(`Start: ${fmt12(v('f-start'))}`);
+  lines.push(`Amount of break time: ${v('f-break') ? v('f-break') + ' min' : 'N/A'}`);
+  lines.push(`End: ${fmt12(v('f-end'))}`);
+  lines.push(`Hours Worked Today: ${hoursToday}`);
+  lines.push(`Weekly Total: ${v('f-weekly') || 'N/A'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`✅ *WHAT WENT GREAT?*`);
+  lines.push(v('f-great') || 'N/A');
+  lines.push(``);
+  lines.push(`⚠️ *WHAT WAS CHALLENGING?*`);
+  lines.push(v('f-challenging') || 'N/A');
+  lines.push(``);
+  lines.push(`🔧 *BROKEN/NEEDS REPAIR*`);
+  lines.push(v('f-broken') || 'N/A');
+  lines.push(``);
+  lines.push(`📌 *SPECIAL PROJECTS*`);
+  lines.push(v('f-projects') || 'N/A');
+  lines.push(``);
+  lines.push(`❌ *TASKS NOT COMPLETED*`);
+  lines.push(v('f-incomplete') || 'None');
+  lines.push(``);
+  lines.push(`📝 *NOTES FOR TOMORROW:*`);
+  lines.push(v('f-notes') || 'N/A');
+  lines.push(``);
+  lines.push(`*WHAT WAS TODAY'S ORDER OF THE 10 DOGS ROTATED DURING SHIFT?*`);
+  dogs.forEach(d => lines.push(`- ${d || ''}`));
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`📦 INVENTORY COUNT (Exact #)`);
+  lines.push(`🥥 Coconuts: ${v('inv-coconuts') || 'N/A'}`);
+  lines.push(`🐱 Cat cans: ${v('inv-catcans') || 'N/A'}`);
+  lines.push(`🦵 Chicken feet: ${v('inv-chickenfeet') || 'N/A'}`);
+  lines.push(`🦴 Bones: ${v('inv-bones') || 'N/A'}`);
+  lines.push(`🧻 Toilet Paper: ${v('inv-tp') || 'N/A'}`);
+  lines.push(`📄 Paper Towels: ${v('inv-papertowels') || 'N/A'}`);
+  lines.push(`🗑️ Trash Bags: ${v('inv-trashbags') || 'N/A'}`);
+  lines.push(`🔥 Incense: ${v('inv-incense') || 'N/A'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  lines.push(`📅 DAYS REMAINING (Est.)`);
+  lines.push(`☕ Coffee: ${v('days-coffee') || 'N/A'}`);
+  lines.push(`🌾 Alfalfa: ${v('days-alfalfa') || 'N/A'}`);
+  lines.push(`🧂 Mineral salt: ${v('days-salt') || 'N/A'}`);
+  lines.push(`🌾 Sheep grain: ${v('days-sheepgrain') || 'N/A'}`);
+  lines.push(`🥩 Meat for dogs: ${v('days-meat') || 'N/A'}`);
+  lines.push(`🍚 Rice for dogs: ${v('days-rice') || 'N/A'}`);
+  lines.push(`🐱 Cat kibble: ${v('days-catkibble') || 'N/A'}`);
+  lines.push(`🧼 Cleaning soap: ${v('days-soap') || 'N/A'}`);
+  lines.push(`🪟 Glass cleaner: ${v('days-glasscleaner') || 'N/A'}`);
+  lines.push(``);
+  lines.push(`⚠️ *LOW STOCK ALERT:*`);
+  lines.push(lowStockText);
+  lines.push(`*(Anything less than 2 days remaining must be private messaged to Adam.)*`);
+  lines.push(``);
+  lines.push(`🛒 *ANYTHING ELSE TO ORDER?*`);
+  lines.push(v('f-order') || 'None');
+  lines.push(``);
+  lines.push(`*1 THING TO IMPROVE AT THE RANCH:*`);
+  lines.push(v('f-improve') || 'N/A');
+  lines.push(``);
+  lines.push(`*3 THINGS I'M GRATEFUL FOR TODAY:*`);
+  lines.push(`1. ${v('f-grateful1') || '—'}`);
+  lines.push(`2. ${v('f-grateful2') || '—'}`);
+  lines.push(`3. ${v('f-grateful3') || '—'}`);
+  lines.push(`━━━━━━━━━━━━━━━━━`);
+  lines.push(``);
+  const stepLabels = ['Read task','Complete task','Re-read task to confirm all details','Read next task before starting it'];
+  const stepChecks = [...document.querySelectorAll('.task-check')].map(cb => cb.checked);
+
+  lines.push(`✔️ CHECKLIST FOR EACH TASK:`);
+  stepLabels.forEach((label, i) => {
+    lines.push(`${stepChecks[i] ? '✅' : '⬜'} ${i+1}️⃣ ${label}`);
   });
-  el.classList.add('sel-purple');
-  selectedAgent = name;
+  lines.push(``);
+  lines.push(confirmed
+    ? `✅ I confirm I re-read the task list and all tasks were fully completed or pre-approved.`
+    : `❌ Task list confirmation NOT checked.`);
+  lines.push(``);
+  lines.push(`🛑 READ THE TASK LIST EACH TIME YOU DO A TASK 🛑 ORDER FROM TOP TO BOTTOM IS IMPORTANT. 🛑`);
+
+  const report = lines.join('\n');
+  document.getElementById('output-box').textContent = report;
+
+  const outSec = document.getElementById('output-section');
+  outSec.style.display = 'block';
+  outSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ══ RECOMMENDATION ENGINE ══
-function getRec(score, answers) {
-  const reasons = [];
-  if (S.urgency >= 15) reasons.push({ text: answers.urgency === 'ASAP' ? 'Immediate urgency' : 'Near-term timeline', type: 'good' });
-  if (S.quotes >= 30) reasons.push({ text: answers.quotes === 'Got 1 Quote' ? 'Has competitor quote' : 'Competitor appt scheduled', type: 'good' });
-  if (S.dm === 20) reasons.push({ text: 'All decision makers confirmed', type: 'good' });
-  if (S.credit >= 15) reasons.push({ text: answers.credit === 'Fair' ? 'Fair credit' : 'Strong credit', type: 'good' });
-  if (S.urgency === 0) reasons.push({ text: 'Shopping around', type: 'warn' });
-  if (S.quotes === 10) reasons.push({ text: 'No other quotes yet', type: 'warn' });
-  if (S.dm === 0) reasons.push({ text: 'Decision makers unconfirmed', type: 'bad' });
-  if (S.credit === 5) reasons.push({ text: "Credit not disclosed", type: 'warn' });
-  if (score >= 90) return { action: '🚫 NEVER DOUBLE BOOK', sub: 'Schedule in a premium calendar slot — highest close probability.', color: '#4ade80', reasons };
-  if (score >= 80) return { action: '⚡ DOUBLE BOOK WITH CAUTION', sub: 'Only double book alongside a Low Priority lead.', color: '#a78bfa', reasons };
-  if (score >= 65) return { action: '✅ STANDARD DOUBLE BOOK OK', sub: 'Can be double booked on the standard calendar.', color: '#fbbf24', reasons };
-  return { action: '⏳ STANDBY / PARTNER OUT', sub: 'Lower priority — consider standby slot or partner referral.', color: '#9ca3af', reasons };
-}
-
-// ══ COMPETITOR FOLLOWUP LOGIC ══
-function showCompetitorFollowup() {
-  competitorApptExists = true;
-  document.getElementById('competitor-followup').style.display = 'block';
-  document.getElementById('competitor-reminder').style.display = 'block';
-  updateCompetitorDate();
-}
-
-function hideCompetitorFollowup() {
-  competitorApptExists = false;
-  document.getElementById('competitor-followup').style.display = 'none';
-  document.getElementById('competitor-reminder').style.display = 'none';
-  document.getElementById('competitorApptDate').value = '';
-  document.getElementById('reminder-date-display').style.display = 'none';
-}
-
-function updateCompetitorDate() {
-  const dateVal = document.getElementById('competitorApptDate').value;
-  if (!dateVal) { document.getElementById('reminder-date-display').style.display = 'none'; return; }
-  const compDate = new Date(dateVal + 'T00:00:00');
-  const beDate = new Date(compDate);
-  beDate.setDate(beDate.getDate() + 2);
-  const fmt = d => d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-  document.getElementById('reminder-competitor-date').textContent = fmt(compDate);
-  document.getElementById('reminder-be-date').textContent = fmt(beDate);
-  document.getElementById('reminder-date-display').style.display = 'flex';
-  // Auto-suggest the appointment date
-  const y = beDate.getFullYear(), m = String(beDate.getMonth()+1).padStart(2,'0'), day = String(beDate.getDate()).padStart(2,'0');
-  document.getElementById('appointmentDate').value = `${y}-${m}-${day}`;
-}
-
-// ══ PICK CHOICES ══
-function pick(group, label, pts, el, cls, catName) {
-  document.querySelectorAll('#group-' + group + ' .choice').forEach(c => {
-    c.className = c.className.replace(/sel-\w+/g, '').trim();
-  });
-  el.classList.add(cls);
-  const prev = S[group];
-  A[group] = label; S[group] = pts;
-  document.getElementById('dot-' + group).classList.add('done');
-  // Hide competitor if switching away from "Appt Before Us"
-  if (group === 'quotes' && label !== 'Have Appt Before Us') hideCompetitorFollowup();
-  calc(); showToast(pts, prev, catName);
-}
-
-function pickDM(label, pts, el) {
-  document.querySelectorAll('#group-dm .dm-big').forEach(c => c.classList.remove('dm-yes-sel','dm-no-sel'));
-  el.classList.add(pts > 0 ? 'dm-yes-sel' : 'dm-no-sel');
-  const prev = S.dm;
-  A.dm = label; S.dm = pts;
-  document.getElementById('dot-dm').classList.add('done');
-  calc(); showToast(pts, prev, 'Decision Makers');
-}
-
-function pickBonus(label, pts, el, cls) {
-  document.querySelectorAll('#group-engagement .choice').forEach(c => {
-    c.className = c.className.replace(/sel-\w+/g, '').trim();
-  });
-  el.classList.add(cls);
-  enthAnswer = label; enthBonus = pts;
-  updateBonusDisplay();
-}
-
-// ══ CALC ══
-function calc() {
-  const total = Object.values(S).reduce((a,b) => a+b, 0);
-  const done  = Object.values(A).filter(v => v !== null).length;
-
-  let priority, pillClass, ringClass, rec = null;
-  if (done === 0) { priority = '—'; pillClass = 'pill-none'; ringClass = 'ring-none'; }
-  else if (total >= 80) { priority = 'HIGH'; pillClass = 'pill-high'; ringClass = 'ring-high'; rec = getRec(total, A); }
-  else if (total >= 65) { priority = 'MEDIUM'; pillClass = 'pill-med'; ringClass = 'ring-med'; rec = getRec(total, A); }
-  else { priority = 'LOW'; pillClass = 'pill-low'; ringClass = 'ring-low'; rec = getRec(total, A); }
-
-  const scoreColor = done === 0 ? '#4b5563' : total >= 80 ? '#4ade80' : total >= 65 ? '#fbbf24' : '#f87171';
-
-  // Score bar
-  const sbScore = document.getElementById('sb-score');
-  sbScore.innerHTML = total + '<span style="font-size:13px;opacity:0.4"> / 100</span>';
-  sbScore.style.color = scoreColor;
-  const sbPill = document.getElementById('sb-pill');
-  sbPill.textContent = done === 0 ? '—' : priority + ' PRIORITY';
-  sbPill.className = 'sb-pill ' + pillClass;
-  document.getElementById('sb-rec').textContent = rec ? rec.action : 'Complete the scored sections below';
-  document.getElementById('sb-rec').style.color = rec ? rec.color : 'rgba(107,114,128,0.6)';
-
-  // Main ring
-  const ring = document.getElementById('mainRing');
-  ring.className = 'score-ring ' + ringClass + ' pulse';
-  setTimeout(() => ring.classList.remove('pulse'), 350);
-  document.getElementById('mainScore').textContent = total;
-  document.getElementById('mainScore').style.color = scoreColor;
-  const mainPill = document.getElementById('mainPill');
-  mainPill.textContent = done === 0 ? 'NO DATA' : priority + ' PRIORITY';
-  mainPill.className = 'sb-pill ' + pillClass;
-
-  // Recommendation
-  if (rec) {
-    document.getElementById('recAction').textContent = rec.action;
-    document.getElementById('recAction').style.color = rec.color;
-    document.getElementById('recSub').textContent = rec.sub;
-    const rl = document.getElementById('reasonList');
-    rl.innerHTML = '';
-    rec.reasons.forEach(r => {
-      const chip = document.createElement('span');
-      chip.className = 'reason-chip ' + r.type;
-      chip.textContent = r.text;
-      rl.appendChild(chip);
-    });
-  } else {
-    document.getElementById('recAction').textContent = 'Answer all 4 scored sections to get recommendation';
-    document.getElementById('recAction').style.color = '#6b7280';
-    document.getElementById('recSub').textContent = 'Urgency · Quotes · Decision Makers · Credit';
-    document.getElementById('reasonList').innerHTML = '';
-  }
-
-  // Breakdown
-  ['urgency','quotes','dm','credit'].forEach(k => {
-    const el = document.getElementById('bd-' + k);
-    if (A[k] === null) { el.textContent = '—'; el.style.color = '#4b5563'; }
-    else { el.textContent = S[k] + ' pts'; el.style.color = S[k] > 0 ? '#4ade80' : '#f87171'; }
-  });
-  document.getElementById('bd-total').textContent = total + ' / 100';
-
-  // Booking rules highlight
-  const ruleIds = ['rule-90','rule-80','rule-65','rule-64'];
-  const ruleActive = done === 0 ? null : total >= 90 ? 'rule-90' : total >= 80 ? 'rule-80' : total >= 65 ? 'rule-65' : 'rule-64';
-  ruleIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (done === 0) { el.classList.remove('rule-active','rule-inactive'); }
-    else if (id === ruleActive) { el.classList.add('rule-active'); el.classList.remove('rule-inactive'); }
-    else { el.classList.add('rule-inactive'); el.classList.remove('rule-active'); }
-  });
-
-  updateNameDisplay();
-  updateBonusDisplay();
-}
-
-function updateBonusDisplay() {
-  const base = Object.values(S).reduce((a,b) => a+b, 0);
-  document.getElementById('bonus-base').textContent = base;
-  document.getElementById('bonus-enth').textContent = '+' + enthBonus;
-  document.getElementById('bonus-total').textContent = base + enthBonus;
-}
-
-function updateNameDisplay() {
-  const name = document.getElementById('customerName').value.trim();
-  const total = Object.values(S).reduce((a,b) => a+b, 0);
-  const done  = Object.values(A).filter(v => v !== null).length;
-  const display = name ? (done > 0 ? total + ' ' + name : name) : '— Enter customer name above —';
-  const el = document.getElementById('finalNameDisplay');
-  el.textContent = display;
-  el.style.color = name ? '#c4b5fd' : 'rgba(167,139,250,0.3)';
-}
-
-// ══ TOAST ══
-function showToast(pts, prevPts, catName) {
-  const total = Object.values(S).reduce((a,b) => a+b, 0);
-  const done  = Object.values(A).filter(v => v !== null).length;
-  let pri = '—', tcol = '#9ca3af';
-  if (total >= 80) { pri = 'HIGH'; tcol = '#4ade80'; }
-  else if (total >= 65) { pri = 'MEDIUM'; tcol = '#fbbf24'; }
-  else if (done > 0) { pri = 'LOW'; tcol = '#f87171'; }
-  const diff = pts - prevPts;
-  const pEl = document.getElementById('t-pts');
-  pEl.textContent = (diff >= 0 ? '+' : '') + diff + ' pts';
-  pEl.style.color = diff > 0 ? '#4ade80' : diff < 0 ? '#f87171' : '#9ca3af';
-  document.getElementById('t-cat').textContent = catName;
-  document.getElementById('t-total').textContent = total + ' pts';
-  document.getElementById('t-pri').textContent = pri;
-  document.getElementById('t-pri').style.color = tcol;
-  const toast = document.getElementById('toast');
-  if (toastTimer) { clearTimeout(toastTimer); toast.className = 'toast'; }
-  void toast.offsetWidth;
-  toast.classList.add('show');
-  toastTimer = setTimeout(() => {
-    toast.classList.remove('show'); toast.classList.add('hide');
-    setTimeout(() => toast.classList.remove('hide'), 300);
-  }, 2400);
-}
-
-// ══ GOOGLE MAPS ADDRESS LOOKUP ══
-function openMap() {
-  const addr = document.getElementById('address').value.trim();
-  const query = addr ? encodeURIComponent(addr + ', USA') : encodeURIComponent('United States');
-  const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
-  window.open(url, '_blank');
-}
-
-function updateMapLink() {
-  const addr = document.getElementById('address').value.trim();
-  const btn = document.getElementById('map-btn');
-  if (addr) {
-    btn.style.borderColor = 'rgba(34,197,94,0.6)';
-    btn.style.color = '#4ade80';
-    btn.innerHTML = '🗺️ Verify in Maps';
-  } else {
-    btn.style.borderColor = 'rgba(34,197,94,0.35)';
-    btn.innerHTML = '🗺️ Open in Maps';
-  }
-}
-
-function toggleOther(sel) {
-  const o = document.getElementById('projectTypeOther');
-  o.style.display = sel.value === 'Other' ? 'block' : 'none';
-  if (sel.value !== 'Other') o.value = '';
-}
-
-// ══ VALIDATION HELPERS ══
-function flashError(elId, msg) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  el.style.borderColor = '#ef4444';
-  el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.2)';
-  const orig = el.placeholder;
-  if (msg) el.placeholder = msg;
-  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; if (msg) el.placeholder = orig; }, 3000);
-}
-
-function showValidationToast(errors) {
-  // Show a blocking validation summary modal instead of the submit modal
-  const box = document.getElementById('validationModal');
-  const list = document.getElementById('validationList');
-  list.innerHTML = errors.map(e => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1);font-size:12px;color:#fca5a5"><span style="font-size:14px">❌</span>${e}</div>`).join('');
-  box.style.display = 'flex';
-}
-
-// ══ SUBMIT ══
-function submitLead() {
-  const errors = [];
-
-  // 1. Customer Name
-  const name = document.getElementById('customerName').value.trim();
-  if (!name) { errors.push('Customer Name is required'); flashError('customerName', '⚠️ Required!'); }
-
-  // 2. BP Opportunity ID
-  const bpId = document.getElementById('bpLeadId').value.trim();
-  if (!bpId) { errors.push('BP Opportunity ID is required'); flashError('bpLeadId', '⚠️ Required!'); }
-
-  // 3. Lead Source
-  const src = document.getElementById('leadSource').value;
-  if (!src) { errors.push('Lead Source must be selected'); document.getElementById('leadSource').style.borderColor = '#ef4444'; setTimeout(() => document.getElementById('leadSource').style.borderColor = '', 3000); }
-
-  // 4. Project Type
-  const pt = document.getElementById('projectType').value;
-  if (!pt) { errors.push('Project Type must be selected'); document.getElementById('projectType').style.borderColor = '#ef4444'; setTimeout(() => document.getElementById('projectType').style.borderColor = '', 3000); }
-
-  // 5. Scored questions — all 4 must be answered
-  if (A.urgency === null) errors.push('Timeline / Urgency answer is required (Section 1)');
-  if (A.quotes === null)  errors.push('Competition / Quotes answer is required (Section 2)');
-  if (A.dm === null)      errors.push('Decision Maker selection is required (Section 3)');
-  if (A.credit === null)  errors.push('Credit / Financing answer is required (Section 4)');
-
-  // 6. Competitor date — optional even if "Appt Before Us" selected
-
-  // 7. Appointment Date & Time
-  const apptDate = document.getElementById('appointmentDate').value;
-  const apptTime = document.getElementById('appointmentTime').value;
-  if (!apptDate) { errors.push('Appointment Date is required'); flashError('appointmentDate', ''); }
-  if (!apptTime) { errors.push('Appointment Time is required'); flashError('appointmentTime', ''); }
-
-  // 8. Sales Agent
-  if (!selectedAgent) errors.push('Sales Agent must be selected (Jack or Dave)');
-
-  // 9. Address — optional, not required
-
-  // ── Block if any errors ──
-  if (errors.length > 0) {
-    showValidationToast(errors);
-    return;
-  }
-
-  const total = Object.values(S).reduce((a,b) => a+b, 0);
-  const priority = total >= 80 ? 'HIGH' : total >= 65 ? 'MEDIUM' : 'LOW';
-  const rec = getRec(total, A);
-  const projectType = pt === 'Other'
-    ? 'Other: ' + (document.getElementById('projectTypeOther').value.trim() || 'Not specified')
-    : pt;
-
-  window._pendingPayload = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-    bp_lead_id: parseInt(document.getElementById('bpLeadId').value) || null,
-    crm_customer_name: total + ' ' + name,
-    customer_name: name,
-    address: document.getElementById('address').value.trim(),
-    set_on: document.getElementById('setOn').value,
-    lead_source: src,
-    project_type: projectType,
-    appointment_date: apptDate,
-    appointment_time: apptTime,
-    sales_agent: selectedAgent,
-    competitor_appt_exists: competitorApptExists,
-    competitor_appt_date: document.getElementById('competitorApptDate').value || null,
-    score: total, score_max: 100, priority,
-    scheduling_recommendation: rec.action,
-    enthusiasm_bonus: enthBonus,
-    enthusiasm_answer: enthAnswer,
-    combined_score: total + enthBonus,
-    answers: { ...A }, scores: { ...S },
-    notes: document.getElementById('callNotes').value,
-    call_timestamp: new Date().toISOString()
-  };
-
-  showReviewModal(window._pendingPayload, total, priority, rec);
-}
-
-function showReviewModal(p, total, priority, rec) {
-  const scoreColor = total >= 80 ? '#4ade80' : total >= 65 ? '#fbbf24' : '#f87171';
-  const fmt = val => val || '<span style="color:rgba(167,139,250,0.3);font-weight:400">—</span>';
-  const fmtDate = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}) : '—';
-  const fmtTime = t => { if(!t) return '—'; const [h,m]=t.split(':'); const ampm=+h>=12?'PM':'AM'; return `${+h%12||12}:${m} ${ampm}`; };
-
-  document.getElementById('reviewBody').innerHTML = `
-    <div class="review-score-block">
-      <div>
-        <div class="review-score-num" style="color:${scoreColor}">${total}</div>
-        <div style="font-size:10px;color:rgba(167,139,250,0.5);margin-top:2px">/ 100 PTS</div>
-      </div>
-      <div style="flex:1">
-        <div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#7c3aed;margin-bottom:4px">Priority</div>
-        <div style="font-size:16px;font-weight:900;color:${scoreColor};margin-bottom:6px">${priority}</div>
-        <div style="font-size:11px;color:#a78bfa;font-weight:700">${rec.action}</div>
-      </div>
-    </div>
-
-    <div class="review-section">
-      <div class="review-section-title">👤 Customer Information</div>
-      <div class="review-row"><span class="review-key">Customer Name</span><span class="review-val">${fmt(p.customer_name)}</span></div>
-      <div class="review-row"><span class="review-key">BP Opportunity ID</span><span class="review-val">${fmt(p.bp_lead_id)}</span></div>
-      <div class="review-row"><span class="review-key">Lead Source</span><span class="review-val">${fmt(p.lead_source)}</span></div>
-      <div class="review-row"><span class="review-key">Project Type</span><span class="review-val">${fmt(p.project_type)}</span></div>
-      <div class="review-row"><span class="review-key">Set On</span><span class="review-val">${fmtDate(p.set_on)}</span></div>
-    </div>
-
-    <div class="review-section">
-      <div class="review-section-title">⚡ Scored Answers</div>
-      <div class="review-row"><span class="review-key">Timeline / Urgency</span><span class="review-val">${fmt(p.answers.urgency)} <span style="color:#7c3aed;font-size:10px">(${p.scores.urgency} pts)</span></span></div>
-      <div class="review-row"><span class="review-key">Quotes / Competition</span><span class="review-val">${fmt(p.answers.quotes)} <span style="color:#7c3aed;font-size:10px">(${p.scores.quotes} pts)</span></span></div>
-      <div class="review-row"><span class="review-key">Decision Maker</span><span class="review-val">${fmt(p.answers.dm)} <span style="color:#7c3aed;font-size:10px">(${p.scores.dm} pts)</span></span></div>
-      <div class="review-row"><span class="review-key">Credit / Financing</span><span class="review-val">${fmt(p.answers.credit)} <span style="color:#7c3aed;font-size:10px">(${p.scores.credit} pts)</span></span></div>
-    </div>
-
-    <div class="review-section">
-      <div class="review-section-title">📅 Appointment Details</div>
-      <div class="review-row"><span class="review-key">Date</span><span class="review-val">${fmtDate(p.appointment_date)}</span></div>
-      <div class="review-row"><span class="review-key">Time</span><span class="review-val">${fmtTime(p.appointment_time)}</span></div>
-      <div class="review-row"><span class="review-key">Sales Agent</span><span class="review-val">${fmt(p.sales_agent)}</span></div>
-      <div class="review-row"><span class="review-key">Property Address</span><span class="review-val">${fmt(p.address)}</span></div>
-      ${p.competitor_appt_exists ? `<div class="review-row"><span class="review-key">⚠️ Competitor Appt</span><span class="review-val" style="color:#fb923c">${fmtDate(p.competitor_appt_date)}</span></div>` : ''}
-    </div>
-
-    <div class="review-section">
-      <div class="review-section-title">⭐ Additional Info</div>
-      ${p.enthusiasm_answer ? `<div class="review-row"><span class="review-key">Enthusiasm</span><span class="review-val">${p.enthusiasm_answer} (+${p.enthusiasm_bonus} bonus)</span></div>` : ''}
-      <div class="review-row"><span class="review-key">Call Notes</span><span class="review-val" style="max-width:260px;text-align:right;line-height:1.5">${p.notes || '<span style="color:rgba(167,139,250,0.3);font-weight:400">None</span>'}</span></div>
-    </div>
-  `;
-  document.getElementById('reviewModal').style.display = 'flex';
-}
-
-function confirmAndSubmit() {
-  const p = window._pendingPayload;
-  if (!p) return;
-  document.getElementById('reviewModal').style.display = 'none';
-
+// ── COPY ──────────────────────────────────────────────────────────────────
+async function copyReport() {
+  const text = document.getElementById('output-box').textContent;
+  const btn  = document.getElementById('copy-btn');
   try {
-    const existing = JSON.parse(localStorage.getItem('leadRecords') || '[]');
-    existing.push(p);
-    localStorage.setItem('leadRecords', JSON.stringify(existing));
-  } catch(e) {}
-
-  fetch('https://hook.us1.make.com/886k5ojznokp6xytozlgqj1w473lfilt', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(p)
-  }).catch(e => console.warn('Webhook error:', e));
-
-  document.getElementById('modalSummary').textContent = p.crm_customer_name + ' · ' + p.priority + ' · ' + p.score + '/100 · ' + p.scheduling_recommendation;
-  document.getElementById('modalPayload').textContent = JSON.stringify(p, null, 2);
-  document.getElementById('modal').style.display = 'flex';
-  window._pendingPayload = null;
+    await navigator.clipboard.writeText(text);
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('success');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy to Clipboard';
+      btn.classList.remove('success');
+    }, 2500);
+  } catch {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('success');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy to Clipboard';
+      btn.classList.remove('success');
+    }, 2500);
+  }
 }
 
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-  document.getElementById('validationModal').style.display = 'none';
-  document.getElementById('reviewModal').style.display = 'none';
-  window._pendingPayload = null;
-  ['customerName','callNotes','bpLeadId','address','competitorApptDate'].forEach(id => document.getElementById(id).value = '');
-  ['leadSource','projectType','appointmentDate','appointmentTime'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('projectTypeOther').style.display = 'none';
-  document.getElementById('projectTypeOther').value = '';
-  document.getElementById('setOn').value = new Date().toISOString().split('T')[0];
-  document.querySelectorAll('.choice').forEach(c => { c.className = c.className.replace(/sel-\w+/g,'').trim(); });
-  document.querySelectorAll('.dm-big').forEach(c => c.classList.remove('dm-yes-sel','dm-no-sel'));
-  document.querySelectorAll('.sb-dot').forEach(d => d.classList.remove('done'));
-  for (const k in A) { A[k] = null; S[k] = 0; }
-  enthAnswer = null; enthBonus = 0;
-  competitorApptExists = false;
-  selectedAgent = null;
-  document.querySelectorAll('#group-agent .choice').forEach(c => { c.className = c.className.replace(/sel-\w+/g,'').trim(); });
-  hideCompetitorFollowup();
-  calc();
-}
+// ── RESET ─────────────────────────────────────────────────────────────────
+function resetForm() {
+  if (!confirm('Clear all fields and start a new report?')) return;
+  document.querySelectorAll('input:not([type=checkbox]), textarea, select').forEach(el => {
+    el.value = '';
+  });
+  document.getElementById('f-confirm').checked = false;
+  document.querySelectorAll('.task-check').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.step-item').classList.remove('done');
+  });
+  document.getElementById('hours-today').textContent = '—';
+  document.getElementById('low-stock-alert').textContent = 'Fill in days remaining above to auto-detect low stock.';
+  document.getElementById('low-stock-alert').style.color = 'var(--danger)';
+  document.getElementById('output-section').style.display = 'none';
 
-// Init
-document.getElementById('setOn').value = new Date().toISOString().split('T')[0];
-document.getElementById('customerName').addEventListener('input', updateNameDisplay);
+  // re-set today's date
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('f-date').value =
+    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
