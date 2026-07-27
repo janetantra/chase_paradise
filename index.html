@@ -439,9 +439,7 @@ select option{background:#0d0020;color:#e2d9f3}
     </div>
   </div>
 
-
-
-  <!-- Q2: QUOTES — with conditional follow-up -->
+  <!-- Q2: QUOTES -->
   <div class="card">
     <div class="card-header">
       <div class="card-icon ci-scored">2</div>
@@ -475,8 +473,6 @@ select option{background:#0d0020;color:#e2d9f3}
         <span class="badge badge-amber">+10 PTS</span>
       </div>
     </div>
-
-    <!-- CONDITIONAL: Competitor appt date follow-up -->
     <div class="followup-block" id="competitor-followup" style="display:none">
       <div class="followup-label">🗓️ Follow-up Question</div>
       <div class="script" style="margin-bottom:12px">
@@ -527,13 +523,10 @@ select option{background:#0d0020;color:#e2d9f3}
     </div>
   </div>
 
-  <!-- BUILD VALUE — moved to after schedule/address per new script order -->
-  
-
   <!-- ══ APPOINTMENT QUALIFICATION ══ -->
   <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Appointment Qualification</div><div class="section-divider-line" style="background:linear-gradient(90deg,rgba(109,40,217,0.25),transparent)"></div></div>
 
-  <!-- Q4: CREDIT — updated scoring -->
+  <!-- Q4: CREDIT -->
   <div class="qual-panel">
     <div class="card-header" style="margin-bottom:16px">
       <div class="card-icon ci-scored">4</div>
@@ -549,7 +542,6 @@ select option{background:#0d0020;color:#e2d9f3}
       </div>
       <div class="script-listen">👂 Listen — then select below</div>
     </div>
-    <!-- Updated: Good/Excellent=20, Fair=15, Cash=10, Won't Share=5 -->
     <div class="choices cols-4" id="group-credit">
       <div class="choice" onclick="pick('credit','Good / Excellent',20,this,'sel-green','Credit')">
         <div class="choice-label">Good / Excellent</div>
@@ -614,7 +606,7 @@ select option{background:#0d0020;color:#e2d9f3}
 
     <div class="qual-divider"></div>
 
-    <!-- ══ COMPETITOR REMINDER — shows only when "Appt Before Us" selected ══ -->
+    <!-- COMPETITOR REMINDER -->
     <div class="competitor-reminder" id="competitor-reminder" style="display:none">
       <div class="reminder-header">
         <span class="reminder-icon">⚠️</span>
@@ -625,14 +617,10 @@ select option{background:#0d0020;color:#e2d9f3}
         This customer already has an appointment with another contractor.<br>
         <strong>Before selecting a date, confirm their competitor appointment date and book Bathroom Excellence 2 days after.</strong>
       </div>
-
-      <!-- Script for setter -->
       <div class="reminder-script">
         <div class="reminder-script-tag">🎙 Confirm Script</div>
         <div class="reminder-script-body">"Just to confirm — when is your appointment with the other company again?"</div>
       </div>
-
-      <!-- Competitor date display -->
       <div class="competitor-date-display" id="reminder-date-display" style="display:none">
         <span>📅 Competitor Appointment:</span>
         <strong id="reminder-competitor-date">—</strong>
@@ -640,8 +628,6 @@ select option{background:#0d0020;color:#e2d9f3}
         <span>Book BE:</span>
         <strong id="reminder-be-date" style="color:#4ade80">—</strong>
       </div>
-
-      <!-- Recommendation -->
       <div class="reminder-rec">
         <span class="reminder-rec-icon">📆</span>
         <div class="reminder-rec-content">
@@ -693,9 +679,7 @@ select option{background:#0d0020;color:#e2d9f3}
     </div>
     <div class="script">
       <div class="script-tag">🎙 Confirm</div>
-      <div class="script-body">
-        <strong>"Can you please confirm the property address for me?"</strong>
-      </div>
+      <div class="script-body"><strong>"Can you please confirm the property address for me?"</strong></div>
     </div>
     <div>
       <label class="field-label">Property Address</label>
@@ -778,9 +762,7 @@ select option{background:#0d0020;color:#e2d9f3}
       <div class="review-title">Review Before Submitting</div>
       <div class="review-sub">Check all details carefully — then click Confirm & Submit</div>
     </div>
-    <div class="review-body" id="reviewBody">
-      <!-- filled dynamically -->
-    </div>
+    <div class="review-body" id="reviewBody"></div>
     <div class="review-footer">
       <button class="review-edit-btn" onclick="document.getElementById('reviewModal').style.display='none'">✏️ Edit</button>
       <button class="review-confirm-btn" onclick="confirmAndSubmit()">🚀 Confirm & Submit to CRM</button>
@@ -811,7 +793,7 @@ select option{background:#0d0020;color:#e2d9f3}
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- SUCCESS MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal-box" style="max-width:560px;padding:0;overflow:hidden;max-height:90vh;display:flex;flex-direction:column">
     <div style="padding:22px 26px 16px;border-bottom:1px solid rgba(109,40,217,0.2);flex-shrink:0;text-align:center">
@@ -819,8 +801,6 @@ select option{background:#0d0020;color:#e2d9f3}
       <h2 style="font-size:16px;font-weight:800;color:#c4b5fd;margin-bottom:4px">Lead Submitted Successfully!</h2>
       <p style="font-size:11px;color:#7c3aed" id="modalSummary"></p>
     </div>
-
-    <!-- Copyable Note -->
     <div style="padding:18px 26px;flex:1;overflow-y:auto">
       <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:10px">📋 CRM Note — Copy &amp; Paste</div>
       <div style="position:relative">
@@ -831,7 +811,6 @@ select option{background:#0d0020;color:#e2d9f3}
         </button>
       </div>
     </div>
-
     <div style="padding:14px 26px 20px;border-top:1px solid rgba(109,40,217,0.2);flex-shrink:0;display:flex;gap:10px">
       <button class="modal-close" style="flex:1;margin-top:0" onclick="closeModal()">🔄 New Call</button>
     </div>
@@ -840,7 +819,6 @@ select option{background:#0d0020;color:#e2d9f3}
 
 <script>
 // ══ AUTH ══
-// Add / remove users here: { username, password, displayName }
 const USERS = [
   { username: 'arnold',   password: 'BE@arnold2024',  displayName: 'Arnold' },
   { username: 'jack',     password: 'BE@jack2024',    displayName: 'Jack' },
@@ -883,7 +861,6 @@ function doLogout() {
   location.reload();
 }
 
-// Run on page load
 checkSession();
 
 // ══ STATE ══
@@ -902,7 +879,6 @@ function pickAgent(name, el) {
   selectedAgent = name;
 }
 
-// ══ RECOMMENDATION ENGINE ══
 function getRec(score, answers) {
   const reasons = [];
   if (S.urgency >= 15) reasons.push({ text: answers.urgency === 'ASAP' ? 'Immediate urgency' : 'Near-term timeline', type: 'good' });
@@ -919,7 +895,6 @@ function getRec(score, answers) {
   return { action: '⏳ STANDBY / PARTNER OUT', sub: 'Lower priority — consider standby slot or partner referral.', color: '#9ca3af', reasons };
 }
 
-// ══ COMPETITOR FOLLOWUP LOGIC ══
 function showCompetitorFollowup() {
   competitorApptExists = true;
   document.getElementById('competitor-followup').style.display = 'block';
@@ -945,12 +920,10 @@ function updateCompetitorDate() {
   document.getElementById('reminder-competitor-date').textContent = fmt(compDate);
   document.getElementById('reminder-be-date').textContent = fmt(beDate);
   document.getElementById('reminder-date-display').style.display = 'flex';
-  // Auto-suggest the appointment date
   const y = beDate.getFullYear(), m = String(beDate.getMonth()+1).padStart(2,'0'), day = String(beDate.getDate()).padStart(2,'0');
   document.getElementById('appointmentDate').value = `${y}-${m}-${day}`;
 }
 
-// ══ PICK CHOICES ══
 function pick(group, label, pts, el, cls, catName) {
   document.querySelectorAll('#group-' + group + ' .choice').forEach(c => {
     c.className = c.className.replace(/sel-\w+/g, '').trim();
@@ -959,7 +932,6 @@ function pick(group, label, pts, el, cls, catName) {
   const prev = S[group];
   A[group] = label; S[group] = pts;
   document.getElementById('dot-' + group).classList.add('done');
-  // Hide competitor if switching away from "Appt Before Us"
   if (group === 'quotes' && label !== 'Have Appt Before Us') hideCompetitorFollowup();
   calc(); showToast(pts, prev, catName);
 }
@@ -982,20 +954,15 @@ function pickBonus(label, pts, el, cls) {
   updateBonusDisplay();
 }
 
-// ══ CALC ══
 function calc() {
   const total = Object.values(S).reduce((a,b) => a+b, 0);
   const done  = Object.values(A).filter(v => v !== null).length;
-
   let priority, pillClass, ringClass, rec = null;
   if (done === 0) { priority = '—'; pillClass = 'pill-none'; ringClass = 'ring-none'; }
   else if (total >= 80) { priority = 'HIGH'; pillClass = 'pill-high'; ringClass = 'ring-high'; rec = getRec(total, A); }
   else if (total >= 65) { priority = 'MEDIUM'; pillClass = 'pill-med'; ringClass = 'ring-med'; rec = getRec(total, A); }
   else { priority = 'LOW'; pillClass = 'pill-low'; ringClass = 'ring-low'; rec = getRec(total, A); }
-
   const scoreColor = done === 0 ? '#4b5563' : total >= 80 ? '#4ade80' : total >= 65 ? '#fbbf24' : '#f87171';
-
-  // Score bar
   const sbScore = document.getElementById('sb-score');
   sbScore.innerHTML = total + '<span style="font-size:13px;opacity:0.4"> / 100</span>';
   sbScore.style.color = scoreColor;
@@ -1004,8 +971,6 @@ function calc() {
   sbPill.className = 'sb-pill ' + pillClass;
   document.getElementById('sb-rec').textContent = rec ? rec.action : 'Complete the scored sections below';
   document.getElementById('sb-rec').style.color = rec ? rec.color : 'rgba(107,114,128,0.6)';
-
-  // Main ring
   const ring = document.getElementById('mainRing');
   ring.className = 'score-ring ' + ringClass + ' pulse';
   setTimeout(() => ring.classList.remove('pulse'), 350);
@@ -1014,8 +979,6 @@ function calc() {
   const mainPill = document.getElementById('mainPill');
   mainPill.textContent = done === 0 ? 'NO DATA' : priority + ' PRIORITY';
   mainPill.className = 'sb-pill ' + pillClass;
-
-  // Recommendation
   if (rec) {
     document.getElementById('recAction').textContent = rec.action;
     document.getElementById('recAction').style.color = rec.color;
@@ -1034,16 +997,12 @@ function calc() {
     document.getElementById('recSub').textContent = 'Urgency · Quotes · Decision Makers · Credit';
     document.getElementById('reasonList').innerHTML = '';
   }
-
-  // Breakdown
   ['urgency','quotes','dm','credit'].forEach(k => {
     const el = document.getElementById('bd-' + k);
     if (A[k] === null) { el.textContent = '—'; el.style.color = '#4b5563'; }
     else { el.textContent = S[k] + ' pts'; el.style.color = S[k] > 0 ? '#4ade80' : '#f87171'; }
   });
   document.getElementById('bd-total').textContent = total + ' / 100';
-
-  // Booking rules highlight
   const ruleIds = ['rule-90','rule-80','rule-65','rule-64'];
   const ruleActive = done === 0 ? null : total >= 90 ? 'rule-90' : total >= 80 ? 'rule-80' : total >= 65 ? 'rule-65' : 'rule-64';
   ruleIds.forEach(id => {
@@ -1052,7 +1011,6 @@ function calc() {
     else if (id === ruleActive) { el.classList.add('rule-active'); el.classList.remove('rule-inactive'); }
     else { el.classList.add('rule-inactive'); el.classList.remove('rule-active'); }
   });
-
   updateNameDisplay();
   updateBonusDisplay();
 }
@@ -1074,7 +1032,6 @@ function updateNameDisplay() {
   el.style.color = name ? '#c4b5fd' : 'rgba(167,139,250,0.3)';
 }
 
-// ══ TOAST ══
 function showToast(pts, prevPts, catName) {
   const total = Object.values(S).reduce((a,b) => a+b, 0);
   const done  = Object.values(A).filter(v => v !== null).length;
@@ -1100,12 +1057,10 @@ function showToast(pts, prevPts, catName) {
   }, 2400);
 }
 
-// ══ GOOGLE MAPS ADDRESS LOOKUP ══
 function openMap() {
   const addr = document.getElementById('address').value.trim();
   const query = addr ? encodeURIComponent(addr + ', USA') : encodeURIComponent('United States');
-  const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
-  window.open(url, '_blank');
+  window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
 }
 
 function updateMapLink() {
@@ -1127,7 +1082,6 @@ function toggleOther(sel) {
   if (sel.value !== 'Other') o.value = '';
 }
 
-// ══ VALIDATION HELPERS ══
 function flashError(elId, msg) {
   const el = document.getElementById(elId);
   if (!el) return;
@@ -1140,57 +1094,32 @@ function flashError(elId, msg) {
 }
 
 function showValidationToast(errors) {
-  // Show a blocking validation summary modal instead of the submit modal
   const box = document.getElementById('validationModal');
   const list = document.getElementById('validationList');
   list.innerHTML = errors.map(e => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1);font-size:12px;color:#fca5a5"><span style="font-size:14px">❌</span>${e}</div>`).join('');
   box.style.display = 'flex';
 }
 
-// ══ SUBMIT ══
 function submitLead() {
   const errors = [];
-
-  // 1. Customer Name
   const name = document.getElementById('customerName').value.trim();
   if (!name) { errors.push('Customer Name is required'); flashError('customerName', '⚠️ Required!'); }
-
-  // 2. BP Opportunity ID
   const bpId = document.getElementById('bpLeadId').value.trim();
   if (!bpId) { errors.push('BP Opportunity ID is required'); flashError('bpLeadId', '⚠️ Required!'); }
-
-  // 3. Lead Source
   const src = document.getElementById('leadSource').value;
   if (!src) { errors.push('Lead Source must be selected'); document.getElementById('leadSource').style.borderColor = '#ef4444'; setTimeout(() => document.getElementById('leadSource').style.borderColor = '', 3000); }
-
-  // 4. Project Type
   const pt = document.getElementById('projectType').value;
   if (!pt) { errors.push('Project Type must be selected'); document.getElementById('projectType').style.borderColor = '#ef4444'; setTimeout(() => document.getElementById('projectType').style.borderColor = '', 3000); }
-
-  // 5. Scored questions — all 4 must be answered
   if (A.urgency === null) errors.push('Timeline / Urgency answer is required (Section 1)');
   if (A.quotes === null)  errors.push('Competition / Quotes answer is required (Section 2)');
   if (A.dm === null)      errors.push('Decision Maker selection is required (Section 3)');
   if (A.credit === null)  errors.push('Credit / Financing answer is required (Section 4)');
-
-  // 6. Competitor date — optional even if "Appt Before Us" selected
-
-  // 7. Appointment Date & Time
   const apptDate = document.getElementById('appointmentDate').value;
   const apptTime = document.getElementById('appointmentTime').value;
   if (!apptDate) { errors.push('Appointment Date is required'); flashError('appointmentDate', ''); }
   if (!apptTime) { errors.push('Appointment Time is required'); flashError('appointmentTime', ''); }
-
-  // 8. Sales Agent
   if (!selectedAgent) errors.push('Sales Agent must be selected (Jack or Dave)');
-
-  // 9. Address — optional, not required
-
-  // ── Block if any errors ──
-  if (errors.length > 0) {
-    showValidationToast(errors);
-    return;
-  }
+  if (errors.length > 0) { showValidationToast(errors); return; }
 
   const total = Object.values(S).reduce((a,b) => a+b, 0);
   const priority = total >= 80 ? 'HIGH' : total >= 65 ? 'MEDIUM' : 'LOW';
@@ -1231,7 +1160,6 @@ function showReviewModal(p, total, priority, rec) {
   const fmt = val => val || '<span style="color:rgba(167,139,250,0.3);font-weight:400">—</span>';
   const fmtDate = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}) : '—';
   const fmtTime = t => { if(!t) return '—'; const [h,m]=t.split(':'); const ampm=+h>=12?'PM':'AM'; return `${+h%12||12}:${m} ${ampm}`; };
-
   document.getElementById('reviewBody').innerHTML = `
     <div class="review-score-block">
       <div>
@@ -1244,7 +1172,6 @@ function showReviewModal(p, total, priority, rec) {
         <div style="font-size:11px;color:#a78bfa;font-weight:700">${rec.action}</div>
       </div>
     </div>
-
     <div class="review-section">
       <div class="review-section-title">👤 Customer Information</div>
       <div class="review-row"><span class="review-key">Customer Name</span><span class="review-val">${fmt(p.customer_name)}</span></div>
@@ -1253,7 +1180,6 @@ function showReviewModal(p, total, priority, rec) {
       <div class="review-row"><span class="review-key">Project Type</span><span class="review-val">${fmt(p.project_type)}</span></div>
       <div class="review-row"><span class="review-key">Set On</span><span class="review-val">${fmtDate(p.set_on)}</span></div>
     </div>
-
     <div class="review-section">
       <div class="review-section-title">⚡ Scored Answers</div>
       <div class="review-row"><span class="review-key">Timeline / Urgency</span><span class="review-val">${fmt(p.answers.urgency)} <span style="color:#7c3aed;font-size:10px">(${p.scores.urgency} pts)</span></span></div>
@@ -1261,7 +1187,6 @@ function showReviewModal(p, total, priority, rec) {
       <div class="review-row"><span class="review-key">Decision Maker</span><span class="review-val">${fmt(p.answers.dm)} <span style="color:#7c3aed;font-size:10px">(${p.scores.dm} pts)</span></span></div>
       <div class="review-row"><span class="review-key">Credit / Financing</span><span class="review-val">${fmt(p.answers.credit)} <span style="color:#7c3aed;font-size:10px">(${p.scores.credit} pts)</span></span></div>
     </div>
-
     <div class="review-section">
       <div class="review-section-title">📅 Appointment Details</div>
       <div class="review-row"><span class="review-key">Date</span><span class="review-val">${fmtDate(p.appointment_date)}</span></div>
@@ -1270,7 +1195,6 @@ function showReviewModal(p, total, priority, rec) {
       <div class="review-row"><span class="review-key">Property Address</span><span class="review-val">${fmt(p.address)}</span></div>
       ${p.competitor_appt_exists ? `<div class="review-row"><span class="review-key">⚠️ Competitor Appt</span><span class="review-val" style="color:#fb923c">${fmtDate(p.competitor_appt_date)}</span></div>` : ''}
     </div>
-
     <div class="review-section">
       <div class="review-section-title">⭐ Additional Info</div>
       ${p.enthusiasm_answer ? `<div class="review-row"><span class="review-key">Enthusiasm</span><span class="review-val">${p.enthusiasm_answer} (+${p.enthusiasm_bonus} bonus)</span></div>` : ''}
@@ -1291,13 +1215,13 @@ function confirmAndSubmit() {
     localStorage.setItem('leadRecords', JSON.stringify(existing));
   } catch(e) {}
 
-  fetch('https://hook.us1.make.com/886k5ojznokp6xytozlgqj1w473lfilt', {
+  // ── UPDATED WEBHOOK URL ──
+  fetch('https://hook.us1.make.com/4sfajepj4hgpnsewa1dlc56p9qsclsfj', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(p)
   }).catch(e => console.warn('Webhook error:', e));
 
-  // ── Build formatted CRM note ──
   const fmtDate = d => {
     if (!d) return '—';
     const dt = new Date(d + 'T00:00:00');
@@ -1366,7 +1290,6 @@ function copyCrmNote() {
       btn.style.color = '#a78bfa';
     }, 2500);
   }).catch(() => {
-    // Fallback for browsers that block clipboard
     const range = document.createRange();
     range.selectNode(document.getElementById('crmNote'));
     window.getSelection().removeAllRanges();
@@ -1401,7 +1324,6 @@ function closeModal() {
   calc();
 }
 
-// Init
 document.getElementById('setOn').value = new Date().toISOString().split('T')[0];
 document.getElementById('customerName').addEventListener('input', updateNameDisplay);
 </script>
